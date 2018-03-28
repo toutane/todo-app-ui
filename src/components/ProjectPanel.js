@@ -26,7 +26,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import { getProjects, postProjects } from "../api/BeAPI";
+import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
 
 import ProjectStatue from "./ProjectStatuePanel";
 // import { projects as projectsInit } from '../database/projects'
@@ -121,18 +121,19 @@ class Project extends React.Component {
           //   "project_url": "/" + this.state.input.toLowerCase().replace(" ", "")
           // }])
         },
-        () => postProjects({
-          project_id: this.state.projects.length,
-          project_name: this.state.input,
-          project_icon: this.state.icon,
-          project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
-        }).then((data) => {
-          getProjects().then(projects =>
-            this.setState({
-              projects: projects
-            })
-          )
-        })
+        () =>
+          postProjects({
+            project_id: this.state.projects.length + 1,
+            project_name: this.state.input,
+            project_icon: this.state.icon,
+            project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
+          }).then(data => {
+            getProjects().then(projects =>
+              this.setState({
+                projects: projects
+              })
+            );
+          })
       );
     } else {
       this.setState({
@@ -244,11 +245,21 @@ class Project extends React.Component {
         trashCollapse: !this.state.trashCollapse,
         trashModal: !this.state.trashModal,
         dropSelectItemIcon: "",
-        projects: [...this.state.projects].filter(
-          e => e.project_name !== this.state.dropSelectProject
-        )
+        // projects: [...this.state.projects].filter(
+        //   e => e.project_name !== this.state.dropSelectProject
+        // ),
       },
-      () => console.log(this.state.projects)
+      () =>
+          deleteProjects({
+            project_name: this.state.dropSelectProject,
+          }).then(data => {
+            getProjects().then(projects =>
+              this.setState({
+                projects: projects
+              })
+            );
+          }),
+    () => console.log(this.state.projects)
     );
   }
 
@@ -286,7 +297,7 @@ class Project extends React.Component {
           <Button color="info" onClick={this.projectToggle}>
             <i className="fa fa-plus" />&nbsp;Add a project
           </Button>
-          <Button color="success" onClick={this.filterToggle}>
+          &nbsp;&nbsp;&nbsp;<Button color="success" onClick={this.filterToggle}>
             <i className="fa fa-filter" />
           </Button>
           <Button color="danger" onClick={this.trashToggle}>
@@ -494,7 +505,7 @@ class Project extends React.Component {
               key={i}
             >
               <i className={project.project_icon} />
-              &nbsp;{project.project_id}
+              &nbsp;{project.project_name}
             </ListGroupItem>
           ))}
         </ListGroup>
