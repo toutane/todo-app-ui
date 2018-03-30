@@ -244,15 +244,7 @@ class TasksPanel extends React.Component {
       // pour verifier la date :  && this.state.selectedDay !== ""
       this.setState(
         {
-          addTasksModal: !this.state.addTasksModal,
-          dropSelectProject: "Project",
-          dropSelectItemIcon: "fa fa-list",
-          prioritySelectIcon: "fa fa-flag",
-          dropSelectColor: "Color",
-          dropSelectColorIcon: "fa fa-paint-brush",
-          dropSelectIcon: "Icon",
-          dropSelectIconIcon: "fa fa-clipboard",
-          activeTasksInformation: false
+          addTasksModal: !this.state.addTasksModal
         },
         () =>
           postTasks({
@@ -266,13 +258,23 @@ class TasksPanel extends React.Component {
             tasks_card_color: this.state.dropSelectColor.toLocaleLowerCase(),
             tasks_card_icon: this.state.dropSelectIconIcon
           }).then(data => {
-            console.log('retour ',data);
+            console.log("retour ", data);
             getTasks().then(tasks =>
               this.setState({
                 tasks: tasks
               })
             );
-          })
+          }),
+        {
+          dropSelectProject: "Project",
+          dropSelectItemIcon: "fa fa-list",
+          prioritySelectIcon: "fa fa-flag",
+          dropSelectColor: "Color",
+          dropSelectColorIcon: "fa fa-paint-brush",
+          dropSelectIcon: "Icon",
+          dropSelectIconIcon: "fa fa-clipboard",
+          activeTasksInformation: false
+        }
       );
     } else {
       this.setState(
@@ -285,21 +287,23 @@ class TasksPanel extends React.Component {
   }
 
   deleteTasksFunction(index) {
-    this.setState({
-      activeTasksDelete: false,
-      visibleCross: false,
-      // tasks: [...this.state.tasks].filter((e, i) => i !== index)
-    },() =>
-    deleteTasks({
-      id: index,
-    }).then(data => {
-      getTasks().then(tasks =>
-        this.setState({
-          tasks: tasks
+    this.setState(
+      {
+        activeTasksDelete: false,
+        visibleCross: false
+        // tasks: [...this.state.tasks].filter((e, i) => i !== index)
+      },
+      () =>
+        deleteTasks({
+          id: index
+        }).then(data => {
+          getTasks().then(tasks =>
+            this.setState({
+              tasks: tasks
+            })
+          );
         })
-      );
-    })
-  );
+    );
   }
 
   confirmDeleteFunction(i) {
@@ -437,16 +441,16 @@ class TasksPanel extends React.Component {
           </InputGroup>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/* <Button style={{"backgroundColor":"#0c2461"}} onClick={this.addTasksModal}><i className="fa fa-plus" />&nbsp;Add a tasks</Button> */}
-          <Button color="info" onClick={this.addTasksModal}>
+          <Button color="primary" onClick={this.addTasksModal}>
             <i className="fa fa-plus" />&nbsp;Add a tasks
           </Button>
           &nbsp;&nbsp;&nbsp;<Button
-            color="success"
+            outline color="primary"
             onClick={this.moreInformationFunction1}
           >
             <i className="fas fa-ellipsis-v " />
           </Button>
-          <Button color="danger" onClick={null}>
+          <Button outline color="primary" onClick={null}>
             <i className="fa fa-trash" />
           </Button>
         </ButtonGroup>
@@ -460,6 +464,10 @@ class TasksPanel extends React.Component {
               <FormGroup>
                 <Label>Tasks title</Label>
                 <Input
+                  // autoFocus
+                  // name='username'
+                  // id='username'
+                  // innerRef={(input) => (this.username = input)}
                   onChange={input => this.taskTitleInputFunction(input)}
                   value={this.state.tasksTitleInput}
                   // invalid={this.state.tasksTitleInputInvalid}
@@ -624,83 +632,89 @@ class TasksPanel extends React.Component {
         {/* Test map tasks */}
         <hr className="my-3" />&nbsp;
         {filteredTasks
-          .sort(sortBy('tasks_title', (key, value) => key === 'tasks_title' ? value.toLowerCase() : value ))
+          .sort(
+            sortBy(
+              "tasks_title",
+              (key, value) =>
+                key === "tasks_title" ? value.toLowerCase() : value
+            )
+          )
           .map((tasks, i) => (
-          <div key={i}>
-            <Card block color={tasks.tasks_card_color}>
-              <div className="d-flex justify-content-between align-items-start">
-                <div>
-                  <CardTitle>
-                    <div>
-                      <i className={tasks.tasks_card_icon} />&nbsp;{
-                        tasks.tasks_title
-                      }
-                    </div>
-                  </CardTitle>
-                  <CardText onClick={() => this.moreInformationFunction(i)}>
-                    <i className="fas fa-ellipsis-v fa-sm text-success" />&nbsp;&nbsp;{
-                      tasks.tasks_description
-                    }&nbsp;
-                    <Collapse
-                      isOpen={
-                        (i === this.state.selectedTasksInformation &&
-                          this.state.activeTasksInformation) ||
-                        this.state.allActiveTasks
-                      }
-                    >
-                      <hr className="my-2" />
-                      <h6>
-                        {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                          className={tasks.tasks_project_icon}
-                        />&nbsp;{tasks.tasks_project}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                          className={tasks.tasks_priority}
-                        />
-                      </h6>
-                    </Collapse>
-                  </CardText>
-                </div>
-                <ButtonGroup
-                  className={
-                    this.state.visibleCross &&
-                    i === this.state.confirmDeleteTasks
-                      ? "d-flex flex-column align-items-end"
-                      : "d-flex flex-column align-items-center"
-                  }
-                >
-                  <i className="fas fa-check fa-lg mb-2" />
+            <div key={i}>
+              <Card block color={tasks.tasks_card_color}>
+                <div className="d-flex justify-content-between align-items-start">
+                  <div>
+                    <CardTitle>
+                      <div>
+                        <i className={tasks.tasks_card_icon} />&nbsp;{
+                          tasks.tasks_title
+                        }
+                      </div>
+                    </CardTitle>
+                    <CardText onClick={() => this.moreInformationFunction(i)}>
+                      <i className="fas fa-ellipsis-v fa-sm text-primary" />&nbsp;&nbsp;{
+                        tasks.tasks_description
+                      }&nbsp;
+                      <Collapse
+                        isOpen={
+                          (i === this.state.selectedTasksInformation &&
+                            this.state.activeTasksInformation) ||
+                          this.state.allActiveTasks
+                        }
+                      >
+                        <hr className="my-2" />
+                        <h6>
+                          {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                            className={tasks.tasks_project_icon}
+                          />&nbsp;{tasks.tasks_project}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                            className={tasks.tasks_priority}
+                          />
+                        </h6>
+                      </Collapse>
+                    </CardText>
+                  </div>
+                  <ButtonGroup
+                    className={
+                      this.state.visibleCross &&
+                      i === this.state.confirmDeleteTasks
+                        ? "d-flex flex-column align-items-end"
+                        : "d-flex flex-column align-items-center"
+                    }
+                  >
+                    <i className="fas fa-check fa-lg mb-2" />
 
-                  {this.state.visibleCross &&
-                  i === this.state.confirmDeleteTasks ? (
-                    <ButtonGroup>
-                      <Button
-                        color="danger"
-                        outline
-                        size="sm"
-                        onClick={() => this.deleteTasksFunction(i)}
-                      >
-                        confirm
-                      </Button>
-                      &nbsp;<Button
-                        color="success"
-                        outline
-                        size="sm"
-                        onClick={() => this.canceVisibleButtons()}
-                      >
-                        cancel
-                      </Button>
-                    </ButtonGroup>
-                  ) : (
-                    <i
-                      className="fas fa-times fa-lg mb-1"
-                      onClick={() => this.confirmDeleteFunction(i)}
-                    />
-                  )}
-                </ButtonGroup>
-              </div>
-            </Card>
-            <div>&nbsp;</div>
-          </div>
-        ))}
+                    {this.state.visibleCross &&
+                    i === this.state.confirmDeleteTasks ? (
+                      <ButtonGroup>
+                        <Button
+                          color="danger"
+                          outline
+                          size="sm"
+                          onClick={() => this.deleteTasksFunction(tasks.tasks_id)}
+                        >
+                          confirm
+                        </Button>
+                        &nbsp;<Button
+                          color="success"
+                          outline
+                          size="sm"
+                          onClick={() => this.canceVisibleButtons()}
+                        >
+                          cancel
+                        </Button>
+                      </ButtonGroup>
+                    ) : (
+                      <i
+                        className="fas fa-times fa-lg mb-1"
+                        onClick={() => this.confirmDeleteFunction(i)}
+                      />
+                    )}
+                  </ButtonGroup>
+                </div>
+              </Card>
+              <div>&nbsp;</div>
+            </div>
+          ))}
       </div>
     );
   }

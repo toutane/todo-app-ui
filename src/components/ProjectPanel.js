@@ -294,13 +294,13 @@ class Project extends React.Component {
         {/* Command panel */}
 
         <ButtonGroup>
-          <Button color="info" onClick={this.projectToggle}>
+          <Button color="primary" onClick={this.projectToggle}>
             <i className="fa fa-plus" />&nbsp;Add a project
           </Button>
-          &nbsp;&nbsp;&nbsp;<Button color="success" onClick={this.filterToggle}>
+          &nbsp;&nbsp;&nbsp;<Button outline color="primary" onClick={this.filterToggle}>
             <i className="fa fa-filter" />
           </Button>
-          <Button color="danger" onClick={this.trashToggle}>
+          <Button outline color="primary" onClick={this.trashToggle}>
             <i className="fa fa-trash" />
           </Button>
         </ButtonGroup>

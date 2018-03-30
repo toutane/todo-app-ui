@@ -13,8 +13,8 @@ export default class LogOutMenu extends React.Component {
         &nbsp;
         <Container fluid>
           <Jumbotron className="text-center">
-            <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-warning">app</span></h1>
-            <p className="lead">The app for <span className="text-warning">manage</span> your tasks in a moment and <span className="text-warning">organize</span> them!</p>
+            <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-primary">app</span></h1>
+            <p className="lead">The app for <span className="text-primary">manage</span> your tasks in a moment and <span className="text-primary">organize</span> them!</p>
             <hr className="my-2" />&nbsp;
             <Row>
                 <Col xs="12" sm="12" md="6" lg="4">
@@ -42,32 +42,31 @@ export default class LogOutMenu extends React.Component {
             &nbsp;<hr className="my-2" />
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
-                <Button tag={Link} to="/inbox" outline color="warning">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="warning">Log in&nbsp;<i className="fas fa-sign-in-alt"></i></Button>                
+                <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="primary">Log in&nbsp;<i className="fas fa-sign-in-alt"></i></Button>                
               </ButtonGroup>
             </div>
           </Jumbotron>
         </Container>
         &nbsp;
-        <Container>
+        {/* <Container>
           <Row>
             <Col sm="6">
-              <Card block outline color="warning" className="text-center mb-4">
+              <Card block outline color="primary" className="text-center mb-4">
                 <CardTitle><i className="fab fa-github"/> Support me!</CardTitle>
                 <CardText>Support me on GitHub to help me to do this app!</CardText>
-                <Button outline color="warning"href="https://github.com/toutane" >View my GitHub!</Button>
+                <Button outline color="primary"href="https://github.com/toutane" >View my GitHub!</Button>
               </Card>
             </Col>
             <Col sm="6">
               <Card block outline color="danger" className="text-center">
                 <CardTitle><i className="fas fa-magic"/> Change the theme!</CardTitle>
                 <CardText>Change the theme of your app easily and create own!</CardText>
-                {/* <Button style={{"backgroundColor":"#0c2461"}} onClick={this.addTasksModal}><i className="fa fa-plus" />&nbsp;Add a tasks</Button> */}
                 <Button outline color="danger" tag={Link} to="/settings">Change theme!</Button>
               </Card>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
     );
   }

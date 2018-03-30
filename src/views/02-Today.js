@@ -73,7 +73,7 @@ export default class Todo extends React.Component {
               &nbsp;
           </Col>
             <Col>
-              <h4><i className="far fa-calendar fa-fw" />&nbsp;Today -&nbsp;&nbsp;<Badge color="info">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
+              <h4><i className="far fa-calendar fa-fw" />&nbsp;Today -&nbsp;&nbsp;<Badge color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
               <hr className="my-3" />
               <TasksPanelManager />
               <hr className="my-3" />
