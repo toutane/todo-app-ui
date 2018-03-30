@@ -33,6 +33,7 @@ import {
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import sortBy from "sort-by";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -255,6 +256,7 @@ class TasksPanel extends React.Component {
         },
         () =>
           postTasks({
+            tasks_id: this.state.tasks.length + 1,
             tasks_title: this.state.tasksTitleInput,
             tasks_description: this.state.tasksDescriptionInput,
             tasks_date: this.state.selectedDay.format("L"),
@@ -264,6 +266,7 @@ class TasksPanel extends React.Component {
             tasks_card_color: this.state.dropSelectColor.toLocaleLowerCase(),
             tasks_card_icon: this.state.dropSelectIconIcon
           }).then(data => {
+            console.log('retour ',data);
             getTasks().then(tasks =>
               this.setState({
                 tasks: tasks
@@ -620,7 +623,9 @@ class TasksPanel extends React.Component {
         </Modal>
         {/* Test map tasks */}
         <hr className="my-3" />&nbsp;
-        {filteredTasks.map((tasks, i) => (
+        {filteredTasks
+          .sort(sortBy('tasks_title', (key, value) => key === 'tasks_title' ? value.toLowerCase() : value ))
+          .map((tasks, i) => (
           <div key={i}>
             <Card block color={tasks.tasks_card_color}>
               <div className="d-flex justify-content-between align-items-start">
