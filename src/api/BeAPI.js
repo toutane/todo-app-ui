@@ -1,7 +1,20 @@
 // Readable fetchs API
 const api = "http://localhost:3001";
 
-// <- fetch projects ->
+// fetch authentication
+
+export const postLogin = newLogin =>
+  fetch(`${api}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+      // ...headers
+    },
+    body: JSON.stringify(newLogin)
+  }).then(x => x.json());
+
+
+// fetch projects
 
 export const getProjects = () => fetch(`${api}/projects`).then(x => x.json());
 
@@ -25,7 +38,7 @@ export const deleteProjects = deletedProject =>
     body: JSON.stringify(deletedProject)
   });
 
-// <- fetch tasks ->
+// fetch tasks
 
 export const getTasks = () => fetch(`${api}/tasks`).then(x => x.json());
 

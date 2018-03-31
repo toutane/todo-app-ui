@@ -32,6 +32,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
+// import shortid from "shortid-36";
 import moment from "moment";
 import sortBy from "sort-by";
 
@@ -129,6 +130,7 @@ class TasksPanel extends React.Component {
     super(props);
 
     this.state = {
+      userId: "",
       tasks: [],
       projects: [],
       moreInformationCollapse: false,
@@ -248,6 +250,7 @@ class TasksPanel extends React.Component {
         },
         () =>
           postTasks({
+            user_id: this.state.userId,
             tasks_id: this.state.tasks.length + 1,
             tasks_title: this.state.tasksTitleInput,
             tasks_description: this.state.tasksDescriptionInput,

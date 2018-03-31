@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Redirect, BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-// import Login from './views/Login';
+import Login from './components/Login';
 import LogOut from './views/00-NotLogMenu';
 import Inbox from './views/01-Inbox'
 import Today from './views/02-Today';
@@ -42,7 +42,7 @@ class App extends Component {
             {/* <NavBar /> */}
             <Switch>
               <Route exact path="/" component={LogOut} />
-              {/* <Route path="/login" component={Login} /> */}
+              <Route path="/login" component={Login} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />

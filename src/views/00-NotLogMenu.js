@@ -43,7 +43,7 @@ export default class LogOutMenu extends React.Component {
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
                 <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="primary">Log in&nbsp;<i className="fas fa-sign-in-alt"></i></Button>                
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="primary"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
               </ButtonGroup>
             </div>
           </Jumbotron>

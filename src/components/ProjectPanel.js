@@ -25,6 +25,7 @@ import {
   Col
 } from "reactstrap";
 import { Link } from "react-router-dom";
+// import shortid from "shortid-36";
 
 import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
 
@@ -40,6 +41,7 @@ class Project extends React.Component {
     super(props);
 
     this.state = {
+      userId: "",
       projectCollapse: false,
       filterCollapse: false,
       trashCollapse: false,
@@ -123,6 +125,7 @@ class Project extends React.Component {
         },
         () =>
           postProjects({
+            user_id: this.state.userId,
             project_id: this.state.projects.length + 1,
             project_name: this.state.input,
             project_icon: this.state.icon,
