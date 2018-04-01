@@ -15,8 +15,11 @@ export default class AccountSettings extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      updateProfileModal: false
     };
+
+    this.updateProfileModalFunction = this.updateProfileModalFunction.bind(this)
   }
 
   toggle(tab) {
@@ -26,6 +29,13 @@ export default class AccountSettings extends React.Component {
       });
     }
   }
+
+  updateProfileModalFunction() {
+    this.setState({
+      updateProfileModal: !this.state.updateProfileModal
+    })
+  }
+
   render() {
     return (
       <div>
@@ -67,19 +77,37 @@ export default class AccountSettings extends React.Component {
             <Label for="exampleText">Bio</Label>
             <Input type="textarea" name="text" id="exampleText" />
           </FormGroup>
-          <FormGroup>
+          {/* <FormGroup>
             <Label for="exampleEmail">Location</Label>
             <InputGroup>
               <InputGroupAddon><i className="fa fa-map-marker fa-fw" /></InputGroupAddon>
               <Input placeholder="location" />
             </InputGroup>
-          </FormGroup>
+          </FormGroup> */}
           <div><hr className="my-3"/></div>
           <Row>
-            <Col><Button outline color="success">Update profile</Button></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
+            <Col>
+              <Button color="info" onClick={this.updateProfileModalFunction}>Update profile</Button>
+              <Modal isOpen={this.state.updateProfileModal} toggle={this.updateProfileModalFunction}>
+                  <ModalHeader>
+                    <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning
+                    !
+                  </ModalHeader>
+                  <ModalBody>
+                    Are your sure you want to update your profile?
+                    <hr />
+                    <Button outline color="info" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="secondary" onClick={this.updateProfileModalFunction}>
+                      Cancel
+                    </Button>
+                    <Button color="info" onClick={this.updateProfileModalFunction}>
+                      Update profile
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+            </Col>
           </Row>
           </Card>
           &nbsp;&nbsp;

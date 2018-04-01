@@ -1,14 +1,16 @@
 import React from 'react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
-  Badge, Button, CardTitle, CardText, Row, Col, CardImg, CardImgOverlay } from 'reactstrap';
+  Badge, Button, CardTitle, CardText, Row, Col, CardImg, CardImgOverlay,
+  CardFooter
+} from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
 import { getLogout } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
-import Profile from './51-Profile';
-import Account from './52-Account'
-import Customization from './53-Customization';
+import Customization from '../components/CustomizationPanel';
+import Account from '../components/AccountPanel';
+import Logout from '../techComponents/Logout';
 
 import users from "../database/users.js"
 
@@ -39,9 +41,13 @@ export default class Settings extends React.Component {
         &nbsp;
       <Container>
           <Row>
-            <Col xs="3"><Menu /></Col>
+            <Col xs="3">
+              <Menu/>
+                <hr className="my-3"/>        
+              <Logout/>
+            </Col>
             <Col>
-              <h4><i className="fa fa-cog fa-fw" />&nbsp;Settings -&nbsp;&nbsp;<Badge color="danger">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
+              <h4><i className="fa fa-cog fa-fw" />&nbsp;Settings -&nbsp;&nbsp;<Badge color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
               <hr className="my-3" />
               <Nav tabs>
                 <NavItem>
@@ -50,15 +56,6 @@ export default class Settings extends React.Component {
                     onClick={() => { this.toggle('1'); }}
                   >
                     <div><i className="fa fa-eye" />&nbsp;&nbsp;Overview</div>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    className={classnames({ active: this.state.activeTab === '4' })}
-                    onClick={() => { this.toggle('4'); }}
-                  >
-                    <div><i className="fa fa-user-circle" />&nbsp;&nbsp;Profile</div>
-                    {/* <Badge pill>{user.publication}</Badge>*/}
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -95,7 +92,23 @@ export default class Settings extends React.Component {
                   )}</Card>
                   </Col>
                   <Col xs="4">
-                    <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button>
+                    {/* <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button> */}
+                    <Card block>
+                      {users.map((user, index) =>
+                        <CardImg top width="100%" src={user.avatar} alt="Card image cap" />)}
+                      &nbsp;
+                            <CardFooter>{users.map((user, index) =>
+                        <div>
+                          <h4><b>{user.full_name}</b></h4>
+                          <CardText>
+                            <h5>{user.username}</h5>
+                            <small><i className="fa fa-map-marker" /> {user.location}</small>
+                            <div><small><i className="fa fa-sign-in-alt" /> join the {user.join_date}</small></div>
+                          </CardText>
+                          {/* &nbsp; <Button outline color="secondary"><i className="fa fa-gear"/></Button> */}
+                        </div>
+                      )}</CardFooter>
+                    </Card>
                   </Col>
                   <hr className="my-3"/>
                   {/* <Button>Logout</Button> */}
@@ -108,10 +121,6 @@ export default class Settings extends React.Component {
                 <TabPane tabId="3">
                   &nbsp;
                   <Customization onChangeTheme={this.props.onChangeTheme} />
-                </TabPane>
-                <TabPane tabId="4">
-                  &nbsp;
-                <Profile/>
                 </TabPane>
               </TabContent>
             </Col>

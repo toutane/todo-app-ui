@@ -298,7 +298,7 @@ class Project extends React.Component {
         {/* Command panel */}
 
         <ButtonGroup>
-          <Button color="primary" onClick={this.projectToggle}>
+          <Button color="info" onClick={this.projectToggle}>
             <i className="fa fa-plus" />&nbsp;Add a project
           </Button>
           &nbsp;&nbsp;&nbsp;<Button outline color="primary" onClick={this.filterToggle}>
@@ -471,7 +471,7 @@ class Project extends React.Component {
                       className={this.state.dropSelectItemIcon}
                     />&nbsp;
                     {this.state.dropSelectProject}&nbsp;<hr />
-                    Be careful ! This action is irreversible ...
+                    <Button outline color="danger" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="secondary" onClick={this.trashModalBis}>

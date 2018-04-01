@@ -444,7 +444,7 @@ class TasksPanel extends React.Component {
           </InputGroup>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/* <Button style={{"backgroundColor":"#0c2461"}} onClick={this.addTasksModal}><i className="fa fa-plus" />&nbsp;Add a tasks</Button> */}
-          <Button color="primary" onClick={this.addTasksModal}>
+          <Button color="info" onClick={this.addTasksModal}>
             <i className="fa fa-plus" />&nbsp;Add a tasks
           </Button>
           &nbsp;&nbsp;&nbsp;<Button
@@ -655,7 +655,7 @@ class TasksPanel extends React.Component {
                       </div>
                     </CardTitle>
                     <CardText onClick={() => this.moreInformationFunction(i)}>
-                      <i className="fas fa-ellipsis-v fa-sm text-primary" />&nbsp;&nbsp;{
+                      <i className="fas fa-ellipsis-v fa-sm text-info" />&nbsp;&nbsp;{
                         tasks.tasks_description
                       }&nbsp;
                       <Collapse
@@ -698,7 +698,7 @@ class TasksPanel extends React.Component {
                           confirm
                         </Button>
                         &nbsp;<Button
-                          color="success"
+                          color="primary"
                           outline
                           size="sm"
                           onClick={() => this.canceVisibleButtons()}

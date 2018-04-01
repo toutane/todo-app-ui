@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import Login from './techComponents/Login';
 import Signup from './techComponents/SignUp';
-import LogOut from './views/00-NotLogMenu';
+import Home from './views/00-Home';
 import Inbox from './views/01-Inbox'
 import Today from './views/02-Today';
 import Activities from './views/03-Activities'
@@ -42,7 +42,7 @@ class App extends Component {
             &nbsp;<div>&nbsp;</div>
             {/* <NavBar /> */}
             <Switch>
-              <Route exact path="/" component={LogOut} />
+              <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />              
               <Route path="/login" component={Login} />
               <Route path="/inbox" component={Inbox} />
