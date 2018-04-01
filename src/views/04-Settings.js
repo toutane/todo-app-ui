@@ -3,6 +3,7 @@ import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
   Badge, Button, CardTitle, CardText, Row, Col, CardImg, CardImgOverlay } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
+import { getLogout } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
 import Profile from './51-Profile';
@@ -19,6 +20,10 @@ export default class Settings extends React.Component {
     this.state = {
       activeTab: '1'
     };
+  }
+
+  logoutFunction() {
+    getLogout().then(x => x)
   }
 
   toggle(tab) {
@@ -89,7 +94,9 @@ export default class Settings extends React.Component {
                     </div>
                   )}</Card>
                   </Col>
-                  <Col xs="4"></Col>
+                  <Col xs="4">
+                    <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button>
+                  </Col>
                   <hr className="my-3"/>
                   {/* <Button>Logout</Button> */}
                 </Row>

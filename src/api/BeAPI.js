@@ -3,6 +3,8 @@ const api = "http://localhost:3001";
 
 // fetch authentication
 
+export const getLogout = () => fetch(`${api}/logout`).then(x => x.json());
+
 export const postLogin = newLogin =>
   fetch(`${api}/login`, {
     method: "POST",
