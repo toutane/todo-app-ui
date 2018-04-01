@@ -82,7 +82,7 @@ export default class Settings extends React.Component {
                   <Card block outline color="">{users.map((user, index) =>
                     <div>
                       <CardTitle>Signed as <b>{user.full_name}</b></CardTitle>
-                      <div><hr className="my-3" /></div>
+                      <div><hr className="my-3"/></div>
                       <CardText>
                         <b>{user.full_name}</b> {user.bio}
                       </CardText>
@@ -90,6 +90,8 @@ export default class Settings extends React.Component {
                   )}</Card>
                   </Col>
                   <Col xs="4"></Col>
+                  <hr className="my-3"/>
+                  {/* <Button>Logout</Button> */}
                 </Row>
                 </TabPane>
                 <TabPane tabId="2">

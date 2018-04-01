@@ -14,7 +14,7 @@ export default class LogOutMenu extends React.Component {
         <Container fluid>
           <Jumbotron className="text-center">
             <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-primary">app</span></h1>
-            <p className="lead">The app for <span className="text-primary">manage</span> your tasks in a moment and <span className="text-primary">organize</span> them!</p>
+            <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
             <hr className="my-2" />&nbsp;
             <Row>
                 <Col xs="12" sm="12" md="6" lg="4">
@@ -39,11 +39,11 @@ export default class LogOutMenu extends React.Component {
                 </div>
                 </Col>
               </Row>
-            &nbsp;<hr className="my-2" />
+            &nbsp;<hr className="my-2"/>
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
                 <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="primary"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
               </ButtonGroup>
             </div>
           </Jumbotron>

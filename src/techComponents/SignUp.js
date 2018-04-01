@@ -4,18 +4,20 @@ import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
   InputGroupButton, Input, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import { postLogin } from "../api/BeAPI";
+import { postSignUp } from "../api/BeAPI";
 
-export default class Login extends React.Component {
+export default class Signup extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       usernameInput: "",
+      fullnameInput: "",
+      emailInput: "",
       passwordInput: ""
     };
 
-    this.loginFunction = this.loginFunction.bind(this);    
+    this.registerFunction = this.registerFunction.bind(this)
 
   };
 
@@ -27,6 +29,22 @@ export default class Login extends React.Component {
   );  
   };
 
+  fullnameInputFunction(input) {
+    this.setState({
+      fullnameInput: input.target.value
+    },
+    // console.log(this.state.fullnameInput)
+  );  
+  };
+
+  emailInputFunction(input) {
+    this.setState({
+      emailInput: input.target.value
+    },
+    // console.log(this.state.emailInput)
+  );  
+  };
+
   passwordInputFunction(input) {
     this.setState({
       passwordInput: input.target.value
@@ -35,20 +53,18 @@ export default class Login extends React.Component {
   );
   };
 
-  loginFunction() {
+  registerFunction() {
     if (this.state.usernameInput !== "") {
-      this.setState(
-      {},
-      () =>
-        postLogin({
+      this.setState({ }, () => postSignUp({
          username: this.state.usernameInput,
+         full_name: this.state.fullnameInput,
+         email: this.state.emailInput,
          password: this.state.passwordInput         
         })
+        .then(data => this.props.history.push("/login"))
       );
     } else {
-      this.setState(
-        {}
-      );
+      this.setState({ });
     }
   }
 
@@ -61,7 +77,7 @@ export default class Login extends React.Component {
             <Row>
               <Col>
                 <Card block outline color="primary" className="text-center mb-4">
-                  <CardTitle><i className="fas fa-sign-in-alt"/> Login</CardTitle>
+                  <CardTitle><i className="fas fa-user-circle fa-fw"/> Create your account</CardTitle>
                   <hr className="my-3"/>
                   <FormGroup>
                     <InputGroup >
@@ -70,6 +86,26 @@ export default class Login extends React.Component {
                       placeholder="username"
                       onChange={input => this.usernameInputFunction(input)}
                       value={this.state.usernameInput}                      
+                       />
+                    </InputGroup>
+                  </FormGroup>
+                  <FormGroup>
+                    <InputGroup >
+                      <InputGroupAddon><i className="far fa-address-card fa-fw" /></InputGroupAddon>
+                      <Input 
+                      placeholder="full name"
+                      onChange={input => this.fullnameInputFunction(input)}
+                      value={this.state.fullnameInput}                      
+                       />
+                    </InputGroup>
+                    </FormGroup>
+                  <FormGroup>
+                    <InputGroup >
+                      <InputGroupAddon><i className="far fa-envelope fa-fw" /></InputGroupAddon>
+                      <Input 
+                      placeholder="email"
+                      onChange={input => this.emailInputFunction(input)}
+                      value={this.state.emailInput}                      
                        />
                     </InputGroup>
                   </FormGroup>
@@ -86,12 +122,12 @@ export default class Login extends React.Component {
                   </FormGroup>
                   <hr className="my-2"/>
                   <div className="d-flex justify-content-center">
-                    <ButtonGroup>
-                      <Button outline color="primary">Create an account</Button>                   
-                      &nbsp;&nbsp;&nbsp;<Button color="primary" onClick={this.loginFunction}><i className="fas fa-sign-in-alt"/> Login</Button>
-                    </ButtonGroup>
+                      <Button color="info" onClick={this.registerFunction}>Create account</Button>                   
                   </div>
                 </Card>
+                <p>Already have an account with us?<CardLink tag={Link} to="/login" className="text-info"> Login</CardLink> instead.</p>
+                <hr className="my-3"/>
+                  {/* <Button tag={Link} to="/" outline color="secondary"><i className="fas fa-angle-left"></i> Back</Button> */}
               </Col>
             </Row>
           </div>

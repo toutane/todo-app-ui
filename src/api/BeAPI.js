@@ -13,6 +13,17 @@ export const postLogin = newLogin =>
     body: JSON.stringify(newLogin)
   }).then(x => x.json());
 
+export const postSignUp = newSignup =>
+  fetch(`${api}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+      // ...headers
+    },
+    body: JSON.stringify(newSignup)
+  })
+  .then(x => x.json());
+
 
 // fetch projects
 
@@ -23,8 +34,8 @@ export const postProjects = newProject =>
     method: "POST",
     headers: {
       "Content-Type": "application/json"
-      // ...headers
     },
+    credentials: "same-origin",
     body: JSON.stringify(newProject)
   }).then(x => x.json());
 
