@@ -3,7 +3,7 @@ const api = "http://localhost:3001";
 
 // fetch authentication
 
-export const getLogout = () => fetch(`${api}/logout`).then(x => x.json());
+export const getLogout = () => fetch(`${api}/logout`, {credentials: "include"} ).then(x => x.json());
 
 export const postLogin = newLogin =>
   fetch(`${api}/login`, {
@@ -12,6 +12,7 @@ export const postLogin = newLogin =>
       "Content-Type": "application/json"
       // ...headers
     },
+    credentials: "include",
     body: JSON.stringify(newLogin)
   }).then(x => x.json());
 
@@ -22,6 +23,7 @@ export const postSignUp = newSignup =>
       "Content-Type": "application/json"
       // ...headers
     },
+    credentials: "include",
     body: JSON.stringify(newSignup)
   })
   .then(x => x.json());
@@ -48,6 +50,7 @@ export const deleteProjects = deletedProject =>
       "Content-Type": "application/json"
       // ...headers
     },
+    credentials: "include",
     body: JSON.stringify(deletedProject)
   });
 
@@ -61,6 +64,7 @@ export const postTasks = newTasks =>
     headers: {
       "Content-Type": "application/json"
     },
+    credentials: "include",
     body: JSON.stringify(newTasks)
   }).then(x => x.json());
 
@@ -71,5 +75,6 @@ fetch(`${api}/tasks`, {
     "Content-Type": "application/json"
     // ...headers
   },
+  credentials: "include",
   body: JSON.stringify(deleteTasks)
 });
