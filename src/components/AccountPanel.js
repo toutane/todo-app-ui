@@ -51,7 +51,7 @@ export default class AccountSettings extends React.Component {
               </div>
             )}</Card>
             &nbsp;
-            <Card block>
+            <Card block outline color="warning">
             <FormGroup>
             <Label for="exampleEmail">Username</Label>
             <InputGroup>
@@ -87,7 +87,7 @@ export default class AccountSettings extends React.Component {
           <div><hr className="my-3"/></div>
           <Row>
             <Col>
-              <Button color="info" onClick={this.updateProfileModalFunction}>Update profile</Button>
+              <Button color="warning" onClick={this.updateProfileModalFunction}>Update profile</Button>
               <Modal isOpen={this.state.updateProfileModal} toggle={this.updateProfileModalFunction}>
                   <ModalHeader>
                     <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning
@@ -96,13 +96,13 @@ export default class AccountSettings extends React.Component {
                   <ModalBody>
                     Are your sure you want to update your profile?
                     <hr />
-                    <Button outline color="info" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
+                    <Button outline color="danger" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
                   </ModalBody>
                   <ModalFooter>
                     <Button color="secondary" onClick={this.updateProfileModalFunction}>
                       Cancel
                     </Button>
-                    <Button color="info" onClick={this.updateProfileModalFunction}>
+                    <Button color="warning" onClick={this.updateProfileModalFunction}>
                       Update profile
                     </Button>
                   </ModalFooter>
