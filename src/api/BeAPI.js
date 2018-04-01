@@ -29,7 +29,7 @@ export const postSignUp = newSignup =>
 
 // fetch projects
 
-export const getProjects = () => fetch(`${api}/projects`).then(x => x.json());
+export const getProjects = () => fetch(`${api}/projects`, {credentials: "include"}).then(x => x.json());
 
 export const postProjects = newProject =>
   fetch(`${api}/projects`, {
@@ -53,7 +53,7 @@ export const deleteProjects = deletedProject =>
 
 // fetch tasks
 
-export const getTasks = () => fetch(`${api}/tasks`).then(x => x.json());
+export const getTasks = () => fetch(`${api}/tasks`, {credentials: "include"}).then(x => x.json());
 
 export const postTasks = newTasks =>
   fetch(`${api}/tasks`, {
