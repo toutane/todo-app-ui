@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Container, Row, Col, CardImg, CardText, CardTitle, Button, Card, CardColumns,
   CardSubtitle, CardImgOverlay, TabContent, TabPane, Nav, NavItem, NavLink,
-  ButtonGroup, Badge
+  ButtonGroup, Badge, Popover
 } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -18,8 +18,11 @@ export default class Todo extends React.Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.togglePopover = this.togglePopover.bind(this);
+
     this.state = {
       activeTab: '1',
+      popoverOpen: false
     };
   }
 
@@ -30,6 +33,13 @@ export default class Todo extends React.Component {
       });
     }
   }
+  
+  togglePopover() {
+    this.setState({
+      popoverOpen: !this.state.popoverOpen
+    });
+  }
+
   render() {
     return (
       <div>
@@ -73,7 +83,13 @@ export default class Todo extends React.Component {
               &nbsp;
           </Col>
             <Col>
-              <h4><i className="far fa-calendar fa-fw" />&nbsp;Today -&nbsp;&nbsp;<Badge color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
+              <h4><i className="far fa-calendar fa-fw" />&nbsp;Today -&nbsp;&nbsp;
+                <Badge color="primary" id="Popover1" onClick={this.togglePopover}>{moment().format('dddd, MMMM Do YYYY')}</Badge>
+                {/* <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.togglePopover}>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere rem, facilis quae quasi reiciendis officia amet nam culpa eos tenetur odit soluta, cum qui voluptates excepturi harum quas architecto veritatis.
+                  </p>
+                </Popover> */}
+              </h4>
               <hr className="my-3" />
               <TasksPanelManager />
               <hr className="my-3" />

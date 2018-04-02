@@ -41,8 +41,8 @@ export default class AccountSettings extends React.Component {
       <div>
         <Row>
           <Col>
-            <Card block>{users.map((user, index) =>
-              <div>
+            <Card block>{users.map((user, i) =>
+              <div key={i}>
                 <CardTitle>Signed as <b>{user.full_name}</b></CardTitle>
                 <div><hr className="my-3"/></div>
                 <CardText>
@@ -114,21 +114,23 @@ export default class AccountSettings extends React.Component {
           </Col>
           <Col xs="4">
             <Card block>
-              {users.map((user, index) =>
-                <CardImg top width="100%" src={user.avatar} alt="Card image cap" />)}
-              &nbsp;
-                    <CardFooter>{users.map((user, index) =>
-                <div>
-                  <h4><b>{user.full_name}</b></h4>
-                  <CardText>
-                    <h5>{user.username}</h5>
-                    <small><i className="fa fa-map-marker" /> {user.location}</small>
-                    <div><small><i className="fa fa-sign-in-alt" /> join the {user.join_date}</small></div>
-                  </CardText>
-                  {/* &nbsp; <Button outline color="secondary"><i className="fa fa-gear"/></Button> */}
+              {users.map((user, i) =>
+                <div key={i}>
+                  <CardImg top width="100%" src={user.avatar} alt="Card image cap" />
+                  &nbsp;
+                    <CardFooter>
+                      <div>
+                        <h4><b>{user.full_name}</b></h4>
+                        <CardText>
+                          <h5>{user.username}</h5>
+                          <small><i className="fa fa-map-marker" /> {user.location}</small>
+                          <div><small><i className="fa fa-sign-in-alt" /> join the {user.join_date}</small></div>
+                        </CardText>
+                        {/* &nbsp; <Button outline color="secondary"><i className="fa fa-gear"/></Button> */}
+                    </div>
+                  </CardFooter>
                 </div>
-              )}</CardFooter>
-            </Card>
+            )}</Card>
             &nbsp;
           </Col>
         </Row>

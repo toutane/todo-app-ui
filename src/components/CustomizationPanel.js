@@ -69,7 +69,7 @@ class Customization extends Component {
           <Col xs="5">
               <ListGroup>
               {themes.map((theme, i) =>
-              <ListGroupItem onClick={() => {
+              <ListGroupItem key={i} onClick={() => {
                 this.props.onChangeTheme(theme.theme_repertory);
                 this.changeCurrentThemeImg(i)
                 }} action><i className={theme.theme_icon} />&nbsp;

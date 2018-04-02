@@ -48,7 +48,7 @@ class App extends Component {
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
-              <Route path="/settings" render={() => <Settings onChangeTheme={this.onChangeTheme} />} />
+              <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props}/>} />
               {projects.map( (project, i) =>
                 <Route 
                 path={project.project_url} 

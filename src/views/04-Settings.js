@@ -44,7 +44,7 @@ export default class Settings extends React.Component {
             <Col xs="3">
               <Menu/>
                 <hr className="my-3"/>        
-              <Logout/>
+              <Logout history={this.props.history}/>
             </Col>
             <Col>
               <h4><i className="fa fa-cog fa-fw" />&nbsp;Settings -&nbsp;&nbsp;<Badge color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
@@ -81,23 +81,25 @@ export default class Settings extends React.Component {
                   &nbsp;
                 <Row>
                   <Col>
-                  <Card block outline color="">{users.map((user, index) =>
-                    <div>
+                  <div>
+                  <Card block outline color="">{users.map((user, i) =>
+                    <div key={i}>
                       <CardTitle>Signed as <b>{user.full_name}</b></CardTitle>
-                      <div><hr className="my-3"/></div>
-                      <CardText>
-                        <b>{user.full_name}</b> {user.bio}
-                      </CardText>
+                        <div><hr className="my-3"/></div>
+                        <CardText>
+                          <b>{user.full_name}</b> {user.bio}
+                        </CardText>
                     </div>
                   )}</Card>
+                  </div>
                   </Col>
                   <Col xs="4">
                     {/* <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button> */}
-                    <Card block>
-                      {users.map((user, index) =>
-                        <CardImg top width="100%" src={user.avatar} alt="Card image cap" />)}
-                      &nbsp;
-                            <CardFooter>{users.map((user, index) =>
+                    <Card block>{users.map((user, i) => 
+                    <div key={i}>
+                      <CardImg top width="100%" src={user.avatar} alt="Card image cap" />
+                        <div>&nbsp;</div>
+                        <CardFooter>
                         <div>
                           <h4><b>{user.full_name}</b></h4>
                           <CardText>
@@ -107,8 +109,9 @@ export default class Settings extends React.Component {
                           </CardText>
                           {/* &nbsp; <Button outline color="secondary"><i className="fa fa-gear"/></Button> */}
                         </div>
-                      )}</CardFooter>
-                    </Card>
+                      </CardFooter>
+                    </div>
+                    )}</Card>
                   </Col>
                   <hr className="my-3"/>
                   {/* <Button>Logout</Button> */}

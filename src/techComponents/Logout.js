@@ -6,10 +6,16 @@ import { Link } from 'react-router-dom';
 
 import { getLogout } from '../api/BeAPI' 
 
-class SettingsBox extends React.Component {
-  
+class Logout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logoutFunction = this.logoutFunction.bind(this);  
+  }
+
+
   logoutFunction() {
-    getLogout().then(x => x)
+    getLogout()
+    .then(response => this.props.history.push("/"))
   }
 
   render() {
@@ -24,4 +30,4 @@ class SettingsBox extends React.Component {
   };
 }
 
-export default SettingsBox;
+export default Logout;

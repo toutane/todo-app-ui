@@ -131,13 +131,13 @@ class Project extends React.Component {
             project_icon: this.state.icon,
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
           }).then(x=>x)
-          // .then(data => {
-          //   getProjects().then(projects =>
-          //     this.setState({
-          //       projects: projects
-          //     })
-          //   );
-          // })
+          .then(data => {
+            getProjects().then(projects =>
+              this.setState({
+                projects: projects
+              })
+            );
+          })
       );
     } else {
       this.setState({
