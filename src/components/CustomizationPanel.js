@@ -77,7 +77,7 @@ class Customization extends Component {
                 </ListGroupItem>)}
             </ListGroup>
             <hr className="my-3"/>
-            <Button color="warning"><i className="fas fa-plus"></i> Add your theme</Button>
+            <Button color="success"><i className="fas fa-plus"></i> Add your theme</Button>
             {/* &nbsp;
             <p>Add your bootswatch theme!</p> */}
           </Col>
