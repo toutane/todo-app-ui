@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
   CardSubtitle, CardLink, CardImg, FormGroup, Label, InputGroupAddon,
   InputGroupButton, Input, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import moment from "moment";
 
 import { postSignUp } from "../api/BeAPI";
 
@@ -59,7 +60,8 @@ export default class Signup extends React.Component {
          username: this.state.usernameInput,
          full_name: this.state.fullnameInput,
          email: this.state.emailInput,
-         password: this.state.passwordInput         
+         password: this.state.passwordInput,
+         join_date: moment().format("L")         
         })
         .then(data => this.props.history.push("/login"))
       );
