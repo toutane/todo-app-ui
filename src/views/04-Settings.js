@@ -5,11 +5,13 @@ import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
 } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
-import { getLogout } from '../api/BeAPI'
+import { Link } from 'react-router-dom';
+
+import { getLogout, getUser } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
 import Customization from '../components/CustomizationPanel';
-import Account from '../components/AccountPanel';
+import Personal from '../components/PersonalPanel';
 import Logout from '../techComponents/Logout';
 
 import users from "../database/users.js"
@@ -19,9 +21,26 @@ export default class Settings extends React.Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.editTabFunction = this.editTabFunction.bind(this)
+
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      currentUser: []
     };
+  }
+
+  componentDidMount() {
+    getUser().then(user => 
+      this.setState({
+        currentUser: user
+      })
+    )
+  }
+
+  editTabFunction() {
+    this.setState({
+      activeTab: '2'
+    })
   }
 
   logoutFunction() {
@@ -36,6 +55,9 @@ export default class Settings extends React.Component {
     }
   }
   render() {
+
+  const currentUser = this.state.currentUser;
+
     return (
       <div>
         &nbsp;
@@ -63,7 +85,7 @@ export default class Settings extends React.Component {
                     className={classnames({ active: this.state.activeTab === '2' })}
                     onClick={() => { this.toggle('2'); }}
                   >
-                    <div><i className="far fa-id-card" />&nbsp;&nbsp;Account</div>
+                    <div><i className="fas fa-user-circle" />&nbsp;&nbsp;Personal</div>
                     {/* <Badge pill>{user.follower}</Badge> */}
                   </NavLink>
                 </NavItem>
@@ -82,20 +104,27 @@ export default class Settings extends React.Component {
                 <Row>
                   <Col>
                   <div>
-                  <Card block outline color="">{users.map((user, i) =>
-                    <div key={i}>
-                      <CardTitle>Signed as <b>{user.full_name}</b></CardTitle>
-                        <div><hr className="my-3"/></div>
+                  <Card block>
+                  {currentUser.map((user, i) =>
+                      <div key={i} className="d-flex justify-content-between align-items-start">
+                      <div>
+                        <CardTitle>
+                          Signed as <b>{user.full_name}</b>
+                        </CardTitle> 
+                          <hr className="my-3"/>
                         <CardText>
-                          <b>{user.full_name}</b> {user.bio}
+                          {user.bio}
                         </CardText>
+                      </div>
+                      {/* <i className="fas fa-edit fa-lg" onClick={this.editTabFunction}/> */}
                     </div>
                   )}</Card>
                   </div>
                   </Col>
                   <Col xs="4">
                     {/* <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button> */}
-                    <Card block>{users.map((user, i) => 
+                    <Card block>
+                    {currentUser.map((user, i) => 
                     <div key={i}>
                       <CardImg top width="100%" src={user.avatar} alt="Card image cap" />
                         <div>&nbsp;</div>
@@ -119,7 +148,7 @@ export default class Settings extends React.Component {
                 </TabPane>
                 <TabPane tabId="2">
                   &nbsp;
-                <Account />
+                <Personal/>
                 </TabPane>
                 <TabPane tabId="3">
                   &nbsp;
