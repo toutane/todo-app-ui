@@ -5,6 +5,10 @@ const api = "http://localhost:3001";
 
 export const getLogout = () => fetch(`${api}/logout`, {credentials: "include"} ).then(x => x.json());
 
+// fetch users
+
+export const getUser = () => fetch(`${api}/user`, {credentials: "include"}).then(x => x.json());
+
 export const postLogin = newLogin =>
   fetch(`${api}/login`, {
     method: "POST",
