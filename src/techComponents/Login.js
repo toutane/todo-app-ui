@@ -15,7 +15,7 @@ export default class Login extends React.Component {
       passwordInput: ""
     };
 
-    this.loginFunction = this.loginFunction.bind(this);    
+    this.loginFunction = this.loginFunction.bind(this);
 
   };
 
@@ -24,7 +24,7 @@ export default class Login extends React.Component {
       usernameInput: input.target.value
     },
     // console.log(this.state.usernameInput)
-  );  
+  );
   };
 
   passwordInputFunction(input) {
@@ -43,8 +43,13 @@ export default class Login extends React.Component {
       () =>
         postLogin({
          username: this.state.usernameInput,
-         password: this.state.passwordInput         
-        }).then(response => this.props.history.push("/today"))
+         password: this.state.passwordInput
+        }).then(response =>
+          { response.err
+            ? console.log(response.message)
+            : this.props.history.push("/today")
+          }
+        )
       );
     } else {
       this.setState(
@@ -68,31 +73,31 @@ export default class Login extends React.Component {
                     <FormGroup>
                       <InputGroup >
                         <InputGroupAddon><i className="fas fa-user-circle fa-fw" /></InputGroupAddon>
-                        <Input 
+                        <Input
                         placeholder="username"
                         onChange={input => this.usernameInputFunction(input)}
-                        value={this.state.usernameInput}                      
+                        value={this.state.usernameInput}
                         />
                       </InputGroup>
                     </FormGroup>
                     <FormGroup>
                       <InputGroup>
                         <InputGroupAddon><i className="fa fa-key fa-fw" /></InputGroupAddon>
-                        <Input 
-                        placeholder="password" 
-                        type="password" 
+                        <Input
+                        placeholder="password"
+                        type="password"
                         onChange={input => this.passwordInputFunction(input)}
-                        value={this.state.passwordInput}                      
+                        value={this.state.passwordInput}
                         />
                       </InputGroup>
                     </FormGroup>
                     <hr className="my-2"/>
-                    <div className="d-flex justify-content-center">                 
+                    <div className="d-flex justify-content-center">
                         <Button color="info" type="submit">Login</Button>
                     </div>
                   </Form>
                 </Card>
-                <p>Don't have an todo account yet?<CardLink tag={Link} to="/signup" className="text-info"> Sign up now!</CardLink></p>                
+                <p>Don't have an todo account yet?<CardLink tag={Link} to="/signup" className="text-info"> Sign up now!</CardLink></p>
                 <hr className="my-3"/>
                   <Button tag={Link} to="/" outline color="secondary"><i className="fas fa-angle-left"></i> Back</Button>
               </Col>
