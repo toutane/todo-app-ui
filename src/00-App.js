@@ -55,6 +55,7 @@ class App extends Component {
                 component={Today}
                 key={i}/>
               )}
+              <Route component={Home}/>
             </Switch>
           </div>
         </Router>
