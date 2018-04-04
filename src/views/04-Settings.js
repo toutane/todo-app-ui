@@ -12,6 +12,7 @@ import { getLogout, getUser } from '../api/BeAPI'
 import Menu from '../10.3-Menu';
 import Customization from '../components/CustomizationPanel';
 import Profile from '../components/ProfilePanel';
+import Overview from '../components/OverviewPanel';
 import Account from '../components/AccountPanel';
 import Notifications from '../components/NotificationsPanel';
 
@@ -29,6 +30,7 @@ export default class Settings extends React.Component {
     this.state = {
       currentUser: [],
       activeTab: '1',
+      activeOverview: '1',
       activePersonnal: '1'
     };
   }
@@ -50,7 +52,13 @@ export default class Settings extends React.Component {
   personnalSettingsView(view) {
     this.setState({
       activePersonnal: view
-    }, () => console.log(this.state.activePersonnal))
+    })
+  }
+
+  overviewView(view) {
+    this.setState({
+      activeOverview: view
+    })
   }
 
   logoutFunction() {
@@ -77,14 +85,29 @@ export default class Settings extends React.Component {
               <Menu/>
                 <hr className="my-4"/>
                   {
+                    this.state.activeTab === '1'
+                    ? (
+                      <div>
+                        <ListGroup>
+                          {/* <ListGroupItem active tag="a" href="#" action>Personal settings</ListGroupItem> */}
+                          <ListGroupItem onClick={() => this.overviewView('1')} action><i className="fas fa-eye fa-fw"/>&nbsp; Overview</ListGroupItem>
+                          <ListGroupItem onClick={() => this.overviewView('2')} action><i className="fa fa-magic fa-fw"/>&nbsp; Customization</ListGroupItem>
+                          <ListGroupItem onClick={() => this.overviewView('3')} action><i className="far fa-bell fa-fw"/>&nbsp; Notifications</ListGroupItem>
+                        </ListGroup>
+                        <hr className="my-3"/> 
+                      </div>                              
+                    ) 
+                    :   (
+                    <div></div>
+                    )
+                  }
+                  {
                   this.state.activeTab === '2'
                   ? (
                     <div>
                       <ListGroup>
-                        {/* <ListGroupItem active tag="a" href="#" action>Personal settings</ListGroupItem> */}
                         <ListGroupItem onClick={() => this.personnalSettingsView('1')} action><i className="fas fa-user-circle fa-fw"/>&nbsp; Profile</ListGroupItem>
                         <ListGroupItem onClick={() => this.personnalSettingsView('2')} action><i className="far fa-address-card fa-fw"/>&nbsp; Account</ListGroupItem>
-                        <ListGroupItem onClick={() => this.personnalSettingsView('3')} action><i className="far fa-bell fa-fw"/>&nbsp; Notifications</ListGroupItem>
                       </ListGroup>
                       <hr className="my-3"/> 
                     </div>                              
@@ -116,62 +139,20 @@ export default class Settings extends React.Component {
                     {/* <Badge pill>{user.follower}</Badge> */}
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink
-                    className={classnames({ active: this.state.activeTab === '3' })}
-                    onClick={() => { this.toggle('3'); }}
-                  >
-                    <div><i className="fa fa-magic" />&nbsp;&nbsp;Customization</div>
-                  </NavLink>
-                </NavItem>
               </Nav>
               <TabContent activeTab={this.state.activeTab}>
                 <TabPane tabId="1">
                   &nbsp;
-                <Row>
-                  <Col>
-                  <div>
-                  <Card block>
-                  {currentUser.map((user, i) =>
-                      <div key={i} className="d-flex justify-content-between align-items-start">
-                      <div>
-                        <CardTitle>
-                          Signed as <b>{user.full_name}</b>
-                        </CardTitle> 
-                          <hr className="my-3"/>
-                        <CardText>
-                          {user.bio}
-                        </CardText>
-                      </div>
-                      {/* <i className="fas fa-edit fa-lg" onClick={this.editTabFunction}/> */}
-                    </div>
-                  )}</Card>
-                  </div>
-                  </Col>
-                  <Col xs="4">
-                    {/* <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button> */}
-                    <Card block>
-                    {currentUser.map((user, i) => 
-                    <div key={i}>
-                      <CardImg top width="100%" src={user.avatar} alt="Card image cap" />
-                        <div>&nbsp;</div>
-                        <CardFooter>
-                        <div>
-                          <h4><b>{user.full_name}</b></h4>
-                          <CardText>
-                            <h5>{user.username}</h5>
-                            <small><i className="fa fa-map-marker" /> {user.location}</small>
-                            <div><small><i className="fa fa-sign-in-alt" /> join the {user.join_date}</small></div>
-                          </CardText>
-                          {/* &nbsp; <Button outline color="secondary"><i className="fa fa-gear"/></Button> */}
-                        </div>
-                      </CardFooter>
-                    </div>
-                    )}</Card>
-                  </Col>
-                  <hr className="my-3"/>
-                  {/* <Button>Logout</Button> */}
-                </Row>
+                  {
+                    this.state.activeOverview === '1'
+                      ? (<Overview/>)
+                      : (<div></div>)
+                  }
+                  {
+                    this.state.activeOverview === '2'
+                      ? (<Customization onChangeTheme={this.props.onChangeTheme}/>)
+                      : (<div></div>)
+                  }
                 </TabPane>
                 <TabPane tabId="2">
                   &nbsp;
@@ -190,10 +171,6 @@ export default class Settings extends React.Component {
                     ? (<Notifications/>)
                     : (<div></div>)
                 }
-                </TabPane>
-                <TabPane tabId="3">
-                  &nbsp;
-                  <Customization onChangeTheme={this.props.onChangeTheme} />
                 </TabPane>
               </TabContent>
             </Col>
