@@ -7,7 +7,7 @@ import {
 import classnames from 'classnames'
 import users from "../database/users"
 
-import { getUser, putUser } from '../api/BeAPI'
+import { getUser } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
 
@@ -77,22 +77,7 @@ export default class Profile extends React.Component {
   }
 
   updateProfileFunction() {
-    putUser({ 
-        user_id: this.state.userId,
-        full_name: this.state.fullnameInput
-    }).then(data => { getUser().then(user => 
-      this.setState({
-        currentUser: user,
-        usernameInput: user.map(user => user.username),
-        fullnameInput: user.map(user => user.full_name),
-        emailInput: user.map(user => user.email),
-        bioInput: user.map(user => user.bio),
-        locationInput: user.map(user => user.location),
-        avatarImg: user.map(user => user.avatar),
-        joindate: user.map(user => user.join_date)     
-      })
-    )}
-  )
+    
   }
 
   render() {
