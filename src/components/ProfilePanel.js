@@ -7,7 +7,7 @@ import {
 import classnames from 'classnames'
 import users from "../database/users"
 
-import { getUser } from '../api/BeAPI'
+import { getUser, putUser } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
 
@@ -17,14 +17,18 @@ export default class Profile extends React.Component {
 
     this.state = {
       currentUser: [],
+      userId: "",
       avatarImg: "",
       usernameInput: "",
       fullnameInput: "",
       emailInput: "",
       bioInput: "",
       locationInput: "",
-      joindate: ""
+      joindate: "",
+      confirmArrow: false
     };
+
+    this.updateProfileFunction = this.updateProfileFunction.bind(this)
   }
 
   componentDidMount() {
@@ -70,6 +74,25 @@ export default class Profile extends React.Component {
     this.setState({
       avatarImg: img.target.value
     },() => console.log(this.state.avatarImg))
+  }
+
+  updateProfileFunction() {
+    putUser({ 
+        user_id: this.state.userId,
+        full_name: this.state.fullnameInput
+    }).then(data => { getUser().then(user => 
+      this.setState({
+        currentUser: user,
+        usernameInput: user.map(user => user.username),
+        fullnameInput: user.map(user => user.full_name),
+        emailInput: user.map(user => user.email),
+        bioInput: user.map(user => user.bio),
+        locationInput: user.map(user => user.location),
+        avatarImg: user.map(user => user.avatar),
+        joindate: user.map(user => user.join_date)     
+      })
+    )}
+  )
   }
 
   render() {
@@ -125,7 +148,17 @@ export default class Profile extends React.Component {
               </Form>
               <Row>
                 <Col>
-                  <Button color="success">Update profile</Button>                
+                  {/* <div className="d-flex justify-content-between align-items-center"> */}
+                  {/* <Button color="success" onClick={() => this.setState({confirmArrow: !this.state.confirmArrow})}> */}
+                  <Button color="success" onClick={this.updateProfileFunction}>
+                    Update profile
+                  </Button>
+                    {/* {
+                      this.state.confirmArrow
+                      ? (<i className="far fa-check-circle fa-lg text-success ml-2" onClick={this.updateProfileFunction}></i>)
+                      : (<div></div>)
+                    }
+                  </div> */}
                 </Col>
                 <Col></Col>
                 <Col></Col>
