@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   ListGroupItem, ListGroup, Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle,
-  Button,  ButtonGroup,} from 'reactstrap';
+  Button,  ButtonGroup, CardLink} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 const themes = [
@@ -63,11 +63,13 @@ class Customization extends Component {
     
     return (
       <div>
-        <h4>Personalize with your themes</h4>
-        <hr className="my-3" />
-        <Row>
-          <Col xs="5">
-              <ListGroup>
+        <h4><i className="fas fa-magic"/>&nbsp;&nbsp;Customize your app</h4>
+          <hr className="my-4" />  
+          <h4 className="ml-4">Change theme</h4>
+          <hr className="my-3 ml-4"/>
+          <Row>
+            <Col xs="5">
+            <ListGroup className="ml-4">
               {themes.map((theme, i) =>
               <ListGroupItem key={i} onClick={() => {
                 this.props.onChangeTheme(theme.theme_repertory);
@@ -76,17 +78,16 @@ class Customization extends Component {
                 {theme.theme_name}
                 </ListGroupItem>)}
             </ListGroup>
-            <hr className="my-3"/>
-            <Button color="success"><i className="fas fa-plus"></i> Add your theme</Button>
-            {/* &nbsp;
-            <p>Add your bootswatch theme!</p> */}
-          </Col>
-          <Col>
-            <Card outline color="primary">
-            <CardImg top width="100%" src={this.state.currentThemeImg}/>
-            </Card>
-          </Col>
-        </Row>
+            <hr className="my-3 ml-4"/>          
+            <p className="text-muted ml-4">You can <CardLink tag={Link} to="/login" className="text-info">add your bootswatch theme.</CardLink></p>
+            <Button className="ml-4" color="success">Change theme</Button> 
+            </Col>
+            <Col>
+              <Card>
+              <CardImg top width="100%" src={this.state.currentThemeImg}/>
+              </Card>
+            </Col>
+          </Row>
       </div>
     );
   }
