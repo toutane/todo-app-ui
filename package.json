@@ -6,7 +6,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "flexbox": "0.0.3",
     "moment": "^2.21.0",
-    "react": "^15.6.1",
+    "react": "^15.6.2",
     "react-addons-css-transition-group": "^15.6.0",
     "react-addons-transition-group": "^15.6.0",
     "react-color": "^2.14.0",
