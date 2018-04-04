@@ -9,17 +9,6 @@ export const getLogout = () => fetch(`${api}/logout`, {credentials: "include"} )
 
 export const getUser = () => fetch(`${api}/user`, {credentials: "include"}).then(x => x.json());
 
-// export const putUser = updateUser =>
-//   fetch(`${api}/user`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//       // ...headers
-//     },
-//     credentials: "include",
-//     body: JSON.stringify(updateUser)
-//   }).then(x => x.json());
-
 export const postLogin = newLogin =>
   fetch(`${api}/login`, {
     method: "POST",

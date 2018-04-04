@@ -15,7 +15,8 @@ export default class Signup extends React.Component {
       usernameInput: "",
       fullnameInput: "",
       emailInput: "",
-      passwordInput: ""
+      passwordInput: "",
+      registerError: ""
     };
 
     this.registerFunction = this.registerFunction.bind(this)
@@ -25,37 +26,28 @@ export default class Signup extends React.Component {
   usernameInputFunction(input) {
     this.setState({
       usernameInput: input.target.value
-    },
-    // console.log(this.state.usernameInput)
-  );  
+    });  
   };
 
   fullnameInputFunction(input) {
     this.setState({
       fullnameInput: input.target.value
-    },
-    // console.log(this.state.fullnameInput)
-  );  
+    });  
   };
 
   emailInputFunction(input) {
     this.setState({
       emailInput: input.target.value
-    },
-    // console.log(this.state.emailInput)
-  );  
+    });  
   };
 
   passwordInputFunction(input) {
     this.setState({
       passwordInput: input.target.value
-    },
-    // console.log(this.state.passwordInput)
-  );
+    });
   };
 
   registerFunction() {
-    if (this.state.usernameInput !== "") {
       this.setState({ }, () => postSignUp({
          username: this.state.usernameInput,
          full_name: this.state.fullnameInput,
@@ -63,11 +55,12 @@ export default class Signup extends React.Component {
          password: this.state.passwordInput,
          join_date: moment().format("L")         
         })
-        .then(data => this.props.history.push("/login"))
+        .then(data => {
+          data.error 
+            ? this.setState({registerError: data.message})
+            : this.props.history.push("/login")
+        })
       );
-    } else {
-      this.setState({ });
-    }
   }
 
   render() {
@@ -78,7 +71,7 @@ export default class Signup extends React.Component {
           <div className="d-flex justify-content-center">
             <Row>
               <Col>
-                <Card block outline color="primary" className="text-center mb-4">
+                <Card block outline color="primary" className="text-center mb-4" style={{"width": "335px"}}>
                   <CardTitle><i className="fas fa-user-circle fa-fw"/> Create your account</CardTitle>
                   <hr className="my-3"/>
                   <FormGroup>
@@ -122,6 +115,7 @@ export default class Signup extends React.Component {
                       />
                     </InputGroup>
                   </FormGroup>
+                  <span className="text-danger text-wrap" >{this.state.registerError}</span>
                   <hr className="my-2"/>
                   <div className="d-flex justify-content-center">
                       <Button color="info" onClick={this.registerFunction}>Create account</Button>                   
