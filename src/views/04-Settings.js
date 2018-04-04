@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
   Badge, Button, CardTitle, CardText, Row, Col, CardImg, CardImgOverlay,
-  CardFooter
+  CardFooter, ListGroupItem, ListGroup
 } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -11,7 +11,10 @@ import { getLogout, getUser } from '../api/BeAPI'
 
 import Menu from '../10.3-Menu';
 import Customization from '../components/CustomizationPanel';
-import Personal from '../components/PersonalPanel';
+import Profile from '../components/ProfilePanel';
+import Account from '../components/AccountPanel';
+import Notifications from '../components/NotificationsPanel';
+
 import Logout from '../techComponents/Logout';
 
 import users from "../database/users.js"
@@ -24,8 +27,9 @@ export default class Settings extends React.Component {
     this.editTabFunction = this.editTabFunction.bind(this)
 
     this.state = {
+      currentUser: [],
       activeTab: '1',
-      currentUser: []
+      activePersonnal: '1'
     };
   }
 
@@ -41,6 +45,12 @@ export default class Settings extends React.Component {
     this.setState({
       activeTab: '2'
     })
+  }
+  
+  personnalSettingsView(view) {
+    this.setState({
+      activePersonnal: view
+    }, () => console.log(this.state.activePersonnal))
   }
 
   logoutFunction() {
@@ -65,7 +75,24 @@ export default class Settings extends React.Component {
           <Row>
             <Col xs="3">
               <Menu/>
-                <hr className="my-3"/>        
+                <hr className="my-4"/>
+                  {
+                  this.state.activeTab === '2'
+                  ? (
+                    <div>
+                      <ListGroup>
+                        {/* <ListGroupItem active tag="a" href="#" action>Personal settings</ListGroupItem> */}
+                        <ListGroupItem onClick={() => this.personnalSettingsView('1')} action><i className="fas fa-user-circle fa-fw"/>&nbsp; Profile</ListGroupItem>
+                        <ListGroupItem onClick={() => this.personnalSettingsView('2')} action><i className="far fa-address-card fa-fw"/>&nbsp; Account</ListGroupItem>
+                        <ListGroupItem onClick={() => this.personnalSettingsView('3')} action><i className="far fa-bell fa-fw"/>&nbsp; Notifications</ListGroupItem>
+                      </ListGroup>
+                      <hr className="my-3"/> 
+                    </div>                              
+                  ) 
+                  :   (
+                  <div></div>
+                  )
+                }
               <Logout history={this.props.history}/>
             </Col>
             <Col>
@@ -148,7 +175,21 @@ export default class Settings extends React.Component {
                 </TabPane>
                 <TabPane tabId="2">
                   &nbsp;
-                <Personal/>
+                {
+                  this.state.activePersonnal === '1'
+                    ? (<Profile/>)
+                    : (<div></div>)
+                }
+                {
+                  this.state.activePersonnal === '2'
+                    ? (<Account/>)
+                    : (<div></div>)
+                }
+                {
+                  this.state.activePersonnal === '3'
+                    ? (<Notifications/>)
+                    : (<div></div>)
+                }
                 </TabPane>
                 <TabPane tabId="3">
                   &nbsp;
