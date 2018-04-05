@@ -645,7 +645,7 @@ class TasksPanel extends React.Component {
             </p>
             <hr />
             <p className="mb-0">
-              Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+              Look in your <a href="/inbox" className="alert-link">box</a> if you have tasks to do.
             </p>
           </Alert>)
           : (<div></div>) 
