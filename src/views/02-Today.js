@@ -33,7 +33,7 @@ export default class Todo extends React.Component {
       });
     }
   }
-  
+
   togglePopover() {
     this.setState({
       popoverOpen: !this.state.popoverOpen
@@ -75,7 +75,7 @@ export default class Todo extends React.Component {
                   <Row>
                     <Col sm="12">
                       &nbsp;
-                      <ProjectPanel />
+                      <ProjectPanel {...this.props}/>
                     </Col>
                   </Row>
                 </TabPane>

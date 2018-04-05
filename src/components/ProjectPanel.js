@@ -85,10 +85,10 @@ class Project extends React.Component {
   }
 
   componentDidMount() {
-    getProjects().then(projects =>
-      this.setState({
-        projects: projects
-      })
+    getProjects().then(resProjects =>
+      resProjects.error
+        ? this.props.history.push("/login")
+        : this.setState({ projects: resProjects })
     );
   }
 
@@ -287,11 +287,11 @@ class Project extends React.Component {
   }
 
   render() {
-    const filteredProjects = this.state.projects.filter(project =>
+    const filteredProjects = this.state.projects.length && this.state.projects.filter(project =>
       project.project_name
         .toLowerCase()
         .includes(this.state.search.toLowerCase())
-    );
+    ) || [];
 
     return (
       <div>

@@ -45,7 +45,7 @@ export default class Login extends React.Component {
          username: this.state.usernameInput,
          password: this.state.passwordInput
         }).then(response =>
-          { response.err
+          { response.error
             ? console.log(response.message)
             : this.props.history.push("/today")
           }
