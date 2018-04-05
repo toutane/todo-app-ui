@@ -645,7 +645,7 @@ class TasksPanel extends React.Component {
             </p>
             <hr />
             <p className="mb-0">
-              Look in your <a href="/inbox" className="alert-link">box</a> if you have tasks to do.
+              Look in your <a href="/inbox" className="alert-link">box</a> if you have other tasks to do.
             </p>
           </Alert>)
           : (<div></div>) 
