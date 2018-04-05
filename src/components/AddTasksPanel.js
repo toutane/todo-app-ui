@@ -634,6 +634,20 @@ class TasksPanel extends React.Component {
         </Modal>
         {/* Test map tasks */}
         <hr className="my-3" />&nbsp;
+        {
+          filteredTasks.length === 0
+          ? (<Alert color="info">
+            <h4 className="alert-heading">You have finished your day!</h4>
+            <p>
+              Well done you don't have tasks to do! #nothingToDo
+            </p>
+            <hr />
+            <p className="mb-0">
+              Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+            </p>
+          </Alert>)
+          : (<div></div>) 
+        }
         {filteredTasks
           .sort(
             sortBy(
