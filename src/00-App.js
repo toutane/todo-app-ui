@@ -34,7 +34,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Helmet>
+        <Helmet
+          onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}>
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
         </Helmet>
         <Router>
@@ -43,15 +44,15 @@ class App extends Component {
             {/* <NavBar /> */}
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/signup" component={Signup} />              
+              <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
               <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props}/>} />
               {projects.map( (project, i) =>
-                <Route 
-                path={project.project_url} 
+                <Route
+                path={project.project_url}
                 component={Today}
                 key={i}/>
               )}

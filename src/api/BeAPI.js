@@ -35,7 +35,11 @@ export const postSignUp = newSignup =>
 
 // fetch projects
 
-export const getProjects = () => fetch(`${api}/projects`, {credentials: "include"}).then(x => x.json());
+export const getProjects = () =>
+  fetch(`${api}/projects`, {credentials: "include"})
+    .then(x =>
+      (x.status === 405) ? x.json() : x.json()
+    );
 
 export const postProjects = newProject =>
   fetch(`${api}/projects`, {

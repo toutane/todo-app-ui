@@ -219,10 +219,12 @@ class TasksPanel extends React.Component {
         selectedDay: moment()
       },
       () =>
-        getProjects().then(projects =>
+        getProjects().then(resProjects => {
+          // console.log(resProjects);
           this.setState({
-            projects: projects
+            projects: resProjects
           })
+        }
         )
     );
     console.log(this.state.tasks);
