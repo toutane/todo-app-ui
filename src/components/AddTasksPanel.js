@@ -257,8 +257,6 @@ class TasksPanel extends React.Component {
         },
         () =>
           postTasks({
-            // user_id: this.state.userId,
-            // project_id: this.state.dropSelectProject.project_id,
             tasks_id: this.state.tasks.length + 1,
             tasks_title: this.state.tasksTitleInput,
             tasks_description: this.state.tasksDescriptionInput,
