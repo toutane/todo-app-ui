@@ -64,7 +64,7 @@ export const deleteProjects = deletedProject =>
 
 // fetch tasks
 
-export const getTasks = () => fetch(`${api}/tasks`, {credentials: "include"}).then(x => x.json());
+export const getTasks = (project_id) => fetch(`${api}/tasks/${project_id}`, {credentials: "include"}).then(x => x.json());
 
 export const postTasks = newTasks =>
   fetch(`${api}/tasks`, {

@@ -125,8 +125,6 @@ class Project extends React.Component {
         },
         () =>
           postProjects({
-            // user_id: this.state.userId,
-            project_id: this.state.projects.length + 1,
             project_name: this.state.input,
             project_icon: this.state.icon,
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")

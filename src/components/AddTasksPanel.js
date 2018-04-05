@@ -144,6 +144,7 @@ class TasksPanel extends React.Component {
       dropdownSelectColorOpen: false,
       dropdownSelectIconOpen: false,
       allActiveTasks: false,
+      dropSelectProjectName: "Project",
       dropSelectProject: "Project",
       dropSelectColor: "Color-theme",
       dropSelectColorIcon: "fa fa-paint-brush",
@@ -195,11 +196,14 @@ class TasksPanel extends React.Component {
   }
 
   componentDidMount() {
-    getTasks().then(tasks =>
-      this.setState({
-        tasks: tasks
-      })
-    );
+    getProjects().then(resProjects => 
+      resProjects.map(project => 
+        getTasks(project.project_id).then(tasks =>
+          this.setState({
+            tasks: this.state.tasks.concat(tasks)
+          }, console.log(this.state.tasks))
+        )
+      ))
   }
 
   canceVisibleButtons() {
@@ -238,7 +242,8 @@ class TasksPanel extends React.Component {
 
   onAddProjectSelected(project) {
     this.setState({
-      dropSelectProject: project.project_name,
+      dropSelectProjectName: project.project_name,
+      dropSelectProject: project,
       dropSelectItemIcon: project.project_icon
     });
   }
@@ -252,12 +257,14 @@ class TasksPanel extends React.Component {
         },
         () =>
           postTasks({
-            user_id: this.state.userId,
+            // user_id: this.state.userId,
+            // project_id: this.state.dropSelectProject.project_id,
             tasks_id: this.state.tasks.length + 1,
             tasks_title: this.state.tasksTitleInput,
             tasks_description: this.state.tasksDescriptionInput,
             tasks_date: this.state.selectedDay.format("L"),
             tasks_project: this.state.dropSelectProject,
+            tasks_project_name: this.state.dropSelectProjectName,
             tasks_project_icon: this.state.dropSelectItemIcon,
             tasks_priority: this.state.prioritySelectIcon,
             tasks_card_color: this.state.dropSelectColor.toLocaleLowerCase(),
@@ -513,7 +520,7 @@ class TasksPanel extends React.Component {
                       >
                         <DropdownToggle caret outline color="info">
                           <i className={this.state.dropSelectItemIcon} />{" "}
-                          {this.state.dropSelectProject}
+                          {this.state.dropSelectProjectName}
                         </DropdownToggle>
                         <DropdownMenu>
                           {this.state.projects.map((project, i) => (
@@ -685,7 +692,7 @@ class TasksPanel extends React.Component {
                         <h6>
                           {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
                             className={tasks.tasks_project_icon}
-                          />&nbsp;{tasks.tasks_project}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
+                          />&nbsp;{tasks.tasks_project_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
                             className={tasks.tasks_priority}
                           />
                         </h6>
