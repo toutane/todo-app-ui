@@ -22,7 +22,8 @@ import {
   ModalBody,
   ModalFooter,
   Row,
-  Col
+  Col,
+  Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
 // import shortid from "shortid-36";
@@ -486,7 +487,7 @@ class Project extends React.Component {
                 </Modal>
               </ButtonGroup>
               <Collapse isOpen={this.state.trashDetectCollapse}>
-                <hr />
+                <hr/>
                 <p className="text-danger">&nbsp;You must select a project !</p>
               </Collapse>
             </Card>
@@ -497,20 +498,32 @@ class Project extends React.Component {
 
         {/* Project list */}
 
-        <ListGroup>
-          {filteredProjects.map((project, i) => (
-            <ListGroupItem
-              tag={Link}
-              to={project.project_url}
-              // action={this.state.advancedProjectOptionsFunction}
-              action
-              key={i}
-            >
-              <i className={project.project_icon} />
-              &nbsp;{project.project_name}
-            </ListGroupItem>
-          ))}
-        </ListGroup>
+          {
+            filteredProjects.length === 0
+            ? (<Alert color="info">
+            <h4 className="alert-heading">No project!</h4>
+            <hr/>
+            <p className="mb-0">
+              Add a project if you want to organise and add tasks.
+            </p>
+          </Alert>)
+          : (
+            <ListGroup>
+              {filteredProjects.map((project, i) => (
+                <ListGroupItem
+                  tag={Link}
+                  to={project.project_url}
+                  // action={this.state.advancedProjectOptionsFunction}
+                  action
+                  key={i}
+                >
+                  <i className={project.project_icon} />
+                  &nbsp;{project.project_name}
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          )
+          }        
       </div>
     );
   }
