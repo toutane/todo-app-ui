@@ -224,7 +224,6 @@ class TasksPanel extends React.Component {
       },
       () =>
         getProjects().then(resProjects => {
-          // console.log(resProjects);
           this.setState({
             projects: resProjects
           })
