@@ -24,7 +24,6 @@ import {
   ButtonDropdown,
   CardText,
   Alert,
-  InputGroupAddon,
   InputGroup,
   Popover,
   FormFeedback,
@@ -37,6 +36,8 @@ import moment from "moment";
 import sortBy from "sort-by";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { InputGroupAddon } from '../utils/InputGroupAddon';
+
 
 import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
 
@@ -458,10 +459,10 @@ class TasksPanel extends React.Component {
             outline color="primary"
             onClick={this.moreInformationFunction1}
           >
-            <i className="fas fa-ellipsis-v " />
+            <i className="fas fa-ellipsis-v fa-fw" />
           </Button>
           <Button outline color="primary" onClick={null}>
-            <i className="fa fa-trash" />
+            <i className="fa fa-trash fa-fw" />
           </Button>
         </ButtonGroup>
         {/* <ProjectStatue/> */}

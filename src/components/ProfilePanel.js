@@ -1,11 +1,12 @@
 import React from 'react';
 import {
   Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle, Button, InputGroup, CardFooter,
-  FormGroup, Label, InputGroupAddon, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
+  FormGroup, Label, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
   Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form
 } from 'reactstrap';
 import classnames from 'classnames'
 import users from "../database/users"
+import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { getUser } from '../api/BeAPI'
 

@@ -8,7 +8,6 @@ import {
   Card,
   FormGroup,
   InputGroup,
-  InputGroupAddon,
   Input,
   Label,
   Dropdown,
@@ -26,6 +25,7 @@ import {
   Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { InputGroupAddon } from '../utils/InputGroupAddon';
 // import shortid from "shortid-36";
 
 import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
@@ -298,13 +298,13 @@ class Project extends React.Component {
 
         <ButtonGroup>
           <Button color="info" onClick={this.projectToggle}>
-            <i className="fa fa-plus" />&nbsp;Add a project
+            <i className="fa fa-plus fa-fw" />&nbsp;Add a project
           </Button>
           &nbsp;&nbsp;&nbsp;<Button outline color="primary" onClick={this.filterToggle}>
-            <i className="fa fa-filter" />
+            <i className="fa fa-filter fa-fw" />
           </Button>
           <Button outline color="primary" onClick={this.trashToggle}>
-            <i className="fa fa-trash" />
+            <i className="fa fa-trash fa-fw" />
           </Button>
         </ButtonGroup>
 
@@ -331,7 +331,7 @@ class Project extends React.Component {
                   isOpen={this.state.dropdownAddProjectOpen}
                   toggle={this.dropdownAddProjectToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="info">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectItem}
                   </DropdownToggle>
@@ -397,7 +397,7 @@ class Project extends React.Component {
                   isOpen={this.state.dropdownFilterOpen}
                   toggle={this.dropdownFiltersToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="success">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectFilter}
                   </DropdownToggle>
@@ -440,7 +440,7 @@ class Project extends React.Component {
                   isOpen={this.state.dropdownDeleteProjectOpen}
                   toggle={this.dropdownDeleteProjectToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="danger">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectProject}
                   </DropdownToggle>
