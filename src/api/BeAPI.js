@@ -37,9 +37,7 @@ export const postSignUp = newSignup =>
 
 export const getProjects = () =>
   fetch(`${api}/projects`, {credentials: "include"})
-    .then(x =>
-      (x.status === 405) ? x.json() : x.json()
-    );
+    .then(x => x.json());
 
 export const postProjects = newProject =>
   fetch(`${api}/projects`, {
