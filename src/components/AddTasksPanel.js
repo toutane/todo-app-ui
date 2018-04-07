@@ -130,6 +130,7 @@ class TasksPanel extends React.Component {
     super(props);
 
     this.state = {
+      spinner: true,
       userId: "",
       tasks: [],
       projects: [],
@@ -193,17 +194,28 @@ class TasksPanel extends React.Component {
     this.confirmDeleteFunction = this.confirmDeleteFunction.bind(this);
     this.canceVisibleButtons = this.canceVisibleButtons.bind(this);
     this.moreInformationFunction1 = this.moreInformationFunction1.bind(this);
+    this.getAllTasksFromAllProjects = this.getAllTasksFromAllProjects.bind(this);
   }
 
   componentDidMount() {
-    getProjects().then(resProjects => 
+    this.getAllTasksFromAllProjects();
+  }
+
+  getAllTasksFromAllProjects() {
+    this.setState({
+      tasks: [],
+      spinner: true,
+    },
+    () => getProjects().then(resProjects => 
       resProjects.map(project => 
         getTasks(project.project_id).then(tasks =>
           this.setState({
             tasks: this.state.tasks.concat(tasks)
-          }, console.log(this.state.tasks))
+          }, this.setState({
+            spinner: false,
+          }))
         )
-      ))
+      )))
   }
 
   canceVisibleButtons() {
@@ -268,11 +280,7 @@ class TasksPanel extends React.Component {
             tasks_card_icon: this.state.dropSelectIconIcon
           }).then(data => {
             console.log("retour ", data);
-            getTasks().then(tasks =>
-              this.setState({
-                tasks: tasks
-              })
-            );
+            this.getAllTasksFromAllProjects();
           }),
         {
           dropSelectProject: "Project",
@@ -654,8 +662,9 @@ class TasksPanel extends React.Component {
           </Alert>)
           : (<div></div>) 
         }
-        {filteredTasks
-          .sort(
+        {(this.state.spinner)
+          ? (<div className="d-flex justify-content-center"><i className="fas fa-sync fa-spin fa-7x"></i></div>)
+          : (filteredTasks.sort(
             sortBy(
               "tasks_title",
               (key, value) =>
@@ -737,7 +746,8 @@ class TasksPanel extends React.Component {
               </Card>
               <div>&nbsp;</div>
             </div>
-          ))}
+          ))
+          )}
       </div>
     );
   }
