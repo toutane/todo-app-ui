@@ -1,8 +1,9 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
-  CardSubtitle, CardLink, CardImg, FormGroup, Label, InputGroupAddon,
+  CardSubtitle, CardLink, CardImg, FormGroup, Label,
   InputGroupButton, Input, ButtonGroup, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { postLogin } from "../api/BeAPI";
 
@@ -59,52 +60,54 @@ export default class Login extends React.Component {
   }
 
   render() {
-    return (
-      <div>
+    return <div>
         <Container>
-          <div className="my-5"></div>
+          <div className="my-5" />
           <div className="d-flex justify-content-center">
             <Row>
               <Col>
                 <Card block outline color="primary" className="text-center mb-4">
-                  <CardTitle><i className="fas fa-sign-in-alt"/> Login</CardTitle>
-                  <hr className="my-3"/>
-                  <Form onSubmit={(e) => this.loginFunction(e)}>
+                  <CardTitle><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
+                  <hr className="my-3" />
+                  <Form onSubmit={e => this.loginFunction(e)}>
                     <FormGroup>
-                      <InputGroup >
-                        <InputGroupAddon><i className="fas fa-user-circle fa-fw" /></InputGroupAddon>
-                        <Input
-                        placeholder="username"
-                        onChange={input => this.usernameInputFunction(input)}
-                        value={this.state.usernameInput}
-                        />
+                      <InputGroup>
+                        <InputGroupAddon>
+                          <i className="fas fa-user-circle fa-fw" />
+                        </InputGroupAddon>
+                        <Input placeholder="username" onChange={input => this.usernameInputFunction(input)} value={this.state.usernameInput} />
                       </InputGroup>
                     </FormGroup>
                     <FormGroup>
                       <InputGroup>
-                        <InputGroupAddon><i className="fa fa-key fa-fw" /></InputGroupAddon>
-                        <Input
-                        placeholder="password"
-                        type="password"
-                        onChange={input => this.passwordInputFunction(input)}
-                        value={this.state.passwordInput}
-                        />
+                        <InputGroupAddon>
+                          <i className="fa fa-key fa-fw" />
+                        </InputGroupAddon>
+                        <Input placeholder="password" type="password" onChange={input => this.passwordInputFunction(input)} value={this.state.passwordInput} />
                       </InputGroup>
                     </FormGroup>
-                    <hr className="my-2"/>
+                    <hr className="my-2" />
                     <div className="d-flex justify-content-center">
-                        <Button color="info" type="submit">Login</Button>
+                      <Button color="info" type="submit">
+                        Login
+                      </Button>
                     </div>
                   </Form>
                 </Card>
-                <p>Don't have an todo account yet?<CardLink tag={Link} to="/signup" className="text-info"> Sign up now!</CardLink></p>
-                <hr className="my-3"/>
-                  <Button tag={Link} to="/" outline color="secondary"><i className="fas fa-angle-left"></i> Back</Button>
+                <p>
+                  Don't have an todo account yet?<CardLink tag={Link} to="/signup" className="text-info">
+                    {" "}
+                    Sign up now!
+                  </CardLink>
+                </p>
+                <hr className="my-3" />
+                <Button tag={Link} to="/" outline color="secondary">
+                  <i className="fas fa-angle-left" /> Back
+                </Button>
               </Col>
             </Row>
           </div>
         </Container>
-      </div>
-    );
+      </div>;
   }
 };

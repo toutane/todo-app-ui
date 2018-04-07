@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
-  CardSubtitle, CardLink, CardImg, FormGroup, Label, InputGroupAddon,
+  CardSubtitle, CardLink, CardImg, FormGroup, Label,
   InputGroupButton, Input, ButtonGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import moment from "moment";
+import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { postSignUp } from "../api/BeAPI";
 
@@ -72,7 +73,7 @@ export default class Signup extends React.Component {
             <Row>
               <Col>
                 <Card block outline color="primary" className="text-center mb-4" style={{"width": "335px"}}>
-                  <CardTitle><i className="fas fa-user-circle fa-fw"/> Create your account</CardTitle>
+                  <CardTitle><h4><i className="fas fa-user-circle fa-fw"/> Create your account</h4></CardTitle>
                   <hr className="my-3"/>
                   <FormGroup>
                     <InputGroup >
