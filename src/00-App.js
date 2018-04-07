@@ -19,7 +19,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      theme: "./themes/superhero-theme.min.css"
+      theme: "./themes/superhero-new.min.css"
     };
 
     this.onChangeTheme = this.onChangeTheme.bind(this);

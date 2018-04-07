@@ -366,7 +366,7 @@ class Project extends React.Component {
             <Card block outline color="success">
               <FormGroup>
                 <InputGroup>
-                  <InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">
                     <i className="fa fa-search fa-fw" />
                   </InputGroupAddon>
                   <Input
