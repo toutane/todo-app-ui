@@ -481,13 +481,8 @@ class TasksPanel extends React.Component {
               <FormGroup>
                 <Label>Tasks title</Label>
                 <Input
-                  // autoFocus
-                  // name='username'
-                  // id='username'
-                  // innerRef={(input) => (this.username = input)}
                   onChange={input => this.taskTitleInputFunction(input)}
                   value={this.state.tasksTitleInput}
-                  // invalid={this.state.tasksTitleInputInvalid}
                 />
               </FormGroup>
               <FormGroup>
