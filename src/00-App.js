@@ -40,8 +40,8 @@ class App extends Component {
         </Helmet>
         <Router>
           <div>
-            &nbsp;<div>&nbsp;</div>
-            {/* <NavBar /> */}
+            <NavBar/>
+            &nbsp;
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />
