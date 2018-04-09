@@ -5,6 +5,7 @@ import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
 import { Link } from 'react-router-dom';
 
 import NavBar from '../20-NavBar';
+import BottomView from '../03-BottomView';
 
 export default class LogOutMenu extends React.Component {
   render() {
@@ -71,6 +72,7 @@ export default class LogOutMenu extends React.Component {
             </Col>
           </Row>
         </Container> */}
+        <BottomView/>
       </div>
     );
   }
