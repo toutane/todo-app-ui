@@ -50,7 +50,7 @@ class App extends Component {
       <div>
         <Provider value={{
               isLog: true,
-              login: () => this.isLog = !this.isLog,
+              login: function() { return this.isLog = !this.isLog },
               logout: () => this.isLog = !this.isLog
             }}>
         <Helmet

@@ -44,10 +44,8 @@ export default class Login extends React.Component {
   loginFunction(e) {
     e.preventDefault();
     if (this.state.usernameInput !== "") {
-      this.setState(
-      {},
-      () =>
-        postLogin({
+      this.setState({},
+      () => postLogin({
          username: this.state.usernameInput,
          password: this.state.passwordInput
         }).then(response =>
@@ -58,9 +56,7 @@ export default class Login extends React.Component {
         )
       );
     } else {
-      this.setState(
-        {}
-      );
+      this.setState( {} );
     }
   }
 
@@ -74,11 +70,11 @@ export default class Login extends React.Component {
                 <Card outline color="primary" className="text-center mb-4">
                 <CardBody>
                   <CardTitle tag="div"><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
-                  <Consumer>
-                    {value => (<span> value: {value.isLog.toString()} </span>)}
-                  </Consumer>
                   <hr className="my-3" />
-                  <Form onSubmit={e => this.loginFunction(e)}>
+                  <Consumer>
+                  {value => (
+                    <Form onSubmit={e => this.loginFunction(e)}>
+                    <span> value: {value.isLog.toString()} </span>
                     <FormGroup>
                       <InputGroup>
                         <InputGroupAddon>
@@ -97,11 +93,13 @@ export default class Login extends React.Component {
                     </FormGroup>
                     <hr className="my-2" />
                     <div className="d-flex justify-content-center">
-                      <Button color="info" type="submit">
+                      <Button color="info" onClick={()=> value.login()} type="submit">
                         Login
                       </Button>
                     </div>
                   </Form>
+                  )}
+                  </Consumer>
                   </CardBody>
                 </Card>
                 <p>
@@ -111,11 +109,9 @@ export default class Login extends React.Component {
                   </CardLink>
                 </p>
                 <hr className="my-3" />
-                {/* <LoginLogout log={false}> */}
                   <Button tag={Link} to="/" outline color="secondary">
                     <i className="fas fa-angle-left" /> Back
                   </Button>
-                {/* </LoginLogout> */}
               </Col>
             </Row>
           </div>
