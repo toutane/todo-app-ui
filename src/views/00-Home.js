@@ -3,17 +3,57 @@ import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
   Input, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { getLogout, getUser } from "../api/BeAPI";
 
 import NavBar from '../02-NavBar';
 import BottomView from '../03-BottomView';
 
-export default class LogOutMenu extends React.Component {
+export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+       isLogged: false,
+       currentUser: []
+      };
+    this.logoutFunction = this.logoutFunction.bind(this)
+  }
+
+  componentDidMount() {
+    getUser().then(user =>
+      this.setState({
+        currentUser: user
+      }, user.error === undefined
+          ? (this.setState({isLogged: true}))
+          : (this.setState({isLogged: false}))
+    )
+    );
+  }
+
+  logoutFunction() {
+    getLogout().then(response => this.setState({
+      isLogged: false
+    }));
+  }
+
   render() {
     return (
       <div>
         &nbsp;
         <Container fluid>
-          <Jumbotron className="text-center">
+          {
+            this.state.isLogged
+            ? (this.state.currentUser.map((user, i) => <Jumbotron key={i} className="text-center">
+            <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{user.username}</span></h1>
+            <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
+            &nbsp;<hr className="my-2"/>
+            &nbsp;<div className="d-flex justify-content-center">
+              <ButtonGroup>
+                <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+              </ButtonGroup>
+            </div>
+          </Jumbotron>))
+            : (<Jumbotron className="text-center">
             <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-primary">app</span></h1>
             <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
             <hr className="my-2" />&nbsp;
@@ -47,7 +87,8 @@ export default class LogOutMenu extends React.Component {
                 &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
               </ButtonGroup>
             </div>
-          </Jumbotron>
+          </Jumbotron>)
+          }
         </Container>
         &nbsp;
         {/* <Container>

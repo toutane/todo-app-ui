@@ -50,7 +50,7 @@ export default class Login extends React.Component {
         }).then(response =>
           { response.error
             ? console.log(response.message)
-            : this.props.history.push("/today")
+            : this.props.history.push("/home")
           }
         )
       );
