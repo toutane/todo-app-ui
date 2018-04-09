@@ -10,27 +10,38 @@ import Today from './views/02-Today';
 import Activities from './views/03-Activities'
 import Settings from './views/04-Settings';
 import NavBar from './20-NavBar';
+import { getLogout } from './api/BeAPI';
 
-import { projects } from './database/projects'
+import { projects } from './database/projects';
+// import { LoginProvider } from './techComponents/LoginProvider';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
-      theme: "./themes/superhero-new.min.css"
+      theme: "./themes/superhero-new.min.css",
+      user: "",
+      isLogged: false,
     };
-
     this.onChangeTheme = this.onChangeTheme.bind(this);
+    this.loginFunction = this.loginFunction.bind(this);
+    this.logoutFunction = this.logoutFunction.bind(this);
   }
-
+  loginFunction() {
+    this.setState({ isLogged: true });
+  }
+  logoutFunction() {
+    getLogout()
+    .then(response => {
+      this.setState({ isLogged: false });
+      // this.props.history.push("/home");
+    })
+  }
   onChangeTheme(newTheme) {
     this.setState({
       theme: newTheme
     });
   }
-
   render() {
     return (
       <div>
@@ -40,12 +51,13 @@ class App extends Component {
         </Helmet>
         <Router>
           <div>
-            <NavBar/>
+            <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/>
             &nbsp;
             <Switch>
+        {/* <LoginProvider {...this.props}> */}
               <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />
-              <Route path="/login" component={Login} />
+              <Route isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction} path="/login" component={Login} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
@@ -57,6 +69,7 @@ class App extends Component {
                 key={i}/>
               )}
               <Route component={Home}/>
+        {/* </LoginProvider> */}
             </Switch>
           </div>
         </Router>

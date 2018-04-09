@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { postLogin } from "../api/BeAPI";
+import { LoginLogout } from './LoginProvider';
+
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -101,9 +103,11 @@ export default class Login extends React.Component {
                   </CardLink>
                 </p>
                 <hr className="my-3" />
-                <Button tag={Link} to="/" outline color="secondary">
-                  <i className="fas fa-angle-left" /> Back
-                </Button>
+                {/* <LoginLogout log={false}> */}
+                  <Button tag={Link} to="/" outline color="secondary">
+                    <i className="fas fa-angle-left" /> Back
+                  </Button>
+                {/* </LoginLogout> */}
               </Col>
             </Row>
           </div>

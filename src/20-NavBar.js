@@ -32,11 +32,13 @@ export default class NavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      logged: false,
+      isLogged: false,
       currentUser: [],
-      isOpen: false
+      isOpen: false,
+      isOpen2: false
     };
     this.dropdownToggle = this.dropdownToggle.bind(this);
+    this.dropdownToggle2 = this.dropdownToggle2.bind(this);    
     this.logoutFunction = this.logoutFunction.bind(this);
 
     this.stateDropdown = {
@@ -49,15 +51,15 @@ export default class NavBar extends React.Component {
       this.setState({
         currentUser: user
       }, user.error === undefined
-          ? (this.setState({logged: true}))
-          : (this.setState({logged: false}))
+          ? (this.setState({isLogged: true}))
+          : (this.setState({isLogged: false}))
     )
     );
   }
 
   logoutFunction() {
     getLogout().then(response => this.setState({
-      logged: false
+      isLogged: false
     }));
   }
 
@@ -72,6 +74,17 @@ export default class NavBar extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+  dropdownToggle2() {
+    this.setState({
+      dropdownOpen2: !this.state.dropdownOpen2
+    });
+  }
+
+  toggle() {
+    this.setState2({
+      isOpen2: !this.state.isOpen2
+    });
+  }
   render() {
     return (
       <div>
@@ -83,7 +96,7 @@ export default class NavBar extends React.Component {
                 app
               </span>
             </NavbarBrand>
-            {this.state.logged
+            {this.state.isLogged
             ? (<Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
@@ -91,6 +104,37 @@ export default class NavBar extends React.Component {
                       <i className="far fa-bell fa-lg mt-2" />
                     </NavLink>
                   </NavItem>
+                  <Dropdown
+                    isOpen={this.state.dropdownOpen2}
+                    toggle={this.dropdownToggle2}
+                  >
+                        <UncontrolledDropdown nav inNavbar>
+                          <DropdownToggle nav caret>
+                            <i className="fa fa-plus fa-lg mt-2" />  
+                          </DropdownToggle>
+                          <DropdownMenu right>
+                            <DropdownItem header>
+                              Signed in as{" "}
+                              <b className="text-white"></b>
+                            </DropdownItem>
+                            <DropdownItem divider />
+                            <DropdownItem tag={Link} to="/settings">
+                              Your Profile
+                            </DropdownItem>
+                            <DropdownItem divider />
+                            <DropdownItem tag={Link} to="/settings">
+                              <i className="fa fa-cog" /> Settings
+                            </DropdownItem>
+                            <DropdownItem
+                              onClick={this.logoutFunction}
+                              tag={Link}
+                              to="/home"
+                            >
+                              <i className="fas fa-sign-out-alt" /> Logout
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                  </Dropdown>
                   <Dropdown
                     isOpen={this.state.dropdownOpen}
                     toggle={this.dropdownToggle}
@@ -101,7 +145,7 @@ export default class NavBar extends React.Component {
                           <DropdownToggle nav caret key={i}>
                             <img
                               src={user.avatar}
-                              className="rounded"
+                              className="img-rounded"
                               height="30"
                               alt="user-name"
                             />
