@@ -15,6 +15,8 @@ import { getLogout } from './api/BeAPI';
 
 import { projects } from './database/projects';
 // import { LoginProvider } from './techComponents/LoginProvider';
+// const { Provider, Consumer } = React.createContext();
+import { Provider } from './techComponents/Context';
 
 class App extends Component {
   constructor(props) {
@@ -46,6 +48,11 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Provider value={{
+              isLog: true,
+              login: () => this.isLog = !this.isLog,
+              logout: () => this.isLog = !this.isLog
+            }}>
         <Helmet
           onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}>
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
@@ -55,10 +62,9 @@ class App extends Component {
             <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/>
             &nbsp;
             <Switch>
-        {/* <LoginProvider {...this.props}> */}
               <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />
-              <Route isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction} path="/login" component={Login} />
+                  <Route path="/login" component={Login} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
@@ -70,11 +76,11 @@ class App extends Component {
                 key={i}/>
               )}
               <Route component={Home}/>
-        {/* </LoginProvider> */}
             </Switch>
             {/* <BottomView/> */}
           </div>
         </Router>
+              </Provider>
       </div>
     );
   }

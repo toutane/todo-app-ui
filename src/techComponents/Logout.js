@@ -4,18 +4,18 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import { getLogout } from '../api/BeAPI' 
+import { getLogout } from '../api/BeAPI'
 
 class Logout extends React.Component {
   constructor(props) {
     super(props);
-    this.logoutFunction = this.logoutFunction.bind(this);  
+    this.logoutFunction = this.logoutFunction.bind(this);
   }
 
 
   logoutFunction() {
     getLogout()
-    .then(response => this.props.history.push("/home"))
+      .then(response => this.props.history.push("/home"))
   }
 
   render() {
@@ -23,7 +23,7 @@ class Logout extends React.Component {
       <div>
         <ButtonGroup>
           <Button tag={Link} to="/"><i className="fas fa-home"></i></Button>
-          &nbsp;&nbsp;&nbsp;<Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button>        
+          &nbsp;&nbsp;&nbsp;<Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button>
         </ButtonGroup>
       </div>
     );

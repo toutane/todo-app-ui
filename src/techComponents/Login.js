@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { postLogin } from "../api/BeAPI";
-import { LoginLogout } from './LoginProvider';
+// import { LoginLogout } from './LoginProvider';
+// const { Consumer } = React.createContext();
+import { Consumer } from './Context';
+
 
 
 export default class Login extends React.Component {
@@ -25,7 +28,7 @@ export default class Login extends React.Component {
   usernameInputFunction(input) {
     this.setState({
       usernameInput: input.target.value
-    },
+    }
     // console.log(this.state.usernameInput)
   );
   };
@@ -33,7 +36,7 @@ export default class Login extends React.Component {
   passwordInputFunction(input) {
     this.setState({
       passwordInput: input.target.value
-    },
+    }
     // console.log(this.state.passwordInput)
   );
   };
@@ -71,6 +74,9 @@ export default class Login extends React.Component {
                 <Card outline color="primary" className="text-center mb-4">
                 <CardBody>
                   <CardTitle tag="div"><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
+                  <Consumer>
+                    {value => (<span> value: {value.isLog.toString()} </span>)}
+                  </Consumer>
                   <hr className="my-3" />
                   <Form onSubmit={e => this.loginFunction(e)}>
                     <FormGroup>
