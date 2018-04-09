@@ -9,7 +9,7 @@ import Inbox from './views/01-Inbox'
 import Today from './views/02-Today';
 import Activities from './views/03-Activities'
 import Settings from './views/04-Settings';
-import NavBar from './20-NavBar';
+import NavBar from './02-NavBar';
 import BottomView from './03-BottomView';
 import { getLogout } from './api/BeAPI';
 

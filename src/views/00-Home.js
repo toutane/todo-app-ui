@@ -4,7 +4,7 @@ import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   Input, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import NavBar from '../20-NavBar';
+import NavBar from '../02-NavBar';
 import BottomView from '../03-BottomView';
 
 export default class LogOutMenu extends React.Component {
