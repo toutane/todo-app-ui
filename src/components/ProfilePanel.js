@@ -165,7 +165,7 @@ export default class Profile extends React.Component {
                     <CardFooter>
                     <div>
                       <h4><b>{this.state.fullnameInput}</b></h4>
-                      <CardText>
+                      <CardText tag="div">
                         <h5>{this.state.usernameInput}</h5>
                         <small><i className="fa fa-map-marker" /> {this.state.locationInput}</small>
                         <div><small><i className="fa fa-sign-in-alt" /> join the {this.state.joindate}</small></div>

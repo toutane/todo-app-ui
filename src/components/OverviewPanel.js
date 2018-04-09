@@ -82,7 +82,7 @@ export default class Overview extends React.Component {
                         <CardFooter>
                         <div>
                           <h4><b>{user.full_name}</b></h4>
-                          <CardText>
+                          <CardText tag="div">
                             <h5>{user.username}</h5>
                             <small><i className="fa fa-map-marker" /> {user.location}</small>
                             <div><small><i className="fa fa-sign-in-alt" /> join the {user.join_date}</small></div>

@@ -114,9 +114,11 @@ export default class NavBar extends React.Component {
                           </DropdownToggle>
                           <DropdownMenu right>
                             <DropdownItem tag={Link} to="/today">
+                              {/* <i className="fa fa-tasks"/> */}
                               New task
                             </DropdownItem>
                             <DropdownItem tag={Link} to="/today">
+                              {/* <i className="fa fa-list"/> */}
                               New project
                             </DropdownItem>
                           </DropdownMenu>
