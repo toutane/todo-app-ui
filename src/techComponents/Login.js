@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
   CardSubtitle, CardLink, CardImg, FormGroup, Label,
-  InputGroupButton, Input, ButtonGroup, Form } from 'reactstrap';
+  InputGroupButton, Input, ButtonGroup, Form, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
@@ -68,7 +68,8 @@ export default class Login extends React.Component {
           <div className="d-flex justify-content-center">
             <Row>
               <Col>
-                <Card block outline color="primary" className="text-center mb-4">
+                <Card outline color="primary" className="text-center mb-4">
+                <CardBody>
                   <CardTitle><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
                   <hr className="my-3" />
                   <Form onSubmit={e => this.loginFunction(e)}>
@@ -95,6 +96,7 @@ export default class Login extends React.Component {
                       </Button>
                     </div>
                   </Form>
+                  </CardBody>
                 </Card>
                 <p>
                   Don't have an todo account yet?<CardLink tag={Link} to="/signup" className="text-info">

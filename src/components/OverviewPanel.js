@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle, Button, InputGroup, CardFooter,
   FormGroup, Label, InputGroupAddon, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
-  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form
+  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardBody
 } from 'reactstrap';
 import classnames from 'classnames'
 import users from "../database/users"
@@ -52,7 +52,8 @@ export default class Overview extends React.Component {
         <hr className="my-4" />
         <Row>
           <Col>
-          <Card block>
+          <Card>
+          <CardBody>
                   {currentUser.map((user, i) =>
                       <div key={i} className="d-flex justify-content-between align-items-start">
                       <div>
@@ -66,15 +67,18 @@ export default class Overview extends React.Component {
                       </div>
                       {/* <i className="fas fa-edit fa-lg" onClick={this.editTabFunction}/> */}
                     </div>
-                  )}</Card>
+                  )}</CardBody>
+                  </Card>
                   </Col>
                   <Col xs="4">
                     {/* <Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button> */}
-                    <Card block>
+                    <Card>
                     {currentUser.map((user, i) => 
                     <div key={i}>
+                      <CardBody>
                       <CardImg top width="100%" src={user.avatar} alt="Card image cap" />
                         <div>&nbsp;</div>
+                        </CardBody>
                         <CardFooter>
                         <div>
                           <h4><b>{user.full_name}</b></h4>

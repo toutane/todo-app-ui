@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle, Button, InputGroup, CardFooter,
   FormGroup, Label, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
-  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form
+  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardBody
 } from 'reactstrap';
 import classnames from 'classnames'
 import users from "../database/users"
@@ -91,7 +91,8 @@ export default class Profile extends React.Component {
         <hr className="my-4" />
         <Row>
           <Col>
-            <Card block>
+            <Card>
+            <CardBody>
               <Form>
                 <FormGroup>
                   <Label>Name</Label>
@@ -150,14 +151,17 @@ export default class Profile extends React.Component {
                 <Col></Col>
                 <Col></Col>
               </Row>
+              </CardBody>              
             </Card>
             &nbsp;
           </Col>
           <Col xs="4">
-            <Card block>
+            <Card>
                 <div>
+                  <CardBody>
                   <CardImg top width="100%" src={this.state.avatarImg} alt="Card image cap" />
                     <div>&nbsp;</div>
+                  </CardBody>
                     <CardFooter>
                     <div>
                       <h4><b>{this.state.fullnameInput}</b></h4>

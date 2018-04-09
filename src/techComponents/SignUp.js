@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
   CardSubtitle, CardLink, CardImg, FormGroup, Label,
-  InputGroupButton, Input, ButtonGroup } from 'reactstrap';
+  InputGroupButton, Input, ButtonGroup, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import moment from "moment";
 import { InputGroupAddon } from '../utils/InputGroupAddon';
@@ -72,7 +72,8 @@ export default class Signup extends React.Component {
           <div className="d-flex justify-content-center">
             <Row>
               <Col>
-                <Card block outline color="primary" className="text-center mb-4" style={{"width": "335px"}}>
+                <Card outline color="primary" className="text-center mb-4" style={{"width": "335px"}}>
+                <CardBody>                
                   <CardTitle><h4><i className="fas fa-user-circle fa-fw"/> Create your account</h4></CardTitle>
                   <hr className="my-3"/>
                   <FormGroup>
@@ -121,6 +122,7 @@ export default class Signup extends React.Component {
                   <div className="d-flex justify-content-center">
                       <Button color="info" onClick={this.registerFunction}>Create account</Button>                   
                   </div>
+                  </CardBody>
                 </Card>
                 <p>Already have an account with us?<CardLink tag={Link} to="/login" className="text-info"> Login</CardLink> instead.</p>
                 <hr className="my-3"/>

@@ -6,6 +6,7 @@ import {
   ButtonGroup,
   Collapse,
   Card,
+  CardBody,
   FormGroup,
   InputGroup,
   Input,
@@ -43,6 +44,7 @@ class Project extends React.Component {
 
     this.state = {
       userId: "",
+      currentProject: null,
       projectCollapse: false,
       filterCollapse: false,
       trashCollapse: false,
@@ -63,6 +65,7 @@ class Project extends React.Component {
       filtersDropdownList: filtersDropdownList,
       input: "",
       icon: "",
+      color: "",
       search: ""
     };
 
@@ -83,6 +86,7 @@ class Project extends React.Component {
     this.trashModal = this.trashModal.bind(this);
     this.trashModalBis = this.trashModalBis.bind(this);
     this.dropdownFiltersToggle = this.dropdownFiltersToggle.bind(this);
+    this.setCurrentProject = this.setCurrentProject.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +95,13 @@ class Project extends React.Component {
         ? this.props.history.push("/login")
         : this.setState({ projects: resProjects })
     );
+  }
+
+  setCurrentProject(project) {
+    // console.log(project)
+    this.setState({
+      currentProject: project
+    })    
   }
 
   projectToggle() {
@@ -126,6 +137,7 @@ class Project extends React.Component {
         },
         () =>
           postProjects({
+            project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
@@ -213,14 +225,15 @@ class Project extends React.Component {
     this.setState({
       dropSelectItem: icon.icon_name,
       dropSelectItemIcon: icon.icon,
-      icon: icon.icon
+      icon: icon.icon, 
+      color: icon.icon_color
     });
   }
 
   onAddProjectSelected(project) {
     this.setState({
       dropSelectProject: project.project_name,
-      dropSelectItemIcon: project.project_icon
+      dropSelectItemIcon: project.project_icon,
     });
   }
 
@@ -313,7 +326,8 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.projectCollapse}>
             &nbsp;
-            <Card block outline color="info">
+            <Card outline color="info">
+            <CardBody>            
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon>
@@ -356,6 +370,7 @@ class Project extends React.Component {
                   &nbsp;You must enter a project name !
                 </p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
 
@@ -363,7 +378,8 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.filterCollapse}>
             &nbsp;
-            <Card block outline color="success">
+            <Card outline color="success">
+            <CardBody>
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">
@@ -427,6 +443,7 @@ class Project extends React.Component {
                   &nbsp;You can't add twice the same project !
                 </p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
 
@@ -434,7 +451,8 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.trashCollapse}>
             &nbsp;
-            <Card block outline color="danger">
+            <Card outline color="danger">
+            <CardBody>            
               <ButtonGroup>
                 <ButtonDropdown
                   isOpen={this.state.dropdownDeleteProjectOpen}
@@ -490,6 +508,7 @@ class Project extends React.Component {
                 <hr/>
                 <p className="text-danger">&nbsp;You must select a project !</p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
         </div>
@@ -511,9 +530,7 @@ class Project extends React.Component {
             <ListGroup>
               {filteredProjects.map((project, i) => (
                 <ListGroupItem
-                  tag={Link}
-                  to={project.project_url}
-                  // action={this.state.advancedProjectOptionsFunction}
+                  onClick={() => this.setCurrentProject(project)}
                   action
                   key={i}
                 >

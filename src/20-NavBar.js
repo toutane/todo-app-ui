@@ -88,9 +88,9 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar className="navbar-dark bg-dark" toggleable>
+        <Navbar className="navbar-dark bg-dark" expand="md">
           <Container>
-            <NavbarToggler right onClick={this.toggle} />
+            <NavbarToggler onClick={this.toggle} />
             <NavbarBrand tag={Link} to="/home">
               <i className="far fa-clipboard fa-lg" />&nbsp; to do-<span className="text-primary">
                 app
@@ -101,7 +101,7 @@ export default class NavBar extends React.Component {
                 <Nav className="ml-auto" navbar>
                   <NavItem>
                     <NavLink tag={Link} to="/settings">
-                      <i className="far fa-bell fa-lg mt-2" />
+                      <i className="far fa-bell fa-lg mt-1" />
                     </NavLink>
                   </NavItem>
                   <Dropdown
@@ -110,27 +110,14 @@ export default class NavBar extends React.Component {
                   >
                         <UncontrolledDropdown nav inNavbar>
                           <DropdownToggle nav caret>
-                            <i className="fa fa-plus fa-lg mt-2" />  
+                            <i className="fa fa-plus fa-lg mt-1" />  
                           </DropdownToggle>
                           <DropdownMenu right>
-                            <DropdownItem header>
-                              Signed in as{" "}
-                              <b className="text-white"></b>
+                            <DropdownItem tag={Link} to="/today">
+                              New task
                             </DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem tag={Link} to="/settings">
-                              Your Profile
-                            </DropdownItem>
-                            <DropdownItem divider />
-                            <DropdownItem tag={Link} to="/settings">
-                              <i className="fa fa-cog" /> Settings
-                            </DropdownItem>
-                            <DropdownItem
-                              onClick={this.logoutFunction}
-                              tag={Link}
-                              to="/home"
-                            >
-                              <i className="fas fa-sign-out-alt" /> Logout
+                            <DropdownItem tag={Link} to="/today">
+                              New project
                             </DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
@@ -146,7 +133,7 @@ export default class NavBar extends React.Component {
                             <img
                               src={user.avatar}
                               className="img-rounded"
-                              height="30"
+                              height="26"
                               alt="user-name"
                             />
                           </DropdownToggle>
