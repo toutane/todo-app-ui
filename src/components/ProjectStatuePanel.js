@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   CardTitle, Card, CardText,
-  Row, Col
+  Row, Col, CardBody
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -25,14 +25,16 @@ class ProjectStatue extends React.Component {
         <Row>
           <Col>
           &nbsp;
-            <Card block>
+            <Card>
+            <CardBody>
               <div>
                 <CardTitle>Signed as <b>Charles Antoine LEGER</b></CardTitle>
                 <div><hr className="my-3" /></div>
                 <CardText>
                   <b>Charles-Antoine LEGER</b> Hello
-                      </CardText>
+                </CardText>
               </div>
+              </CardBody>              
             </Card>
           </Col>
           <Col xs="4"></Col>

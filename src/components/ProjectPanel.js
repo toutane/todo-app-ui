@@ -6,9 +6,9 @@ import {
   ButtonGroup,
   Collapse,
   Card,
+  CardBody,
   FormGroup,
   InputGroup,
-  InputGroupAddon,
   Input,
   Label,
   Dropdown,
@@ -26,6 +26,7 @@ import {
   Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { InputGroupAddon } from '../utils/InputGroupAddon';
 // import shortid from "shortid-36";
 
 import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
@@ -43,6 +44,7 @@ class Project extends React.Component {
 
     this.state = {
       userId: "",
+      currentProject: null,
       projectCollapse: false,
       filterCollapse: false,
       trashCollapse: false,
@@ -63,6 +65,7 @@ class Project extends React.Component {
       filtersDropdownList: filtersDropdownList,
       input: "",
       icon: "",
+      color: "",
       search: ""
     };
 
@@ -83,6 +86,7 @@ class Project extends React.Component {
     this.trashModal = this.trashModal.bind(this);
     this.trashModalBis = this.trashModalBis.bind(this);
     this.dropdownFiltersToggle = this.dropdownFiltersToggle.bind(this);
+    this.setCurrentProject = this.setCurrentProject.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +95,13 @@ class Project extends React.Component {
         ? this.props.history.push("/login")
         : this.setState({ projects: resProjects })
     );
+  }
+
+  setCurrentProject(project) {
+    // console.log(project)
+    this.setState({
+      currentProject: project
+    })    
   }
 
   projectToggle() {
@@ -126,6 +137,7 @@ class Project extends React.Component {
         },
         () =>
           postProjects({
+            project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
@@ -213,14 +225,15 @@ class Project extends React.Component {
     this.setState({
       dropSelectItem: icon.icon_name,
       dropSelectItemIcon: icon.icon,
-      icon: icon.icon
+      icon: icon.icon, 
+      color: icon.icon_color
     });
   }
 
   onAddProjectSelected(project) {
     this.setState({
       dropSelectProject: project.project_name,
-      dropSelectItemIcon: project.project_icon
+      dropSelectItemIcon: project.project_icon,
     });
   }
 
@@ -298,13 +311,13 @@ class Project extends React.Component {
 
         <ButtonGroup>
           <Button color="info" onClick={this.projectToggle}>
-            <i className="fa fa-plus" />&nbsp;Add a project
+            <i className="fa fa-plus fa-fw" />&nbsp;Add a project
           </Button>
           &nbsp;&nbsp;&nbsp;<Button outline color="primary" onClick={this.filterToggle}>
-            <i className="fa fa-filter" />
+            <i className="fa fa-filter fa-fw" />
           </Button>
           <Button outline color="primary" onClick={this.trashToggle}>
-            <i className="fa fa-trash" />
+            <i className="fa fa-trash fa-fw" />
           </Button>
         </ButtonGroup>
 
@@ -313,7 +326,8 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.projectCollapse}>
             &nbsp;
-            <Card block outline color="info">
+            <Card outline color="info">
+            <CardBody>            
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon>
@@ -331,7 +345,7 @@ class Project extends React.Component {
                   isOpen={this.state.dropdownAddProjectOpen}
                   toggle={this.dropdownAddProjectToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="info">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectItem}
                   </DropdownToggle>
@@ -356,6 +370,7 @@ class Project extends React.Component {
                   &nbsp;You must enter a project name !
                 </p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
 
@@ -363,10 +378,11 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.filterCollapse}>
             &nbsp;
-            <Card block outline color="success">
+            <Card outline color="success">
+            <CardBody>
               <FormGroup>
                 <InputGroup>
-                  <InputGroupAddon>
+                  <InputGroupAddon addonType="prepend">
                     <i className="fa fa-search fa-fw" />
                   </InputGroupAddon>
                   <Input
@@ -397,7 +413,7 @@ class Project extends React.Component {
                   isOpen={this.state.dropdownFilterOpen}
                   toggle={this.dropdownFiltersToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="success">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectFilter}
                   </DropdownToggle>
@@ -427,6 +443,7 @@ class Project extends React.Component {
                   &nbsp;You can't add twice the same project !
                 </p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
 
@@ -434,13 +451,14 @@ class Project extends React.Component {
 
           <Collapse isOpen={this.state.trashCollapse}>
             &nbsp;
-            <Card block outline color="danger">
+            <Card outline color="danger">
+            <CardBody>            
               <ButtonGroup>
                 <ButtonDropdown
                   isOpen={this.state.dropdownDeleteProjectOpen}
                   toggle={this.dropdownDeleteProjectToggle}
                 >
-                  <DropdownToggle caret outline color="secondary">
+                  <DropdownToggle caret outline color="danger">
                     <i className={this.state.dropSelectItemIcon} />{" "}
                     {this.state.dropSelectProject}
                   </DropdownToggle>
@@ -490,6 +508,7 @@ class Project extends React.Component {
                 <hr/>
                 <p className="text-danger">&nbsp;You must select a project !</p>
               </Collapse>
+              </CardBody>              
             </Card>
           </Collapse>
         </div>
@@ -511,9 +530,7 @@ class Project extends React.Component {
             <ListGroup>
               {filteredProjects.map((project, i) => (
                 <ListGroupItem
-                  tag={Link}
-                  to={project.project_url}
-                  // action={this.state.advancedProjectOptionsFunction}
+                  onClick={() => this.setCurrentProject(project)}
                   action
                   key={i}
                 >

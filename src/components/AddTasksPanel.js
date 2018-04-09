@@ -5,6 +5,7 @@ import {
   Card,
   CardTitle,
   CardFooter,
+  CardBody,
   Collapse,
   Row,
   Col,
@@ -24,7 +25,6 @@ import {
   ButtonDropdown,
   CardText,
   Alert,
-  InputGroupAddon,
   InputGroup,
   Popover,
   FormFeedback,
@@ -37,6 +37,8 @@ import moment from "moment";
 import sortBy from "sort-by";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { InputGroupAddon } from '../utils/InputGroupAddon';
+
 
 import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
 
@@ -465,10 +467,10 @@ class TasksPanel extends React.Component {
             outline color="primary"
             onClick={this.moreInformationFunction1}
           >
-            <i className="fas fa-ellipsis-v " />
+            <i className="fas fa-ellipsis-v fa-fw" />
           </Button>
           <Button outline color="primary" onClick={null}>
-            <i className="fa fa-trash" />
+            <i className="fa fa-trash fa-fw" />
           </Button>
         </ButtonGroup>
         {/* <ProjectStatue/> */}
@@ -511,7 +513,8 @@ class TasksPanel extends React.Component {
             <Form>
               <Collapse isOpen={this.state.advancedOptionsCollapse}>
                 &nbsp;
-                <Card block outline color="info">
+                <Card outline color="info">
+                <CardBody>
                   <Row>
                     <Col xs="6" sm="4">
                       <ButtonDropdown
@@ -575,11 +578,13 @@ class TasksPanel extends React.Component {
                       </ButtonDropdown>
                     </Col>
                   </Row>
+                  </CardBody>
                 </Card>
               </Collapse>
               <Collapse isOpen={this.state.personalizationCollapse}>
                 &nbsp;
-                <Card block outline color="success">
+                <Card outline color="success">
+                <CardBody>
                   <Row>
                     <Col />
                     <Col>
@@ -628,6 +633,7 @@ class TasksPanel extends React.Component {
                     </Col>
                     <Col />
                   </Row>
+                  </CardBody>
                 </Card>
               </Collapse>
             </Form>
@@ -668,7 +674,8 @@ class TasksPanel extends React.Component {
           )
           .map((tasks, i) => (
             <div key={i}>
-              <Card block color={tasks.tasks_card_color}>
+              <Card color={tasks.tasks_card_color}>
+              <CardBody>
                 <div className="d-flex justify-content-between align-items-start">
                   <div>
                     <CardTitle>
@@ -678,7 +685,7 @@ class TasksPanel extends React.Component {
                         }
                       </div>
                     </CardTitle>
-                    <CardText onClick={() => this.moreInformationFunction(i)}>
+                    <CardText onClick={() => this.moreInformationFunction(i)} tag="div">
                       <i className="fas fa-ellipsis-v fa-sm text-info" />&nbsp;&nbsp;{
                         tasks.tasks_description
                       }&nbsp;
@@ -689,8 +696,8 @@ class TasksPanel extends React.Component {
                           this.state.allActiveTasks
                         }
                       >
-                        <hr className="my-2" />
-                        <h6>
+                        <hr className="my-2"/>
+                        <h6 >
                           {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
                             className={tasks.tasks_project_icon}
                           />&nbsp;{tasks.tasks_project_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
@@ -738,6 +745,7 @@ class TasksPanel extends React.Component {
                     )}
                   </ButtonGroup>
                 </div>
+                </CardBody>
               </Card>
               <div>&nbsp;</div>
             </div>

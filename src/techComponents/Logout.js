@@ -15,7 +15,7 @@ class Logout extends React.Component {
 
   logoutFunction() {
     getLogout()
-    .then(response => this.props.history.push("/"))
+    .then(response => this.props.history.push("/home"))
   }
 
   render() {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
-  Input } from 'reactstrap';
+  Input, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-import NavBar from '../20-NavBar';
+import NavBar from '../02-NavBar';
+import BottomView from '../03-BottomView';
 
 export default class LogOutMenu extends React.Component {
   render() {
@@ -52,21 +53,26 @@ export default class LogOutMenu extends React.Component {
         {/* <Container>
           <Row>
             <Col sm="6">
-              <Card block outline color="primary" className="text-center mb-4">
+              <Card outline color="primary" className="text-center mb-4">
+              <CardBody>              
                 <CardTitle><i className="fab fa-github"/> Support me!</CardTitle>
                 <CardText>Support me on GitHub to help me to do this app!</CardText>
                 <Button outline color="primary"href="https://github.com/toutane" >View my GitHub!</Button>
+              </CardBody>
               </Card>
             </Col>
             <Col sm="6">
-              <Card block outline color="danger" className="text-center">
+              <Card outline color="danger" className="text-center">
+              <CardBody>              
                 <CardTitle><i className="fas fa-magic"/> Change the theme!</CardTitle>
                 <CardText>Change the theme of your app easily and create own!</CardText>
                 <Button outline color="danger" tag={Link} to="/settings">Change theme!</Button>
+              </CardBody>
               </Card>
             </Col>
           </Row>
         </Container> */}
+        <BottomView/>
       </div>
     );
   }
