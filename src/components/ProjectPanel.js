@@ -45,6 +45,7 @@ class Project extends React.Component {
     this.state = {
       userId: "",
       currentProject: null,
+      spinner: false,
       projectCollapse: false,
       filterCollapse: false,
       trashCollapse: false,
@@ -87,14 +88,25 @@ class Project extends React.Component {
     this.trashModalBis = this.trashModalBis.bind(this);
     this.dropdownFiltersToggle = this.dropdownFiltersToggle.bind(this);
     this.setCurrentProject = this.setCurrentProject.bind(this);
+    this.getAllProject = this.getAllProject.bind(this);
   }
 
   componentDidMount() {
-    getProjects().then(resProjects =>
+    this.getAllProject()
+  }
+
+  getAllProject() {
+    this.setState({
+      spinner: true
+    },
+    () => getProjects().then(resProjects =>
       resProjects.error
         ? this.props.history.push("/login")
-        : this.setState({ projects: resProjects })
-    );
+        : this.setState({ 
+          projects: resProjects,
+          spinner: false
+        })
+    ))
   }
 
   setCurrentProject(project) {
@@ -313,8 +325,10 @@ class Project extends React.Component {
           <Button color="info" onClick={this.projectToggle}>
             <i className="fa fa-plus fa-fw" />&nbsp;Add a project
           </Button>
-          &nbsp;&nbsp;&nbsp;<Button outline color="primary" onClick={this.filterToggle}>
-            <i className="fa fa-filter fa-fw" />
+          &nbsp;&nbsp;&nbsp;<Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
+          {this.state.spinner
+            ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
+            : (<i className="fa fa-filter fa-fw"/>)}    
           </Button>
           <Button outline color="primary" onClick={this.trashToggle}>
             <i className="fa fa-trash fa-fw" />
@@ -518,7 +532,7 @@ class Project extends React.Component {
         {/* Project list */}
 
           {
-            filteredProjects.length === 0
+            filteredProjects.length === 0 && this.state.spinner === false
             ? (<Alert color="info">
             <h4 className="alert-heading">No project!</h4>
             <hr/>

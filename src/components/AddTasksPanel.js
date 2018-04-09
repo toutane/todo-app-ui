@@ -464,10 +464,11 @@ class TasksPanel extends React.Component {
             <i className="fa fa-plus" />&nbsp;Add a tasks
           </Button>
           &nbsp;&nbsp;&nbsp;<Button
-            outline color="primary"
+            outline={!this.state.spinner} color="primary"
             onClick={this.moreInformationFunction1}
-          >
-            <i className="fas fa-ellipsis-v fa-fw" />
+          > {this.state.spinner
+            ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
+            : (<i className="fas fa-ellipsis-v fa-fw" />)}    
           </Button>
           <Button outline color="primary" onClick={null}>
             <i className="fa fa-trash fa-fw" />
@@ -650,7 +651,7 @@ class TasksPanel extends React.Component {
         {/* Test map tasks */}
         <hr className="my-3" />&nbsp;
         {
-          filteredTasks.length === 0
+          filteredTasks.length === 0 && this.state.spinner === false
           ? (<Alert color="info">
             <h4 className="alert-heading">You have finished your day!</h4>
             <p>
@@ -664,7 +665,7 @@ class TasksPanel extends React.Component {
           : (<div></div>) 
         }
         {(this.state.spinner)
-          ? (<div className="d-flex justify-content-center"><i className="fas fa-sync fa-spin fa-7x"></i></div>)
+          ? (<div></div>)
           : (filteredTasks.sort(
             sortBy(
               "tasks_title",
