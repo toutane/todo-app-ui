@@ -80,8 +80,8 @@ export default class NavBar extends React.Component {
     });
   }
 
-  toggle() {
-    this.setState2({
+  toggle2() {
+    this.setState({
       isOpen2: !this.state.isOpen2
     });
   }
