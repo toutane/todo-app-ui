@@ -70,7 +70,7 @@ export default class Login extends React.Component {
               <Col>
                 <Card outline color="primary" className="text-center mb-4">
                 <CardBody>
-                  <CardTitle><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
+                  <CardTitle tag="div"><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
                   <hr className="my-3" />
                   <Form onSubmit={e => this.loginFunction(e)}>
                     <FormGroup>

@@ -74,7 +74,7 @@ export default class Signup extends React.Component {
               <Col>
                 <Card outline color="primary" className="text-center mb-4" style={{"width": "335px"}}>
                 <CardBody>                
-                  <CardTitle><h4><i className="fas fa-user-circle fa-fw"/> Create your account</h4></CardTitle>
+                  <CardTitle tag="div"><h4><i className="fas fa-user-circle fa-fw"/> Create your account</h4></CardTitle>
                   <hr className="my-3"/>
                   <FormGroup>
                     <InputGroup >
