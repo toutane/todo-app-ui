@@ -1,5 +1,6 @@
 // Readable fetchs API
 const api = "http://localhost:3001";
+// const api = "http://192.168.1.47:3001";
 
 // fetch authentication
 
