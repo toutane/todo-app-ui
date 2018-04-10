@@ -22,7 +22,7 @@ export default class ProjectLineChart extends React.Component {
           <Line type="monotone" dataKey="tasks" stroke="#f0ad4e" dot={false}/>
         </LineChart>
         <Fade>
-          <span className="lead text-muted" style={{"fontSize":"14px"}}><i className="fas fa-tasks fa-fw mr-1 mt-3"/>tasks activity</span>          
+          <a href="/activities" className="lead text-muted" style={{"fontSize":"14px"}}><i className="fas fa-tasks fa-fw mr-1 mt-3"/>tasks activity</a>          
         </Fade>
       </div>
           );
