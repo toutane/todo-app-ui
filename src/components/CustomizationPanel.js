@@ -8,19 +8,19 @@ const themes = [
   {
     "theme_name":"Superhero",
     "theme_icon":"fab fa-superpowers fa-fw",
-    "theme_repertory":"./themes/superhero-theme.min.css",
+    "theme_repertory":"./themes/superhero-4.1.0.min.css",
     "theme_img":"https://bootswatch.com/superhero/thumbnail.png"
   },
   {
     "theme_name":"Darkly",
     "theme_icon":"fa fa-user-secret fa-fw",
-    "theme_repertory":"./themes/darkly-theme.min.css",
+    "theme_repertory":"./themes/darkly-4.1.0.min.css",
     "theme_img":"https://bootswatch.com/darkly/thumbnail.png"
   },
   {
     "theme_name":"Flaty",
     "theme_icon":"fa fa-eye fa-fw",
-    "theme_repertory":"./themes/flaty-theme.min.css",
+    "theme_repertory":"./themes/flaty-4.1.0.min.css",
     "theme_img":"https://bootswatch.com/flatly/thumbnail.png"
   },
   // {

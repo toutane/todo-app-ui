@@ -20,7 +20,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: "./themes/superhero-new.min.css",
+      theme: "./themes/superhero-4.1.0.min.css",
       user: "",
       isLogged: false,
     };
