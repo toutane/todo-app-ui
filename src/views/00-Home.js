@@ -49,10 +49,10 @@ export default class Home extends React.Component {
         <Container fluid>
           {
             this.state.isLogged
-            ? (this.state.currentUser.map((user, i) => <Jumbotron key={i} className="text-center">
+            ? (this.state.currentUser.map((user, i) => <div key={i}>
+            <Jumbotron className="text-center">
             <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{user.username}</span></h1>
             <span className="lead text-info">{user.full_name}<i className="ml-2 text-muted fas fa-chart-line fa-xs" onClick={() => this.setState({activityView: !this.state.activityView})}/></span> 
-            {/* <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p> */}
             <Collapse isOpen={this.state.activityView}>
               <hr className="my-3 pb-3"/>
               <div className="d-flex justify-content-center">
@@ -68,7 +68,30 @@ export default class Home extends React.Component {
                 &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="info"><i className="far fa-calendar fa-fw mr-1"/>Today</Button>                
               </ButtonGroup>
             </div>
-          </Jumbotron>))
+          </Jumbotron>
+          &nbsp;
+              <Container>
+                <Row>
+                  <Col sm="6">
+                    <Card outline color="warning" className="text-center">
+                    <CardBody>              
+                      <CardTitle><i className="fas fa-magic"/> Change the theme</CardTitle>
+                      <CardText>Change the theme of your app easily and create own</CardText>
+                      <Button outline color="warning" tag={Link} to="/settings">Change theme</Button>
+                    </CardBody>
+                    </Card>
+                  </Col>
+                  <Col sm="6">
+                    <Card outline color="success" className="text-center mb-4">
+                    <CardBody>              
+                      <CardTitle><i className="fas fa-chart-line"/> Activity</CardTitle>
+                      <CardText>Observe your daily activity thanks to a system of follow-up</CardText>
+                      <Button outline color="success" tag={Link} to="/activities">Activity</Button>
+                    </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Container></div>))
             : (<Jumbotron className="text-center">
             <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-primary">app</span></h1>
             <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
@@ -107,28 +130,6 @@ export default class Home extends React.Component {
           }
         </Container>
         &nbsp;
-        {/* <Container>
-          <Row>
-            <Col sm="6">
-              <Card outline color="primary" className="text-center mb-4">
-              <CardBody>              
-                <CardTitle><i className="fab fa-github"/> Support me!</CardTitle>
-                <CardText>Support me on GitHub to help me to do this app!</CardText>
-                <Button outline color="primary"href="https://github.com/toutane" >View my GitHub!</Button>
-              </CardBody>
-              </Card>
-            </Col>
-            <Col sm="6">
-              <Card outline color="danger" className="text-center">
-              <CardBody>              
-                <CardTitle><i className="fas fa-magic"/> Change the theme!</CardTitle>
-                <CardText>Change the theme of your app easily and create own!</CardText>
-                <Button outline color="danger" tag={Link} to="/settings">Change theme!</Button>
-              </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container> */}
         <BottomView/>
       </div>
     );
