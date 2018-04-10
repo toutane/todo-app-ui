@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import { postLogin } from "../api/BeAPI";
-// import { LoginLogout } from './LoginProvider';
+import { LogContext } from './LoginProvider';
 // const { Consumer } = React.createContext();
-import { Consumer } from './Context';
+// import { Consumer } from './Context';
 
 
 
@@ -18,7 +18,9 @@ export default class Login extends React.Component {
 
     this.state = {
       usernameInput: "",
-      passwordInput: ""
+      passwordInput: "",
+      isLogged: false,
+      user: "personne-not-logged",
     };
 
     this.loginFunction = this.loginFunction.bind(this);
@@ -49,9 +51,12 @@ export default class Login extends React.Component {
          username: this.state.usernameInput,
          password: this.state.passwordInput
         }).then(response =>
-          { response.error
-            ? console.log(response.message)
-            : this.props.history.push("/home")
+          { if (response.error) {
+            console.log(response.message)
+          } else {
+            this.setState({ isLogged: true, user: response.user || ''});
+            this.props.history.push("/home");
+          }
           }
         )
       );
@@ -62,6 +67,9 @@ export default class Login extends React.Component {
 
   render() {
     return <div>
+
+        <LogContext logMe={this.state.isLogged} user={this.state.user} > </LogContext>
+
         <Container>
           <div className="my-5" />
           <div className="d-flex justify-content-center">
@@ -71,10 +79,7 @@ export default class Login extends React.Component {
                 <CardBody>
                   <CardTitle tag="div"><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
                   <hr className="my-3" />
-                  <Consumer>
-                  {value => (
                     <Form onSubmit={e => this.loginFunction(e)}>
-                    <span> value: {value.isLog.toString()} </span>
                     <FormGroup>
                       <InputGroup>
                         <InputGroupAddon>
@@ -93,13 +98,11 @@ export default class Login extends React.Component {
                     </FormGroup>
                     <hr className="my-2" />
                     <div className="d-flex justify-content-center">
-                      <Button color="info" onClick={()=> value.login()} type="submit">
+                      <Button color="info" type="submit">
                         Login
                       </Button>
                     </div>
                   </Form>
-                  )}
-                  </Consumer>
                   </CardBody>
                 </Card>
                 <p>

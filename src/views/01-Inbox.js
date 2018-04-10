@@ -9,6 +9,8 @@ import moment from 'moment';
 
 import ProjectPanel from '../components/ProjectPanel'
 import Menu from '../10.3-Menu';
+import { LogContext } from '../techComponents/LoginProvider';
+
 
 export default class Inbox extends React.Component {
   constructor(props) {
@@ -36,9 +38,10 @@ export default class Inbox extends React.Component {
       popoverOpen: !this.state.popoverOpen
     });
   }
-  
+
   render() {
     return (
+      <LogContext testIsLogged="login">
       <div>
         &nbsp;
       <Container>
@@ -84,6 +87,8 @@ export default class Inbox extends React.Component {
           </Row>
         </Container>
       </div>
+      </LogContext>
+
     );
   };
 };

@@ -14,32 +14,32 @@ import BottomView from './03-BottomView';
 import { getLogout } from './api/BeAPI';
 
 import { projects } from './database/projects';
-// import { LoginProvider } from './techComponents/LoginProvider';
+import { LogProvider, LogContext } from './techComponents/LoginProvider';
 // const { Provider, Consumer } = React.createContext();
-import { Provider } from './techComponents/Context';
+// import { Provider } from './techComponents/Context';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       theme: "./themes/superhero-new.min.css",
-      user: "",
-      isLogged: false,
+      // user: "",
+      // isLogged: false,
     };
     this.onChangeTheme = this.onChangeTheme.bind(this);
-    this.loginFunction = this.loginFunction.bind(this);
-    this.logoutFunction = this.logoutFunction.bind(this);
+    // this.loginFunction = this.loginFunction.bind(this);
+    // this.logoutFunction = this.logoutFunction.bind(this);
   }
-  loginFunction() {
-    this.setState({ isLogged: true });
-  }
-  logoutFunction() {
-    getLogout()
-    .then(response => {
-      this.setState({ isLogged: false });
-      // this.props.history.push("/home");
-    })
-  }
+  // loginFunction() {
+  //   this.setState({ isLogged: true });
+  // }
+  // logoutFunction() {
+  //   getLogout()
+  //   .then(response => {
+  //     this.setState({ isLogged: false });
+  //     // this.props.history.push("/home");
+  //   })
+  // }
   onChangeTheme(newTheme) {
     this.setState({
       theme: newTheme
@@ -47,24 +47,27 @@ class App extends Component {
   }
   render() {
     return (
+      <LogProvider>
       <div>
-        <Provider value={{
-              isLog: true,
-              login: function() { return this.isLog = !this.isLog },
-              logout: () => this.isLog = !this.isLog
-            }}>
         <Helmet
           onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}>
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
         </Helmet>
         <Router>
           <div>
-            <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/>
+            {/* <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/> */}
+          <LogContext testIsLogged="login">
+            <NavBar />
+          </LogContext>
             &nbsp;
+              {/* <Route component={LogProvider}/> */}
             <Switch>
+
+
               <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />
-                  <Route path="/login" component={Login} />
+              <Route path="/login" component={Login} />
+            {/* <LogContext testIsLogged="login"> */}
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
@@ -76,12 +79,13 @@ class App extends Component {
                 key={i}/>
               )}
               <Route component={Home}/>
+              {/* </LogContext> */}
             </Switch>
             {/* <BottomView/> */}
           </div>
         </Router>
-              </Provider>
       </div>
+      </LogProvider>
     );
   }
 }

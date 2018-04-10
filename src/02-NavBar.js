@@ -25,6 +25,8 @@ import { Link } from "react-router-dom";
 import { getLogout, getUser } from "./api/BeAPI";
 
 import users from "./database/users.js";
+import { LogOff } from './techComponents/LoginProvider';
+
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -38,7 +40,7 @@ export default class NavBar extends React.Component {
       isOpen2: false
     };
     this.dropdownToggle = this.dropdownToggle.bind(this);
-    this.dropdownToggle2 = this.dropdownToggle2.bind(this);    
+    this.dropdownToggle2 = this.dropdownToggle2.bind(this);
     this.logoutFunction = this.logoutFunction.bind(this);
 
     this.stateDropdown = {
@@ -88,6 +90,10 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
+
+        <LogOff logOff={!this.state.isLogged} > </LogOff>
+
+
         <Navbar className="navbar-dark bg-dark" expand="md">
           <Container>
             <NavbarToggler onClick={this.toggle} />
@@ -96,8 +102,10 @@ export default class NavBar extends React.Component {
                 app
               </span>
             </NavbarBrand>
-            {this.state.isLogged
-            ? (<Collapse isOpen={this.state.isOpen} navbar>
+
+            {this.props.isLogged
+            ? (
+            <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <NavItem>
                     <NavLink tag={Link} to="/settings">
@@ -110,7 +118,7 @@ export default class NavBar extends React.Component {
                   >
                         <UncontrolledDropdown nav inNavbar>
                           <DropdownToggle nav caret>
-                            <i className="fa fa-plus fa-lg mt-1" />  
+                            <i className="fa fa-plus fa-lg mt-1" />
                           </DropdownToggle>
                           <DropdownMenu right>
                             <DropdownItem tag={Link} to="/today">
