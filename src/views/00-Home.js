@@ -1,18 +1,24 @@
 import React from 'react';
 import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
-  Input, CardBody } from 'reactstrap';
+  Input, CardBody, Fade, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getLogout, getUser } from "../api/BeAPI";
 
 import NavBar from '../02-NavBar';
+
+import TasksLineChart from '../activity/TasksLineChart';
+import ProjectsLineChart from '../activity/ProjectsLineChart';
+
 import BottomView from '../03-BottomView';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
        isLogged: false,
+       activityView: true,
        currentUser: []
       };
     this.logoutFunction = this.logoutFunction.bind(this)
@@ -36,6 +42,7 @@ export default class Home extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         &nbsp;
@@ -44,12 +51,21 @@ export default class Home extends React.Component {
             this.state.isLogged
             ? (this.state.currentUser.map((user, i) => <Jumbotron key={i} className="text-center">
             <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{user.username}</span></h1>
-            <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
-            &nbsp;<hr className="my-2"/>
-            &nbsp;<div className="d-flex justify-content-center">
+            <span className="lead text-info">{user.full_name}<i className="ml-2 text-muted fas fa-chart-line fa-xs" onClick={() => this.setState({activityView: !this.state.activityView})}/></span> 
+            {/* <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p> */}
+            <Collapse isOpen={this.state.activityView}>
+              <hr className="my-3 pb-3"/>
+              <div className="d-flex justify-content-center">
+                <TasksLineChart/>
+                <div className="ml-5 mr-5"></div>
+                <ProjectsLineChart/>
+              </div>
+            </Collapse>
+            <hr className="my-3 pb-3"/>
+            <div className="d-flex justify-content-center">
               <ButtonGroup>
-                <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+                <Button tag={Link} to="/inbox" outline color="primary">See my current tasks</Button>
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="info"><i className="far fa-calendar fa-fw mr-1"/>Today</Button>                
               </ButtonGroup>
             </div>
           </Jumbotron>))
