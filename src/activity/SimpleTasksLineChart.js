@@ -2,7 +2,7 @@ import React from 'react';
 import { Fade } from 'reactstrap';
 import { LineChart, Line } from 'recharts';
 
-export default class TasksLineChart extends React.Component {
+export default class SimpleProjectLineChart extends React.Component {
 
   render() {
 
