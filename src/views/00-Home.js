@@ -7,8 +7,8 @@ import { getLogout, getUser } from "../api/BeAPI";
 
 import NavBar from '../02-NavBar';
 
-import TasksLineChart from '../activity/TasksLineChart';
-import ProjectsLineChart from '../activity/ProjectsLineChart';
+import SimpleTasksLineChart from '../activity/SimpleTasksLineChart';
+import SimpleProjectsLineChart from '../activity/SimpleProjectsLineChart';
 
 import BottomView from '../03-BottomView';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
@@ -56,9 +56,9 @@ export default class Home extends React.Component {
             <Collapse isOpen={this.state.activityView}>
               <hr className="my-3 pb-3"/>
               <div className="d-flex justify-content-center">
-                <TasksLineChart/>
+                <SimpleTasksLineChart/>
                 <div className="ml-5 mr-5"></div>
-                <ProjectsLineChart/>
+                <SimpleProjectsLineChart/>
               </div>
             </Collapse>
             <hr className="my-3 pb-3"/>

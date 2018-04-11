@@ -27,9 +27,9 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { InputGroupAddon } from '../utils/InputGroupAddon';
-// import shortid from "shortid-36";
-
+import moment from "moment";
 import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
+// import shortid from "shortid-36";
 
 import ProjectStatue from "./ProjectStatuePanel";
 // import { projects as projectsInit } from '../database/projects'
@@ -152,6 +152,7 @@ class Project extends React.Component {
             project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
+            project_date: moment().format("l"),
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
           }).then(x=>x)
           .then(data => {
