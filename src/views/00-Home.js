@@ -12,27 +12,9 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       isLogged: false,
-       currentUser: []
+       isLogged: this.props.isLogged,
+       currentUser: this.props.user,
       };
-    this.logoutFunction = this.logoutFunction.bind(this)
-  }
-
-  componentDidMount() {
-    getUser().then(user =>
-      this.setState({
-        currentUser: user
-      }, user.error === undefined
-          ? (this.setState({isLogged: true}))
-          : (this.setState({isLogged: false}))
-    )
-    );
-  }
-
-  logoutFunction() {
-    getLogout().then(response => this.setState({
-      isLogged: false
-    }));
   }
 
   render() {
@@ -41,18 +23,18 @@ export default class Home extends React.Component {
         &nbsp;
         <Container fluid>
           {
-            this.state.isLogged
-            ? (this.state.currentUser.map((user, i) => <Jumbotron key={i} className="text-center">
-            <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{user.username}</span></h1>
+            this.props.isLogged
+            ? (<Jumbotron className="text-center">
+            <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{this.props.user.username}</span></h1>
             <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
             &nbsp;<hr className="my-2"/>
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
                 <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>
               </ButtonGroup>
             </div>
-          </Jumbotron>))
+          </Jumbotron>)
             : (<Jumbotron className="text-center">
             <h1 className="display-3"><i className="far fa-clipboard fa-sm" />&nbsp;to do-<span className="text-primary">app</span></h1>
             <p className="lead">The app for <span className="text-info">manage</span> your tasks in a moment and <span className="text-info">organize</span> them!</p>
@@ -84,7 +66,7 @@ export default class Home extends React.Component {
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
                 <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>
               </ButtonGroup>
             </div>
           </Jumbotron>)
@@ -95,7 +77,7 @@ export default class Home extends React.Component {
           <Row>
             <Col sm="6">
               <Card outline color="primary" className="text-center mb-4">
-              <CardBody>              
+              <CardBody>
                 <CardTitle><i className="fab fa-github"/> Support me!</CardTitle>
                 <CardText>Support me on GitHub to help me to do this app!</CardText>
                 <Button outline color="primary"href="https://github.com/toutane" >View my GitHub!</Button>
@@ -104,7 +86,7 @@ export default class Home extends React.Component {
             </Col>
             <Col sm="6">
               <Card outline color="danger" className="text-center">
-              <CardBody>              
+              <CardBody>
                 <CardTitle><i className="fas fa-magic"/> Change the theme!</CardTitle>
                 <CardText>Change the theme of your app easily and create own!</CardText>
                 <Button outline color="danger" tag={Link} to="/settings">Change theme!</Button>

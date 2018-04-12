@@ -8,7 +8,7 @@ class LogProv extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: 'aucun-en-vrai 👾',
+      user: {username: 'No Logged'},
       isLogged: false
     }
     this.loginFunction = this.loginFunction.bind(this);
@@ -23,7 +23,7 @@ class LogProv extends Component {
         getUser().then(user =>
           this.setState({
             isLogged: true, user: user[0]
-          }, this.props.history.push("/today"))
+          }, this.props.history.push("/home"))
         );
        }
     })
@@ -32,7 +32,7 @@ class LogProv extends Component {
     getLogout()
     .then(response => {
       // console.log('logout from contexte :', response);
-      this.setState({ isLogged: false }, this.props.history.push("/"));
+      this.setState({ isLogged: false, user: {username: 'No Logged'} }, this.props.history.push("/home"));
     })
   }
   render() {

@@ -44,7 +44,7 @@ class App extends Component {
           </LogContext>
             &nbsp;
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/home" render={(props) => <LogContext><Home {...props}/></LogContext>} />
               <Route path="/signup" component={Signup} />
               <Route path="/login" render={(props) => <LogContext><Login {...props}/></LogContext>} />
               <Route path="/inbox" component={Inbox} />
@@ -62,7 +62,7 @@ class App extends Component {
           </div>
         </LogProvider>
         </Router>
-        
+
       </div>
     );
   }
