@@ -209,7 +209,7 @@ class TasksPanel extends React.Component {
       spinner: true,
     },
     () => getProjects().then((resProjects = []) =>
-    (Object.is(resProjects, {}))
+    (!Object.is(resProjects, {}))
       ? resProjects.map(project =>
           getTasks(project.project_id).then(tasks =>
             this.setState({

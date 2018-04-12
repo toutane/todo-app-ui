@@ -42,7 +42,6 @@ class App extends Component {
           <LogContext>
             <NavBar />
           </LogContext>
-            &nbsp;
             <Switch>
               <Route exact path="/home" render={(props) => <LogContext><Home {...props}/></LogContext>} />
               <Route path="/signup" component={Signup} />

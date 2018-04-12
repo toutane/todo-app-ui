@@ -148,7 +148,9 @@ export default class Settings extends React.Component {
                   &nbsp;
                   {
                     this.state.activeOverview === '1'
-                      ? (<Overview/>)
+                      ? (<LogContext>
+                          <Overview/>
+                        </LogContext>)
                       : (<div></div>)
                   }
                   {
@@ -156,22 +158,24 @@ export default class Settings extends React.Component {
                       ? (<Customization onChangeTheme={this.props.onChangeTheme}/>)
                       : (<div></div>)
                   }
+                  {
+                    this.state.Overview === '3'
+                      ? (<Notifications/>)
+                      : (<div></div>)
+                  }
                 </TabPane>
                 <TabPane tabId="2">
                   &nbsp;
                 {
                   this.state.activePersonnal === '1'
-                    ? (<Profile/>)
+                    ? (<LogContext>
+                        <Profile/>
+                        </LogContext>)
                     : (<div></div>)
                 }
                 {
                   this.state.activePersonnal === '2'
                     ? (<Account/>)
-                    : (<div></div>)
-                }
-                {
-                  this.state.activePersonnal === '3'
-                    ? (<Notifications/>)
                     : (<div></div>)
                 }
                 </TabPane>
