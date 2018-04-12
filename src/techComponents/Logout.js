@@ -3,6 +3,7 @@ import {
   Button, ButtonGroup
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { LogContext } from '../techComponents/LoginProvider';
 
 import { getLogout } from '../api/BeAPI'
 
@@ -23,7 +24,10 @@ class Logout extends React.Component {
       <div>
         <ButtonGroup>
           <Button tag={Link} to="/"><i className="fas fa-home"></i></Button>
-          &nbsp;&nbsp;&nbsp;<Button color="info" onClick={this.logoutFunction}><i className="fas fa-sign-out-alt"></i> Logout</Button>
+
+          &nbsp;&nbsp;&nbsp;
+
+          <Button color="info" onClick={this.props.logoff}><i className="fas fa-sign-out-alt"></i> Logout</Button>
         </ButtonGroup>
       </div>
     );

@@ -49,14 +49,7 @@ export default class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    // getUser().then(user =>
-    //   this.setState({
-    //     currentUser: user
-    //   }, user.error === undefined
-    //       ? (this.setState({isLogged: true}))
-    //       : (this.setState({isLogged: false}))
-    // )
-    // );
+
   }
 
   logoutFunction() {

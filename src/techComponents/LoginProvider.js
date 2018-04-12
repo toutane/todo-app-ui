@@ -21,7 +21,7 @@ export class LogProvider extends Component {
        } else {
         getUser().then(user =>
           this.setState({
-            isLogged: true, user
+            isLogged: true, user: user[0]
           }, user.error === undefined
               ? (this.setState({isLogged: true}))
               : (this.setState({isLogged: false}))
