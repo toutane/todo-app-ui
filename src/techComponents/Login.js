@@ -46,7 +46,8 @@ export default class Login extends React.Component {
   loginFunction(e) {
     e.preventDefault();
     if (this.state.usernameInput !== "") {
-      this.props.login(this.state.usernameInput, this.state.passwordInput)
+      this.props.login(this.state.usernameInput, this.state.passwordInput);
+      // this.props.history.push("/today");
     }
   }
 

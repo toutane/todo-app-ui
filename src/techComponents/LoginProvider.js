@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { getUser, getLogout, postLogin } from '../api/BeAPI'
+import { withRouter } from 'react-router';
 
 const LoginContext = React.createContext();
 
-export class LogProvider extends Component {
+class LogProv extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,25 +18,21 @@ export class LogProvider extends Component {
     console.log('from loginFunction: ', username, password);
     postLogin({ username, password }).then(response => {
       if (response.error) {
-         console.log('error in postLogin response: ', response.message)
+        // console.log('error in postLogin response: ', response.message)
        } else {
         getUser().then(user =>
           this.setState({
             isLogged: true, user: user[0]
-          }, user.error === undefined
-              ? (this.setState({isLogged: true}))
-              : (this.setState({isLogged: false}))
-          )
+          }, this.props.history.push("/today"))
         );
-        //  this.props.history.push("/today");
        }
     })
   }
   logoutFunction() {
     getLogout()
     .then(response => {
-      this.setState({ isLogged: false }, console.log('logout from contexte :', response));
-      // this.props.history.push("/home");
+      // console.log('logout from contexte :', response);
+      this.setState({ isLogged: false }, this.props.history.push("/"));
     })
   }
   render() {
@@ -50,6 +47,8 @@ export class LogProvider extends Component {
     )
   }
 }
+
+export const LogProvider = withRouter(LogProv);
 
 export class LogContext extends Component {
   constructor(props) {

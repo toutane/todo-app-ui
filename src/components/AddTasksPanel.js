@@ -208,16 +208,18 @@ class TasksPanel extends React.Component {
       tasks: [],
       spinner: true,
     },
-    () => getProjects().then(resProjects => 
-      resProjects.map(project => 
-        getTasks(project.project_id).then(tasks =>
-          this.setState({
-            tasks: this.state.tasks.concat(tasks)
-          }, this.setState({
-            spinner: false,
-          }))
+    () => getProjects().then((resProjects = []) =>
+    (Object.is(resProjects, {}))
+      ? resProjects.map(project =>
+          getTasks(project.project_id).then(tasks =>
+            this.setState({
+              tasks: this.state.tasks.concat(tasks)
+            }, this.setState({
+              spinner: false,
+            }))
+          )
         )
-      )))
+      : null ))
   }
 
   canceVisibleButtons() {
@@ -468,7 +470,7 @@ class TasksPanel extends React.Component {
             onClick={this.moreInformationFunction1}
           > {this.state.spinner
             ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
-            : (<i className="fas fa-ellipsis-v fa-fw" />)}    
+            : (<i className="fas fa-ellipsis-v fa-fw" />)}
           </Button>
           <Button outline color="primary" onClick={null}>
             <i className="fa fa-trash fa-fw" />
@@ -662,7 +664,7 @@ class TasksPanel extends React.Component {
               Look in your <a href="/inbox" className="alert-link">box</a> if you have other tasks to do.
             </p>
           </Alert>)
-          : (<div></div>) 
+          : (<div></div>)
         }
         {(this.state.spinner)
           ? (<div></div>)
