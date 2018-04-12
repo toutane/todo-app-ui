@@ -1,25 +1,19 @@
 import React from 'react';
 import { Fade } from 'reactstrap';
 import { LineChart, Line } from 'recharts';
+import { countBy, sortBy } from 'lodash';
+import moment from 'moment';
 
 export default class SimpleProjectLineChart extends React.Component {
 
   render() {
 
-    const projectsActivityData = [
-      {name: 'day 1', projects: 2},
-      {name: 'day 2', projects: 1},
-      {name: 'day 3', projects: 1},
-      {name: 'day 4', projects: 3},
-      {name: 'day 5', projects: 2},
-      {name: 'day 6', projects: 2},
-      {name: 'day 7', projects: 1},
-    ];
+    const projectsActivityData = sortBy(Object.entries(countBy(this.props.projects.map(project => project.project_date))), o => new moment(o[0]).format('YYYY')).map(x=>({name: x[0], nb: x[1] }));
 
     return (
       <div>
-        <LineChart width={180} height={150} data={projectsActivityData}>
-          <Line type="monotone" dataKey="projects" stroke="#5cb85c" dot={false}/>
+        <LineChart width={180} height={130} data={projectsActivityData}>
+          <Line type="monotone" dataKey="nb" stroke="#5cb85c" dot={false}/>
         </LineChart>
         <Fade>
           <a href="/activities" className="lead text-muted" style={{"fontSize":"14px"}}><i className="fa fa-list fa-fw mr-1 mt-3"/>projects activity</a>          

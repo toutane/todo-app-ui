@@ -18,7 +18,7 @@ export default class SimpleProjectLineChart extends React.Component {
 
     return (
       <div>
-        <LineChart width={180} height={150} data={tasksActivityData}>
+        <LineChart width={180} height={130} data={tasksActivityData}>
           <Line type="monotone" dataKey="tasks" stroke="#f0ad4e" dot={false}/>
         </LineChart>
         <Fade>
