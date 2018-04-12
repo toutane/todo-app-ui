@@ -3,7 +3,7 @@ import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
   Input, CardBody, Fade, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { getLogout, getUser } from "../api/BeAPI";
+import { getLogout, getUser, getProjects } from "../api/BeAPI";
 
 import NavBar from '../02-NavBar';
 
@@ -17,9 +17,10 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       isLogged: false,
-       activityView: true,
-       currentUser: []
+      projects: [],
+      isLogged: false,
+      activityView: true,
+      currentUser: []
       };
     this.logoutFunction = this.logoutFunction.bind(this)
   }
@@ -31,8 +32,13 @@ export default class Home extends React.Component {
       }, user.error === undefined
           ? (this.setState({isLogged: true}))
           : (this.setState({isLogged: false}))
-    )
-    );
+    ));
+    getProjects().then(resProjects =>
+      resProjects.error
+        ? this.props.history.push("/login")
+        : this.setState({ 
+          projects: resProjects,
+        }))
   }
 
   logoutFunction() {
@@ -58,7 +64,7 @@ export default class Home extends React.Component {
               <div className="d-flex justify-content-center">
                 <SimpleTasksLineChart/>
                 <div className="ml-5 mr-5"></div>
-                <SimpleProjectsLineChart/>
+                <SimpleProjectsLineChart projects={this.state.projects}/>
               </div>
             </Collapse>
             <hr className="my-3 pb-3"/>

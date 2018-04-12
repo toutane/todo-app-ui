@@ -54,7 +54,8 @@ export default class Signup extends React.Component {
          full_name: this.state.fullnameInput,
          email: this.state.emailInput,
          password: this.state.passwordInput,
-         join_date: moment().format("L")         
+         join_date: moment().format("L"),
+         avatar: 'https://image.flaticon.com/icons/svg/180/180645.svg'         
         })
         .then(data => {
           data.error 
