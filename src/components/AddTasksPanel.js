@@ -316,11 +316,7 @@ class TasksPanel extends React.Component {
         deleteTasks({
           id: index
         }).then(data => {
-          getTasks().then(tasks =>
-            this.setState({
-              tasks: tasks
-            })
-          );
+          this.getAllTasksFromAllProjects();
         })
     );
   }

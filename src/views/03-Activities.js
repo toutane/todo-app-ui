@@ -45,7 +45,7 @@ export default class Activity extends React.Component {
                 <hr className="my-4"/>
               </Col>
               <Col>
-                <h4><i className="fas fa-chart-line fa-fw mr-1"/>Activities -<Badge className="ml-2 mr-2" color="success">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
+                <h4><i className="fas fa-chart-line fa-fw mr-1"/>Activities -<Badge className="ml-2 mr-2" color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
                 <hr className="my-3" />
                 <ButtonGroup className="mb-4">
                   <Button onClick={() => this.setState({tasksCollapse: !this.state.tasksCollapse, projectsCollapse: false, loadAPI: true})}>Tasks</Button>
