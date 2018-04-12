@@ -55,19 +55,14 @@ class App extends Component {
         </Helmet>
         <Router>
           <div>
-            {/* <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/> */}
-          <LogContext testIsLogged="login">
+          <LogContext>
             <NavBar />
           </LogContext>
             &nbsp;
-              {/* <Route component={LogProvider}/> */}
             <Switch>
-
-
               <Route exact path="/" component={Home} />
               <Route path="/signup" component={Signup} />
-              <Route path="/login" component={Login} />
-            {/* <LogContext testIsLogged="login"> */}
+              <Route path="/login" render={(props) => <LogContext><Login {...props}/></LogContext>} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
@@ -79,9 +74,7 @@ class App extends Component {
                 key={i}/>
               )}
               <Route component={Home}/>
-              {/* </LogContext> */}
             </Switch>
-            {/* <BottomView/> */}
           </div>
         </Router>
       </div>

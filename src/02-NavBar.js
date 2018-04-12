@@ -34,8 +34,8 @@ export default class NavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isLogged: false,
-      currentUser: [],
+      isLogged: this.props.isLogged,
+      currentUser: this.props.user,
       isOpen: false,
       isOpen2: false
     };
@@ -49,14 +49,14 @@ export default class NavBar extends React.Component {
   }
 
   componentDidMount() {
-    getUser().then(user =>
-      this.setState({
-        currentUser: user
-      }, user.error === undefined
-          ? (this.setState({isLogged: true}))
-          : (this.setState({isLogged: false}))
-    )
-    );
+    // getUser().then(user =>
+    //   this.setState({
+    //     currentUser: user
+    //   }, user.error === undefined
+    //       ? (this.setState({isLogged: true}))
+    //       : (this.setState({isLogged: false}))
+    // )
+    // );
   }
 
   logoutFunction() {
@@ -90,10 +90,6 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-
-        <LogOff logOff={!this.state.isLogged} > </LogOff>
-
-
         <Navbar className="navbar-dark bg-dark" expand="md">
           <Container>
             <NavbarToggler onClick={this.toggle} />
@@ -136,21 +132,20 @@ export default class NavBar extends React.Component {
                     isOpen={this.state.dropdownOpen}
                     toggle={this.dropdownToggle}
                   >
-                    {this.state.currentUser.map((user, i) => (
-                      <div key={i}>
+                      <div>
                         <UncontrolledDropdown nav inNavbar>
-                          <DropdownToggle nav caret key={i}>
+                          <DropdownToggle nav caret>
                             <img
-                              src={user.avatar}
+                              src={this.props.user.avatar}
                               className="img-rounded"
                               height="26"
                               alt="user-name"
                             />
                           </DropdownToggle>
                           <DropdownMenu right>
-                            <DropdownItem header key={i}>
+                            <DropdownItem header>
                               Signed in as{" "}
-                              <b className="text-white"> {user.username}</b>
+                              <b className="text-white"> {this.props.user.username}</b>
                             </DropdownItem>
                             <DropdownItem divider />
                             <DropdownItem tag={Link} to="/settings">
@@ -161,7 +156,7 @@ export default class NavBar extends React.Component {
                               <i className="fa fa-cog" /> Settings
                             </DropdownItem>
                             <DropdownItem
-                              onClick={this.logoutFunction}
+                              onClick={this.props.logoff}
                               tag={Link}
                               to="/home"
                             >
@@ -170,7 +165,6 @@ export default class NavBar extends React.Component {
                           </DropdownMenu>
                         </UncontrolledDropdown>
                       </div>
-                    ))}
                   </Dropdown>
                 </Nav>
               </Collapse>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getLogout, postLogin } from '../api/BeAPI'
+import { getUser, getLogout, postLogin } from '../api/BeAPI'
 
 const LoginContext = React.createContext();
 
@@ -13,26 +13,28 @@ export class LogProvider extends Component {
     this.loginFunction = this.loginFunction.bind(this);
     this.logoutFunction = this.logoutFunction.bind(this);
   }
-  loginFunction(logMe, user) {
-    console.log('from loginFunction: ',logMe, user);
-    this.setState({ isLogged: logMe, user: user }
-      // this.props.history.push("/home")
-    );
-
-    // postLogin({
-    //   username: this.state.usernameInput,
-    //   password: this.state.passwordInput
-    //  }).then(response =>
-    //    { response.error
-    //      ? console.log(response.message)
-    //      : this.setState({ isLogged: true, user: response[0].username })
-    //    }
-    //  )
+  loginFunction(username, password) {
+    console.log('from loginFunction: ', username, password);
+    postLogin({ username, password }).then(response => {
+      if (response.error) {
+         console.log('error in postLogin response: ', response.message)
+       } else {
+        getUser().then(user =>
+          this.setState({
+            isLogged: true, user
+          }, user.error === undefined
+              ? (this.setState({isLogged: true}))
+              : (this.setState({isLogged: false}))
+          )
+        );
+        //  this.props.history.push("/today");
+       }
+    })
   }
   logoutFunction() {
     getLogout()
     .then(response => {
-      this.setState({ isLogged: false });
+      this.setState({ isLogged: false }, console.log('logout from contexte :', response));
       // this.props.history.push("/home");
     })
   }
@@ -59,45 +61,12 @@ export class LogContext extends Component {
   render() {
     return (
       <LoginContext.Consumer>
-        { (context) => {
-              if (this.props.testIsLogged) {
-                console.log(this.props.testIsLogged);
-                  return React.cloneElement(this.props.children, {
-                    isLogged: context.state.isLogged,
-                    user: context.state.user
-                  })
-              } else if (this.props.logMe && !this.state.alreadyLoggedOnce) {
-                console.log(this.props.logMe, this.props.user);
-                this.setState(
-                  { alreadyLoggedOnce: true },
-                  context.login(this.props.logMe, this.props.user)
-                );
-              }
-          }
-        }
-      </LoginContext.Consumer>
-    )
-  }
-}
-
-export class LogOff extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      alreadyLogOffOnce: false,
-    }
-  }
-  render() {
-    return (
-      <LoginContext.Consumer>
-        { (context) => {
-          if (!this.props.logOff && !this.state.alreadyLoggedOnce) {
-            this.setState(
-              { alreadyLogOffOnce: true },
-                context.logout()
-            );
-          }
-          }
+        { (context) => React.cloneElement(this.props.children, {
+              isLogged: context.state.isLogged,
+              user: context.state.user,
+              logoff: context.logout,
+              login: context.login
+            })
         }
       </LoginContext.Consumer>
     )

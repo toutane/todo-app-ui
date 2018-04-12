@@ -5,7 +5,7 @@ import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
 import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
-import { postLogin } from "../api/BeAPI";
+// import { postLogin } from "../api/BeAPI";
 import { LogContext } from './LoginProvider';
 // const { Consumer } = React.createContext();
 // import { Consumer } from './Context';
@@ -19,7 +19,7 @@ export default class Login extends React.Component {
     this.state = {
       usernameInput: "",
       passwordInput: "",
-      isLogged: false,
+      isLogged: this.props.isLogged,
       user: "personne-not-logged",
     };
 
@@ -46,30 +46,12 @@ export default class Login extends React.Component {
   loginFunction(e) {
     e.preventDefault();
     if (this.state.usernameInput !== "") {
-      this.setState({},
-      () => postLogin({
-         username: this.state.usernameInput,
-         password: this.state.passwordInput
-        }).then(response =>
-          { if (response.error) {
-            console.log(response.message)
-          } else {
-            this.setState({ isLogged: true, user: response.user || ''});
-            this.props.history.push("/home");
-          }
-          }
-        )
-      );
-    } else {
-      this.setState( {} );
+      this.props.login(this.state.usernameInput, this.state.passwordInput)
     }
   }
 
   render() {
     return <div>
-
-        <LogContext logMe={this.state.isLogged} user={this.state.user} > </LogContext>
-
         <Container>
           <div className="my-5" />
           <div className="d-flex justify-content-center">
