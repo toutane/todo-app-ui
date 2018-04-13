@@ -91,7 +91,7 @@ export default class Settings extends React.Component {
                       <div>
                         <ListGroup>
                           {/* <ListGroupItem active tag="a" href="#" action>Personal settings</ListGroupItem> */}
-                          <ListGroupItem onClick={() => this.overviewView('1')} action><i className="fas fa-eye fa-fw"/>&nbsp; Overview</ListGroupItem>
+                          <ListGroupItem onClick={() => this.overviewView('1')} action><i className="fas fa-eye text-primary fa-fw"/>&nbsp; Overview</ListGroupItem>
                           <ListGroupItem onClick={() => this.overviewView('2')} action><i className="fa fa-magic fa-fw"/>&nbsp; Customization</ListGroupItem>
                           <ListGroupItem onClick={() => this.overviewView('3')} action><i className="far fa-bell fa-fw"/>&nbsp; Notifications</ListGroupItem>
                         </ListGroup>

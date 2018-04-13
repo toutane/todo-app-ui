@@ -20,7 +20,7 @@ export default class Overview extends React.Component {
   render() {
     return (
       <div>
-        <h4><i className="fas fa-eye"/>&nbsp;&nbsp;Overview</h4>
+        <h4><i className="fas fa-eye text-primary"/>&nbsp;&nbsp;Overview</h4>
         <hr className="my-4" />
         <Row>
           <Col>
