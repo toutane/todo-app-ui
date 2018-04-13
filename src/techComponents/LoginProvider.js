@@ -15,17 +15,20 @@ class LogProv extends Component {
     this.logoutFunction = this.logoutFunction.bind(this);
   }
   loginFunction(username, password) {
-    console.log('from loginFunction: ', username, password);
+    // console.log('from loginFunction: ', username, password);
     postLogin({ username, password }).then(response => {
       if (response.error) {
         // console.log('error in postLogin response: ', response.message)
        } else {
         getUser().then(user =>
           this.setState({
-            isLogged: true, user: user[0]
-          }, this.props.history.push("/home"))
+            user: user[0],
+          })
         );
-       }
+        this.setState({
+          isLogged: true,
+        }, this.props.history.push("/home"))
+      }
     })
   }
   logoutFunction() {
