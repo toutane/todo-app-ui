@@ -17,8 +17,9 @@ import Account from '../components/AccountPanel';
 import Notifications from '../components/NotificationsPanel';
 
 import Logout from '../techComponents/Logout';
+import users from "../database/users.js";
+import { LogContext } from '../techComponents/LoginProvider';
 
-import users from "../database/users.js"
 
 export default class Settings extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class Settings extends React.Component {
   }
 
   componentDidMount() {
-    getUser().then(user => 
+    getUser().then(user =>
       this.setState({
         currentUser: user
       })
@@ -48,7 +49,7 @@ export default class Settings extends React.Component {
       activeTab: '2'
     })
   }
-  
+
   personnalSettingsView(view) {
     this.setState({
       activePersonnal: view
@@ -94,9 +95,9 @@ export default class Settings extends React.Component {
                           <ListGroupItem onClick={() => this.overviewView('2')} action><i className="fa fa-magic fa-fw"/>&nbsp; Customization</ListGroupItem>
                           <ListGroupItem onClick={() => this.overviewView('3')} action><i className="far fa-bell fa-fw"/>&nbsp; Notifications</ListGroupItem>
                         </ListGroup>
-                        <hr className="my-3"/> 
-                      </div>                              
-                    ) 
+                        <hr className="my-3"/>
+                      </div>
+                    )
                     :   (
                     <div></div>
                     )
@@ -109,14 +110,16 @@ export default class Settings extends React.Component {
                         <ListGroupItem onClick={() => this.personnalSettingsView('1')} action><i className="fas fa-user-circle fa-fw"/>&nbsp; Profile</ListGroupItem>
                         <ListGroupItem onClick={() => this.personnalSettingsView('2')} action><i className="far fa-address-card fa-fw"/>&nbsp; Account</ListGroupItem>
                       </ListGroup>
-                      <hr className="my-3"/> 
-                    </div>                              
-                  ) 
+                      <hr className="my-3"/>
+                    </div>
+                  )
                   :   (
                   <div></div>
                   )
                 }
-              <Logout history={this.props.history}/>
+              <LogContext>
+                <Logout history={this.props.history}/>
+              </LogContext>
             </Col>
             <Col>
               <h4><i className="fa fa-cog fa-fw" />&nbsp;Settings -&nbsp;&nbsp;<Badge color="primary">{moment().format('dddd, MMMM Do YYYY')}</Badge></h4>
@@ -145,7 +148,9 @@ export default class Settings extends React.Component {
                   &nbsp;
                   {
                     this.state.activeOverview === '1'
-                      ? (<Overview/>)
+                      ? (<LogContext>
+                          <Overview/>
+                        </LogContext>)
                       : (<div></div>)
                   }
                   {
@@ -153,22 +158,24 @@ export default class Settings extends React.Component {
                       ? (<Customization onChangeTheme={this.props.onChangeTheme}/>)
                       : (<div></div>)
                   }
+                  {
+                    this.state.Overview === '3'
+                      ? (<Notifications/>)
+                      : (<div></div>)
+                  }
                 </TabPane>
                 <TabPane tabId="2">
                   &nbsp;
                 {
                   this.state.activePersonnal === '1'
-                    ? (<Profile/>)
+                    ? (<LogContext>
+                        <Profile/>
+                        </LogContext>)
                     : (<div></div>)
                 }
                 {
                   this.state.activePersonnal === '2'
                     ? (<Account/>)
-                    : (<div></div>)
-                }
-                {
-                  this.state.activePersonnal === '3'
-                    ? (<Notifications/>)
                     : (<div></div>)
                 }
                 </TabPane>

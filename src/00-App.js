@@ -12,31 +12,16 @@ import Settings from './views/04-Settings';
 import NavBar from './02-NavBar';
 import BottomView from './03-BottomView';
 import { getLogout } from './api/BeAPI';
-
 import { projects } from './database/projects';
-// import { LoginProvider } from './techComponents/LoginProvider';
+import { LogProvider, LogContext } from './techComponents/LoginProvider';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: "./themes/superhero-4.1.0.min.css",
-      user: "",
-      isLogged: false,
+      theme: "./themes/superhero-new.min.css",
     };
     this.onChangeTheme = this.onChangeTheme.bind(this);
-    this.loginFunction = this.loginFunction.bind(this);
-    this.logoutFunction = this.logoutFunction.bind(this);
-  }
-  loginFunction() {
-    this.setState({ isLogged: true });
-  }
-  logoutFunction() {
-    getLogout()
-    .then(response => {
-      this.setState({ isLogged: false });
-      // this.props.history.push("/home");
-    })
   }
   onChangeTheme(newTheme) {
     this.setState({
@@ -50,15 +35,17 @@ class App extends Component {
           onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}>
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
         </Helmet>
+
         <Router>
+          <LogProvider>
           <div>
-            <NavBar isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction}/>
-            &nbsp;
+          <LogContext>
+            <NavBar />
+          </LogContext>
             <Switch>
-        {/* <LoginProvider {...this.props}> */}
-              <Route exact path="/" component={Home} />
+              <Route exact path="/home" render={(props) => <LogContext><Home {...props}/></LogContext>} />
               <Route path="/signup" component={Signup} />
-              <Route isLoginState={this.state.isLogged} loginFunction={this.loginFunction} logoutFunction={this.logoutFunction} path="/login" component={Login} />
+              <Route path="/login" render={(props) => <LogContext><Login {...props}/></LogContext>} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
               <Route path="/activities" component={Activities} />
@@ -70,11 +57,11 @@ class App extends Component {
                 key={i}/>
               )}
               <Route component={Home}/>
-        {/* </LoginProvider> */}
             </Switch>
-            {/* <BottomView/> */}
           </div>
+        </LogProvider>
         </Router>
+
       </div>
     );
   }

@@ -8,8 +8,6 @@ import classnames from 'classnames'
 import users from "../database/users"
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
-import { getUser } from '../api/BeAPI'
-
 import Menu from '../10.3-Menu';
 
 export default class Profile extends React.Component {
@@ -17,34 +15,15 @@ export default class Profile extends React.Component {
     super(props);
 
     this.state = {
-      currentUser: [],
-      userId: "",
-      avatarImg: "",
-      usernameInput: "",
-      fullnameInput: "",
-      emailInput: "",
-      bioInput: "",
-      locationInput: "",
-      joindate: "",
-      confirmArrow: false
+      user: this.props.user || {},
+      avatarImg: this.props.user.avatar,
+      usernameInput: this.props.user.username,
+      fullnameInput: this.props.user.full_name,
+      emailInput: this.props.user.email,
+      bioInput: this.props.user.bio,
+      locationInput: this.props.user.location,
+      joindate: this.props.user.join_date,
     };
-
-    this.updateProfileFunction = this.updateProfileFunction.bind(this)
-  }
-
-  componentDidMount() {
-    getUser().then(user => 
-      this.setState({
-        currentUser: user,
-        usernameInput: user.map(user => user.username),
-        fullnameInput: user.map(user => user.full_name),
-        emailInput: user.map(user => user.email),
-        bioInput: user.map(user => user.bio),
-        locationInput: user.map(user => user.location),
-        avatarImg: user.map(user => user.avatar),
-        joindate: user.map(user => user.join_date)     
-      })
-    )
   }
 
   fullnameInputFunction(input) {
@@ -71,20 +50,13 @@ export default class Profile extends React.Component {
     })
   }
 
-  avatarImgFunction(img) {
-    this.setState({
-      avatarImg: img.target.value
-    },() => console.log(this.state.avatarImg))
-  }
-
-  updateProfileFunction() {
-    
-  }
+  // avatarImgFunction(img) {
+  //   this.setState({
+  //     avatarImg: img.target.value
+  //   },() => console.log(this.state.avatarImg))
+  // }
 
   render() {
-
-  const currentUser = this.state.currentUser;
-
     return (
       <div>
         <h4><i className="fas fa-user-circle"/>&nbsp;&nbsp;Profile</h4>
@@ -96,62 +68,54 @@ export default class Profile extends React.Component {
               <Form>
                 <FormGroup>
                   <Label>Name</Label>
-                  <Input 
-                    onChange={input => this.fullnameInputFunction(input)}                    
+                  <Input
+                    onChange={input => this.fullnameInputFunction(input)}
                     value={this.state.fullnameInput}
                   />
                 </FormGroup>
                 <FormGroup>
                   <Label>Email</Label>
-                  <Input 
-                    onChange={input => this.emailInputFunction(input)}                    
+                  <Input
+                    onChange={input => this.emailInputFunction(input)}
                     value={this.state.emailInput}
                   />
                 </FormGroup>
                 <FormGroup>
                   <Label>Bio</Label>
-                  <Input 
+                  <Input
                     type="textarea"
-                    onChange={input => this.bioInputFunction(input)}                    
+                    onChange={input => this.bioInputFunction(input)}
                     value={this.state.bioInput}
                   />
                 </FormGroup>
                 <FormGroup>
                   <Label>Location</Label>
-                  <Input 
-                    onChange={input => this.locationInputFunction(input)}                    
+                  <Input
+                    onChange={input => this.locationInputFunction(input)}
                     value={this.state.locationInput}
                   />
                 </FormGroup>
-                <hr className="my-2"/>                                
+                <hr className="my-2"/>
                 <FormGroup>
                   <Label>Avatar</Label>
-                  <Input 
+                  <Input
                     type="file"
-                    onChange={img => this.avatarImgFunction(img)}                                        
+                    onChange={img => this.avatarImgFunction(img)}
                   />
                 </FormGroup>
-              <hr className="my-4"/>                                                
+              <hr className="my-4"/>
               </Form>
               <Row>
                 <Col>
-                  {/* <div className="d-flex justify-content-between align-items-center"> */}
-                  {/* <Button color="success" onClick={() => this.setState({confirmArrow: !this.state.confirmArrow})}> */}
                   <Button color="success" onClick={this.updateProfileFunction}>
                     Update profile
                   </Button>
-                    {/* {
-                      this.state.confirmArrow
-                      ? (<i className="far fa-check-circle fa-lg text-success ml-2" onClick={this.updateProfileFunction}></i>)
-                      : (<div></div>)
-                    }
-                  </div> */}
                 </Col>
                 <Col></Col>
                 <Col></Col>
                 <Col></Col>
               </Row>
-              </CardBody>              
+              </CardBody>
             </Card>
             &nbsp;
           </Col>

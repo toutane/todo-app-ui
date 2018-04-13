@@ -17,34 +17,9 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: [],
-      isLogged: false,
-      activityView: true,
-      currentUser: []
+       isLogged: this.props.isLogged,
+       currentUser: this.props.user,
       };
-    this.logoutFunction = this.logoutFunction.bind(this)
-  }
-
-  componentDidMount() {
-    getUser().then(user =>
-      this.setState({
-        currentUser: user
-      }, user.error === undefined
-          ? (this.setState({isLogged: true}))
-          : (this.setState({isLogged: false}))
-    ));
-    getProjects().then(resProjects =>
-      resProjects.error
-        ? this.props.history.push("/login")
-        : this.setState({ 
-          projects: resProjects,
-        }))
-  }
-
-  logoutFunction() {
-    getLogout().then(response => this.setState({
-      isLogged: false
-    }));
   }
 
   render() {
@@ -129,7 +104,7 @@ export default class Home extends React.Component {
             &nbsp;<div className="d-flex justify-content-center">
               <ButtonGroup>
                 <Button tag={Link} to="/inbox" outline color="primary">Start to manage your tasks</Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>                
+                &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/login" color="info"><i className="fas fa-sign-in-alt"></i>&nbsp;Login</Button>
               </ButtonGroup>
             </div>
           </Jumbotron>)

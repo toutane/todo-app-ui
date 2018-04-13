@@ -5,8 +5,11 @@ import { Container, Row, Col, Card, CardTitle, CardText, Button, InputGroup,
 import { Link } from 'react-router-dom';
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
-import { postLogin } from "../api/BeAPI";
-import { LoginLogout } from './LoginProvider';
+// import { postLogin } from "../api/BeAPI";
+import { LogContext } from './LoginProvider';
+// const { Consumer } = React.createContext();
+// import { Consumer } from './Context';
+
 
 
 export default class Login extends React.Component {
@@ -15,7 +18,9 @@ export default class Login extends React.Component {
 
     this.state = {
       usernameInput: "",
-      passwordInput: ""
+      passwordInput: "",
+      isLogged: this.props.isLogged,
+      user: "personne-not-logged",
     };
 
     this.loginFunction = this.loginFunction.bind(this);
@@ -25,7 +30,7 @@ export default class Login extends React.Component {
   usernameInputFunction(input) {
     this.setState({
       usernameInput: input.target.value
-    },
+    }
     // console.log(this.state.usernameInput)
   );
   };
@@ -33,7 +38,7 @@ export default class Login extends React.Component {
   passwordInputFunction(input) {
     this.setState({
       passwordInput: input.target.value
-    },
+    }
     // console.log(this.state.passwordInput)
   );
   };
@@ -41,23 +46,8 @@ export default class Login extends React.Component {
   loginFunction(e) {
     e.preventDefault();
     if (this.state.usernameInput !== "") {
-      this.setState(
-      {},
-      () =>
-        postLogin({
-         username: this.state.usernameInput,
-         password: this.state.passwordInput
-        }).then(response =>
-          { response.error
-            ? console.log(response.message)
-            : this.props.history.push("/home")
-          }
-        )
-      );
-    } else {
-      this.setState(
-        {}
-      );
+      this.props.login(this.state.usernameInput, this.state.passwordInput);
+      // this.props.history.push("/today");
     }
   }
 
@@ -72,7 +62,7 @@ export default class Login extends React.Component {
                 <CardBody>
                   <CardTitle tag="div"><h4><i className="fas fa-sign-in-alt"/> Login</h4></CardTitle>
                   <hr className="my-3" />
-                  <Form onSubmit={e => this.loginFunction(e)}>
+                    <Form onSubmit={e => this.loginFunction(e)}>
                     <FormGroup>
                       <InputGroup>
                         <InputGroupAddon>
@@ -105,11 +95,9 @@ export default class Login extends React.Component {
                   </CardLink>
                 </p>
                 <hr className="my-3" />
-                {/* <LoginLogout log={false}> */}
                   <Button tag={Link} to="/" outline color="secondary">
                     <i className="fas fa-angle-left" /> Back
                   </Button>
-                {/* </LoginLogout> */}
               </Col>
             </Row>
           </div>
