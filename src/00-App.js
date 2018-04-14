@@ -48,7 +48,7 @@ class App extends Component {
               <Route path="/login" render={(props) => <LogContext><Login {...props}/></LogContext>} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/today" component={Today} />
-              <Route path="/activities" component={Activities} />
+              <Route path="/activities" render={(props) => <LogContext><Activities {...props}/></LogContext>} />
               <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props}/>} />
               {projects.map( (project, i) =>
                 <Route
