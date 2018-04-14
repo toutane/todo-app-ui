@@ -1,11 +1,11 @@
 import React from 'react';
 import { Fade, Row, Col, Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+  CardTitle, CardSubtitle, Button, Badge } from 'reactstrap';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Area, linearGradient, AreaChart } from 'recharts';
 import { countBy, sortBy } from 'lodash';
 import moment from 'moment';
 
-export default class ProjectLineChart extends React.Component {
+export default class ProjectsLineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,11 +15,11 @@ export default class ProjectLineChart extends React.Component {
     };
   }
   render() {
-    const projectsActivityData = sortBy(Object.entries(countBy(this.props.projects.map(project => project.project_date))), o => new moment(o[0]).format('YYYY')).map(x=>({name: x[0], nb: x[1] }));
+    const projectsActivityData = sortBy(Object.entries(countBy(this.props.projects.map(project => project.project_date))), o => new moment(o[0]).format('YYYYMMDD')).map(x=>({name: x[0], nb: x[1] }));
     return (
       <div>
-          <div className="d-flex justify-content-between">
-            <AreaChart width={560} height={200} data={projectsActivityData}>
+          <div className="d-flex justify-content-start">
+            <AreaChart width={560} height={230} data={projectsActivityData}>
             <defs>
               <linearGradient id="colorProjects" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={this.state.themeColor} stopOpacity={0.8}/>
@@ -28,12 +28,15 @@ export default class ProjectLineChart extends React.Component {
             </defs>
             <XAxis stroke="rgba(255,255,255,0.4)" dataKey="name" />
             <YAxis stroke="rgba(255,255,255,0.4)" />
+            <CartesianGrid strokeDasharray="3" stroke="rgba(255,255,255,0.4)" opacity={0.4}/>
+            <Tooltip wrapperStyle={{"backgroundColor":"#4E5D6C"}}/>
             <Area type="monotone" dataKey="nb" stroke={this.state.themeColor} fillOpacity={1} fill="url(#colorProjects)" />
           </AreaChart>
           <Fade>
-            <Card className="ml-2 mt-2" style={{"width": "220px"}}>
+            <h4 className="ml-4 pb-1"><Badge color="info"><i className="fas fa-chart-line mr-2" />Line chart view</Badge></h4>
+            <Card className="ml-4 mt-1" style={{"width": "230px", "height": "170px"}}>
               <CardBody>
-                <CardTitle style={{"fontSize":"18px"}}><i className="fas fa-chart-line fa-fw mr-1"/><span className="text-info">{this.props.user[0].username}</span> projects</CardTitle>
+                <CardTitle style={{"fontSize":"18px"}}><span className="text-info">{this.props.user.username}</span> projects</CardTitle>
                 <CardSubtitle className="lead mt-3 text-muted" style={{"fontSize":"12px"}}>
                   {this.state.themeColor === "#5bc0de"
                     ? <div><i className="fas fa-long-arrow-alt-right text-info mr-1"/>Projects activity</div>
