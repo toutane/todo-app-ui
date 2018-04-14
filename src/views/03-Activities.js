@@ -12,26 +12,20 @@ import Menu from '../10.3-Menu';
 
 import TasksLineChart from '../activity/TasksLineChart';
 import ProjectsLineChart from '../activity/ProjectsLineChart';
+import ProjectsPieChart from '../activity/ProjectsPieChart';
 
 
 export default class Activity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: [],
       projects: [],
-      loadAPI: false,
       activeTab: '1',
-      overviewTab: '1'
+      overviewTab: '3'
     };
   }
 
   componentWillMount() {
-    getUser().then(user =>
-      this.setState({
-        currentUser: user
-      })
-    )
     getProjects().then(resProjects =>
       resProjects.error
         ? this.props.history.push("/login")
@@ -95,22 +89,32 @@ export default class Activity extends React.Component {
                     ? <div>
                         <h4><i className="fas fa-chart-line text-primary"/>&nbsp;&nbsp;Global activity</h4>
                         <hr className="my-4" />
+                        <Jumbotron className="text-center">
+                        <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{this.props.user.username}</span></h1>
+                        <span className="lead text-info">{this.props.user.full_name}</span>
+                        <hr className="my-3 pb-3"/>
+                        <div className="d-flex justify-content-center">
+                          <ButtonGroup>
+                            <Button tag={Link} to="/inbox" outline color="primary">See my current tasks</Button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<Button tag={Link} to="/today" color="info"><i className="far fa-calendar fa-fw mr-1"/>Today</Button>
+                          </ButtonGroup>
+                        </div>
+                      </Jumbotron>
                       </div>
                     : <div></div>}       
                   {this.state.overviewTab === '2'
                     ? (<div>
                         <h4><i className="fas fa-tasks"/>&nbsp;&nbsp;Tasks activity</h4>
                         <hr className="my-4" />
-                        <Card>
-                          <TasksLineChart/>
-                        </Card>
+                          <TasksLineChart projects={this.state.projects} user={this.props.user}/>
                       </div>)
                     : (<div></div>)}
                   {this.state.overviewTab === '3'
                     ? (<div>
-                      <h4><i className="fa fa-list"/>&nbsp;&nbsp;Projects activity</h4>
                       <hr className="my-4" />
-                      <ProjectsLineChart projects={this.state.projects} user={this.state.currentUser}/>
+                        <ProjectsLineChart projects={this.state.projects} user={this.props.user}/>
+                      <hr className="my-4" />                        
+                        {/* <ProjectsPieChart projects={this.state.projects} user={this.props.user}/> */}
                     </div>)
                     : (<div></div>)}
                 </TabPane>
@@ -120,6 +124,14 @@ export default class Activity extends React.Component {
               </TabContent>
             </Col> 
           </Row>
+          {/* {this.state.overviewTab === '3'
+                    ? (<div>
+                      <hr className="my-4" />
+                        <ProjectsLineChart projects={this.state.projects} user={this.props.user}/>
+                      <hr className="my-4" />                        
+                        <ProjectsPieChart projects={this.state.projects} user={this.props.user}/>
+                    </div>)
+                    : (<div></div>)} */}
         </Container>
       </div>
     );
