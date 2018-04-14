@@ -152,7 +152,7 @@ class Project extends React.Component {
             project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
-            project_date: moment().format("l"),
+            project_date: moment().format("L"),
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
           }).then(x=>x)
           .then(data => {

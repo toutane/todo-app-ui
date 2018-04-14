@@ -276,6 +276,7 @@ class TasksPanel extends React.Component {
             tasks_title: this.state.tasksTitleInput,
             tasks_description: this.state.tasksDescriptionInput,
             tasks_date: this.state.selectedDay.format("L"),
+            tasks_create_date: moment().format("L"),
             tasks_project: this.state.dropSelectProject,
             tasks_project_name: this.state.dropSelectProjectName,
             tasks_project_icon: this.state.dropSelectItemIcon,
