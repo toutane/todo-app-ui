@@ -29,7 +29,7 @@ export default class ProjectsLineChart extends React.Component {
             <XAxis stroke="rgba(255,255,255,0.4)" dataKey="name" />
             <YAxis stroke="rgba(255,255,255,0.4)" />
             <CartesianGrid strokeDasharray="3" stroke="rgba(255,255,255,0.4)" opacity={0.4}/>
-            <Tooltip wrapperStyle={{"backgroundColor":"#4E5D6C"}}/>
+            <Tooltip wrapperStyle={{"backgroundColor":"#4E5D6C"}} />
             <Area type="monotone" dataKey="nb" stroke={this.state.themeColor} fillOpacity={1} fill="url(#colorProjects)" />
           </AreaChart>
           <Fade>

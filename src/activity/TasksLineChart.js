@@ -15,20 +15,22 @@ export default class TasksLineChart extends React.Component {
     };
   }
   render() {
-    const projectsActivityData = sortBy(Object.entries(countBy(this.props.projects.map(project => project.project_date))), o => new moment(o[0]).format('YYYYMMDD')).map(x=>({name: x[0], nb: x[1] }));
+    const tasksActivityData = sortBy(Object.entries(countBy(this.props.tasks.map(task => task.tasks_create_date))), o => new moment(o[0]).format('YYYYMMDD')).map(x=>({name: x[0], nb: x[1] }))
     return (
       <div>
           <div className="d-flex justify-content-between">
-            <AreaChart width={560} height={200} data={projectsActivityData}>
+            <AreaChart width={560} height={200} data={tasksActivityData}>
             <defs>
-              <linearGradient id="colorProjects" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="colorTasks" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={this.state.themeColor} stopOpacity={0.8}/>
                 <stop offset="95%" stopColor={this.state.themeColor} stopOpacity={0}/>
               </linearGradient>
             </defs>
             <XAxis stroke="rgba(255,255,255,0.4)" dataKey="name" />
             <YAxis stroke="rgba(255,255,255,0.4)" />
-            <Area type="monotone" dataKey="nb" stroke={this.state.themeColor} fillOpacity={1} fill="url(#colorProjects)" />
+            <CartesianGrid strokeDasharray="3" stroke="rgba(255,255,255,0.4)" opacity={0.4}/>
+            <Tooltip wrapperStyle={{"backgroundColor":"#4E5D6C"}} />
+            <Area type="monotone" dataKey="nb" stroke={this.state.themeColor} fillOpacity={1} fill="url(#colorTasks)" />
           </AreaChart>
           <Fade>
             <Card className="ml-2 mt-2" style={{"width": "220px"}}>
@@ -40,7 +42,7 @@ export default class TasksLineChart extends React.Component {
                     : <div><i className="fas fa-long-arrow-alt-right text-warning mr-1"/>Tasks activity</div>}
                 </CardSubtitle>
                 <CardText tag="div" className="mt-1" style={{"fontSize":"10px"}}>
-                  <div>total tasks number:<span className="ml-1">{this.props.projects.length}</span></div>
+                  <div>total tasks number:<span className="ml-1">{this.props.tasks.length}</span></div>
                 </CardText>
                 <CardSubtitle className="lead mt-3 text-muted" style={{"fontSize":"12px"}}>
                   {this.state.themeColor === "#DF691A"
@@ -48,7 +50,7 @@ export default class TasksLineChart extends React.Component {
                       : <div><i className="fas fa-chart-area text-warning mr-1"/>Average of your activity</div>}
                 </CardSubtitle>
                 <CardText tag="div" className="mt-1" style={{"fontSize":"10px"}}>
-                  <div>total tasks number:<span className="ml-1">{this.props.projects.length}</span></div>
+                  <div>total tasks number:<span className="ml-1">{this.props.tasks.length}</span></div>
                 </CardText>
               </CardBody>
             </Card>
