@@ -3,12 +3,15 @@ import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
   ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
   Input, CardBody, Fade, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { getProjects } from "../api/BeAPI";
+import moment from 'moment';
+import { countBy, sortBy } from 'lodash';
+import { getProjects, getTasks } from "../api/BeAPI";
 
 import NavBar from '../02-NavBar';
 
 import SimpleTasksLineChart from '../activity/SimpleTasksLineChart';
 import SimpleProjectsLineChart from '../activity/SimpleProjectsLineChart';
+import SimpleLineChart from '../activity/SimpleLineChart';
 
 import BottomView from '../03-BottomView';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
@@ -19,14 +22,27 @@ export default class Home extends React.Component {
     this.state = {
        activityView: true,
        projects: [],
+       tasks: []
       };
   }
   componentDidMount() {
     console.log(this.props.isLogged);
-    (this.props.isLogged)
-    ? getProjects().then(resProjects =>
-        this.setState({ projects: resProjects }))
-    : null
+    getProjects().then(resProjects =>
+          this.setState({ projects: resProjects 
+          }, () => resProjects.map(project =>
+            getTasks(project.project_id).then(tasks =>
+              this.setState({
+                tasks: this.state.tasks.concat(tasks)
+              }, () => this.setState({readyActivity: true}))))))
+    // (this.props.isLogged)
+    // ? getProjects().then(resProjects =>
+    //     this.setState({ projects: resProjects 
+    //     }, () => resProjects.map(project =>
+    //       getTasks(project.project_id).then(tasks =>
+    //         this.setState({
+    //           tasks: this.state.tasks.concat(tasks)
+    //         }, () => this.setState({readyActivity: true}))))))
+    // : null
   }
   // bob() {
   //   (this.props.isLogged)
@@ -47,11 +63,7 @@ export default class Home extends React.Component {
             <span className="lead text-info">{this.props.user.full_name}<i className="ml-2 text-muted fas fa-chart-line fa-xs" onClick={() => this.setState({activityView: !this.state.activityView})}/></span>
             <Collapse isOpen={this.state.activityView}>
               <hr className="my-3 pb-3"/>
-              <div className="d-flex justify-content-center">
-                <SimpleTasksLineChart/>
-                <div className="ml-5 mr-5"></div>
-                <SimpleProjectsLineChart projects={this.state.projects}/>
-              </div>
+              <SimpleLineChart tasks={this.state.tasks} projects={this.state.projects}/>
             </Collapse>
             <hr className="my-3 pb-3"/>
             <div className="d-flex justify-content-center">
