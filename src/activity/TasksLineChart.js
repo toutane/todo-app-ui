@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fade, Row, Col, Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+  CardTitle, CardSubtitle, Button, Badge } from 'reactstrap';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Area, linearGradient, AreaChart } from 'recharts';
 import { countBy, sortBy } from 'lodash';
 import moment from 'moment';
@@ -19,7 +19,7 @@ export default class TasksLineChart extends React.Component {
     return (
       <div>
           <div className="d-flex justify-content-between">
-            <AreaChart width={560} height={200} data={tasksActivityData}>
+            <AreaChart width={560} height={230} data={tasksActivityData}>
             <defs>
               <linearGradient id="colorTasks" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor={this.state.themeColor} stopOpacity={0.8}/>
@@ -33,7 +33,8 @@ export default class TasksLineChart extends React.Component {
             <Area type="monotone" dataKey="nb" stroke={this.state.themeColor} fillOpacity={1} fill="url(#colorTasks)" />
           </AreaChart>
           <Fade>
-            <Card className="ml-2 mt-2" style={{"width": "220px"}}>
+          <h4 className="ml-4 pb-1"><Badge color="warning"><i className="fas fa-chart-line mr-2" />Line chart view</Badge></h4>
+            <Card className="ml-4 mt-1" style={{"width": "230px", "height": "170px"}}>
               <CardBody>
                 <CardTitle style={{"fontSize":"18px"}}><i className="fas fa-chart-line fa-fw mr-1"/><span className="text-warning">{this.props.user.username}</span> tasks</CardTitle>
                 <CardSubtitle className="lead mt-3 text-muted" style={{"fontSize":"12px"}}>
