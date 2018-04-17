@@ -43,6 +43,7 @@ import { InputGroupAddon } from '../utils/InputGroupAddon';
 import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
 
 import ProjectStatue from "./ProjectStatuePanel";
+import AddTasksBoard from "./AddTasksBoard";
 // import { projects } from '../database/projects'
 import { tasks as tasksInit } from "../database/tasks";
 import Project from "./ProjectPanel";
@@ -136,6 +137,7 @@ class TasksPanel extends React.Component {
       userId: "",
       tasks: [],
       projects: [],
+      addTasksBoard: false,
       moreInformationCollapse: false,
       addTasksModal: false,
       dropdownProject: false,
@@ -231,7 +233,8 @@ class TasksPanel extends React.Component {
   addTasksModal() {
     this.setState(
       {
-        addTasksModal: !this.state.addTasksModal,
+        // addTasksModal: !this.state.addTasksModal,
+        addTasksBoard: !this.state.addTasksBoard,        
         tasksTitleInput: "",
         advancedOptionsCollapse: false,
         personalizationCollapse: false,
@@ -268,7 +271,7 @@ class TasksPanel extends React.Component {
       // pour verifier la date :  && this.state.selectedDay !== ""
       this.setState(
         {
-          addTasksModal: !this.state.addTasksModal
+          addTasksModal: !this.state.addTasksModal,
         },
         () =>
           postTasks({
@@ -648,7 +651,8 @@ class TasksPanel extends React.Component {
           </ModalFooter>
         </Modal>
         {/* Test map tasks */}
-        <hr className="my-3" />&nbsp;
+        <hr className="my-4" />
+          <AddTasksBoard addTasksBoard={this.state.addTasksBoard}/>
         {
           filteredTasks.length === 0 && this.state.spinner === false
           ? (<Alert color="info">
