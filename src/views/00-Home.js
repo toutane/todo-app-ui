@@ -14,13 +14,13 @@ import SimpleProjectsLineChart from '../activity/SimpleProjectsLineChart';
 import SimpleLineChart from '../activity/SimpleLineChart';
 
 import BottomView from '../03-BottomView';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
        activityView: true,
+       readyActivity: false,
        projects: [],
        tasks: []
       };
@@ -34,16 +34,17 @@ export default class Home extends React.Component {
               this.setState({
                 tasks: this.state.tasks.concat(tasks)
               }, () => this.setState({readyActivity: true}))))))
-    // (this.props.isLogged)
-    // ? getProjects().then(resProjects =>
-    //     this.setState({ projects: resProjects 
-    //     }, () => resProjects.map(project =>
-    //       getTasks(project.project_id).then(tasks =>
-    //         this.setState({
-    //           tasks: this.state.tasks.concat(tasks)
-    //         }, () => this.setState({readyActivity: true}))))))
-    // : null
-  }
+      }
+  // (this.props.isLogged)
+  //   ? getProjects().then(resProjects =>
+  //       this.setState({ projects: resProjects 
+  //       }, () => resProjects.map(project =>
+  //         getTasks(project.project_id).then(tasks =>
+  //           this.setState({
+  //             tasks: this.state.tasks.concat(tasks)
+  //           }, () => this.setState({readyActivity: true}))))))
+  //   : null
+  // }
   // bob() {
   //   (this.props.isLogged)
   //   ? getProjects().then(resProjects =>

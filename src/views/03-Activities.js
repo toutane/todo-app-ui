@@ -4,7 +4,6 @@ import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
   CardFooter, ListGroupItem, ListGroup, Jumbotron, Collapse, ButtonGroup, CardBody
 } from 'reactstrap';
 import classnames from 'classnames';
-import { countBy, sortBy } from 'lodash';
 import moment from 'moment';
 import { getProjects,  getTasks, getUser } from "../api/BeAPI";
 import { Link } from "react-router-dom";
@@ -62,7 +61,7 @@ export default class Activity extends React.Component {
                     ? (<div>
                         <ListGroup>
                           <ListGroupItem onClick={() => this.setState({ overviewTab: '1' })} action><i className="fas fa-chart-line fa-fw mr-1"/>Global activity</ListGroupItem>                          
-                          <ListGroupItem onClick={() => this.setState({ overviewTab: '2' })} action><i className="fas fa-tasks fa-fw mr-1"/>Tasks</ListGroupItem>
+                          <ListGroupItem onClick={() => this.setState({ overviewTab: '2' })} action><div className="d-flex justify-content-between align-items-center"><div><i className="fas fa-tasks fa-fw mr-1"/>Tasks</div><i className="fas fa-chart-line fa-fw mr-1"/></div></ListGroupItem>
                           <ListGroupItem onClick={() => this.setState({ overviewTab: '3' })} action><i className="fa fa-list fa-fw mr-1"/>Projects</ListGroupItem>
                         </ListGroup>
                         <hr className="my-3"/>
