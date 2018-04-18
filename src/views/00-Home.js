@@ -34,7 +34,7 @@ export default class Home extends React.Component {
               this.setState({
                 tasks: this.state.tasks.concat(tasks)
               }, () => this.setState({readyActivity: true}))))))
-      }
+            }
   // (this.props.isLogged)
   //   ? getProjects().then(resProjects =>
   //       this.setState({ projects: resProjects 
