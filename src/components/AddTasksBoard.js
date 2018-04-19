@@ -31,19 +31,30 @@ export default class AddTasksBoard extends React.Component {
 
     this.state = {
       projectDropdownOpen: false,
+      imgDropdownOpen: false,
       selectProject: "",
       selectProjectName: "Select project",
       selectProjectIcon: "fa fa-list",
+      selectImg: "",
+      selectImgName: "Select image",
+      selectImgIcon: "far fa-image",
       selectPriorityIcon: "fa fa-flag",
       selectPriorityValue: 1
     }
     this.projectToggle = this.projectToggle.bind(this)
+    this.imgToggle = this.imgToggle.bind(this)
     this.priorityToggle = this.priorityToggle.bind(this)
   }
 
   projectToggle() {
     this.setState({
       projectDropdownOpen: !this.state.projectDropdownOpen
+    });
+  }
+
+  imgToggle() {
+    this.setState({
+      imgDropdownOpen: !this.state.imgDropdownOpen
     });
   }
 
@@ -95,13 +106,6 @@ export default class AddTasksBoard extends React.Component {
                       // value={this.state.tasksDescriptionInput}
                     />
                   </FormGroup>
-                  {/* <hr className="my-3"/>
-                  <Button color="info" onClick={this.advancedOptionsCollapse}>
-                    <i className="fa fa-cog">&nbsp;</i>Advanced options
-                  </Button>&nbsp;
-                  <Button color="success" onClick={this.personalizationCollapse}>
-                    <i className="fas fa-paint-brush" />&nbsp;Personalization
-                  </Button> */}
                 </Form>  
               </Col>
               <Col md="4">
@@ -116,11 +120,11 @@ export default class AddTasksBoard extends React.Component {
                     <Button outline color="primary" className="ml-3 mt-2"><i className="far fa-calendar"/></Button>
                   </div>
                 <hr className="my-1"/>
-                <div className="d-flex justify-content-between mt-4 ml-1 mr-1">
+                <div className="d-flex justify-content-between mt-3 ml-1 mr-1">
                   <Dropdown isOpen={this.state.projectDropdownOpen} toggle={this.projectToggle}>
                     <DropdownToggle caret outline color="primary">
                       <i className={this.state.selectProjectIcon} />
-                      &nbsp;{this.state.selectProjectName}
+                      &nbsp;&nbsp;{this.state.selectProjectName}
                     </DropdownToggle>
                     <DropdownMenu>
                       {this.props.projects.map((project, i) => (
@@ -140,6 +144,28 @@ export default class AddTasksBoard extends React.Component {
                       ? (<i key={i} className={priority.priority_icon}/>)
                       : (<div key={i}></div>)
                     )}
+                  </Button>
+                </div>
+                <div className="d-flex justify-content-between mt-3 ml-1 mr-1">
+                  <Dropdown isOpen={this.state.imgDropdownOpen} toggle={this.imgToggle}>
+                    <DropdownToggle caret outline color="primary">
+                      <i className={this.state.selectImgIcon} />
+                      &nbsp;&nbsp;{this.state.selectImgName}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {this.props.projects.map((project, i) => (
+                        <DropdownItem
+                          onClick={() => this.selectProject(project)}
+                          key={i}
+                        >
+                          <i className={project.project_icon} />&nbsp;
+                          {project.project_name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                  <Button outline color="primary">
+                    <i className="fa fa-tag"/>                  
                   </Button>
                 </div>
               </Col>
