@@ -137,7 +137,7 @@ class TasksPanel extends React.Component {
       userId: "",
       tasks: [],
       projects: [],
-      addTasksBoard: false,
+      addTasksBoard: true,
       moreInformationCollapse: false,
       addTasksModal: false,
       dropdownProject: false,
@@ -652,7 +652,7 @@ class TasksPanel extends React.Component {
         </Modal>
         {/* Test map tasks */}
         <hr className="my-4" />
-          <AddTasksBoard addTasksBoard={this.state.addTasksBoard}/>
+          <AddTasksBoard addTasksBoard={this.state.addTasksBoard} projects={this.state.projects}/>
         {
           filteredTasks.length === 0 && this.state.spinner === false
           ? (<Alert color="info">
