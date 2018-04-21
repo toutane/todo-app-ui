@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Area, linearGradient, AreaChart } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Legend, Tooltip, Area, linearGradient, AreaChart } from 'recharts';
 import { countBy, sortBy } from 'lodash';
 import moment from 'moment';
 import Radium, {StyleRoot} from 'radium';
