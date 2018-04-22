@@ -2,7 +2,6 @@ import React from 'react';
 import { Fade } from 'reactstrap';
 import { LineChart, Line } from 'recharts';
 import { countBy, sortBy } from 'lodash';
-import moment from 'moment';
 
 export default class SimpleProjectLineChart extends React.Component {
 
