@@ -137,7 +137,7 @@ class TasksPanel extends React.Component {
       userId: "",
       tasks: [],
       projects: [],
-      addTasksBoard: true,
+      addTasksBoard: false,
       moreInformationCollapse: false,
       addTasksModal: false,
       dropdownProject: false,
@@ -233,8 +233,8 @@ class TasksPanel extends React.Component {
   addTasksModal() {
     this.setState(
       {
-        // addTasksModal: !this.state.addTasksModal,
-        addTasksBoard: !this.state.addTasksBoard,        
+        addTasksModal: !this.state.addTasksModal,
+        // addTasksBoard: !this.state.addTasksBoard,        
         tasksTitleInput: "",
         advancedOptionsCollapse: false,
         personalizationCollapse: false,
