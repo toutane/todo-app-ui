@@ -24,7 +24,6 @@ import {
 import { Link } from "react-router-dom";
 import { getLogout, getUser } from "./api/BeAPI";
 
-import users from "./database/users.js";
 import { LogOff } from './techComponents/LoginProvider';
 
 
