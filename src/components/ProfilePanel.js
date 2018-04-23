@@ -5,7 +5,6 @@ import {
   Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardBody
 } from 'reactstrap';
 import classnames from 'classnames'
-import users from "../database/users"
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 
 import Menu from '../10.3-Menu';
