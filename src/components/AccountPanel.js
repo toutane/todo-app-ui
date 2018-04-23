@@ -5,7 +5,6 @@ import {
   Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardLink, CardBody
 } from 'reactstrap';
 import classnames from 'classnames'
-import users from "../database/users"
 import { Link } from "react-router-dom"
 
 import { getUser } from '../api/BeAPI'
