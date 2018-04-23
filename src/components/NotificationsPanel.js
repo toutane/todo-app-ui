@@ -5,7 +5,6 @@ import {
   Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardBody
 } from 'reactstrap';
 import classnames from 'classnames'
-import users from "../database/users"
 
 import { getUser } from '../api/BeAPI'
 
