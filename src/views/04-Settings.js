@@ -17,7 +17,6 @@ import Account from '../components/AccountPanel';
 import Notifications from '../components/NotificationsPanel';
 
 import Logout from '../techComponents/Logout';
-import users from "../database/users.js";
 import { LogContext } from '../techComponents/LoginProvider';
 
 
