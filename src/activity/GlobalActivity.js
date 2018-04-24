@@ -62,10 +62,6 @@ export default class ProjectsLineChart extends React.Component {
           <Fade>
             <a href="/activities" className="lead text-muted" style={{"fontSize":"14px"}}><i className="fa fa-list fa-fw mr-1 mt-3"/>projects activity</a>          
           </Fade>
-          {/* <ButtonGroup>
-            <Button tag={Link} to="/inbox" outline color="warning"><i className="fas fa-tasks mr-1"/>Tasks</Button>
-            &nbsp;&nbsp;&nbsp;&nbsp;<Button className="ml-4" tag={Link} to="/today" outline color="info"><i className="fas fa-list mr-1"/>Projects</Button>
-          </ButtonGroup> */}
         </div>
     </Jumbotron>
     </div>
