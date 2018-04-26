@@ -17,7 +17,7 @@ const styles = {
     animationName: Radium.keyframes(fadeInUp, 'fadeInUp')
   },
   fadeIn: {
-    animation: 'x 1.5s',
+    animation: 'x 1.6s',
     animationName: Radium.keyframes(fadeIn, 'fadeIn')
   }
 
