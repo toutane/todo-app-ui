@@ -28,7 +28,7 @@ export default class Home extends React.Component {
   componentDidMount() {
     console.log(this.props.isLogged);
     getProjects().then(resProjects =>
-          this.setState({ projects: resProjects 
+          this.setState({ projects: resProjects
           }, () => resProjects.map(project =>
             getTasks(project.project_id).then(tasks =>
               this.setState({
@@ -37,7 +37,7 @@ export default class Home extends React.Component {
             }
   // (this.props.isLogged)
   //   ? getProjects().then(resProjects =>
-  //       this.setState({ projects: resProjects 
+  //       this.setState({ projects: resProjects
   //       }, () => resProjects.map(project =>
   //         getTasks(project.project_id).then(tasks =>
   //           this.setState({
