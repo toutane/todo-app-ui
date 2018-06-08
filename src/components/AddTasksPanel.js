@@ -210,18 +210,18 @@ class TasksPanel extends React.Component {
       tasks: [],
       spinner: true,
     },
-    () => getProjects().then((resProjects = []) =>
-    (!Object.is(resProjects, {}))
-      ? resProjects.map(project =>
-          getTasks(project.project_id).then(tasks =>
-            this.setState({
-              tasks: this.state.tasks.concat(tasks)
-            }, this.setState({
-              spinner: false,
-            }))
-          )
-        )
-      : null ))
+    () => getProjects().then((resProjects = []) => 
+    (!Object.is(resProjects, {})) 
+      ? resProjects.map(project => 
+          getTasks(project.project_id).then(tasks => 
+            this.setState({ 
+              tasks: this.state.tasks.concat(tasks) 
+            }, this.setState({ 
+              spinner: false, 
+            })) 
+          ) 
+        ) 
+      : null )) 
   }
 
   canceVisibleButtons() {
@@ -652,7 +652,7 @@ class TasksPanel extends React.Component {
         </Modal>
         {/* Test map tasks */}
         <hr className="my-4" />
-          <AddTasksBoard addTasksBoard={this.state.addTasksBoard} projects={this.state.projects}/>
+          {/* <AddTasksBoard addTasksBoard={this.state.addTasksBoard} projects={this.state.projects}/> */}
         {
           filteredTasks.length === 0 && this.state.spinner === false
           ? (<Alert color="info">
