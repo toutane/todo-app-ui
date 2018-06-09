@@ -9,7 +9,8 @@ class LogProv extends Component {
     super(props);
     this.state = {
       user: {username: 'No Logged'},
-      isLogged: false
+      isLogged: false,
+      location: {pathname: '/home'},
     }
     this.loginFunction = this.loginFunction.bind(this);
     this.logoutFunction = this.logoutFunction.bind(this);
@@ -27,6 +28,7 @@ class LogProv extends Component {
         );
         this.setState({
           isLogged: true,
+          location: null,
         }, this.props.history.push("/home"))
       }
     })
@@ -35,7 +37,7 @@ class LogProv extends Component {
     getLogout()
     .then(response => {
       // console.log('logout from contexte :', response);
-      this.setState({ isLogged: false, user: {username: 'No Logged'} }, this.props.history.push("/home"));
+      this.setState({ isLogged: false, location: {pathname: '/login'}, user: {username: 'No Logged'} }, this.props.history.push("/home"));
     })
   }
   render() {
@@ -43,7 +45,7 @@ class LogProv extends Component {
       <LoginContext.Provider value={{
         state: this.state,
         login: this.loginFunction,
-        logout: this.logoutFunction
+        logout: this.logoutFunction,
       }}>
         {this.props.children}
       </LoginContext.Provider>
@@ -53,7 +55,7 @@ class LogProv extends Component {
 
 export const LogProvider = withRouter(LogProv);
 
-export class LogContext extends Component {
+export class LogCont extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,10 +69,13 @@ export class LogContext extends Component {
               isLogged: context.state.isLogged,
               user: context.state.user,
               logoff: context.logout,
-              login: context.login
-            })
+              login: context.login,
+              location: context.state.location,
+            } )
         }
       </LoginContext.Consumer>
     )
   }
 }
+
+export const LogContext = withRouter(LogCont);
