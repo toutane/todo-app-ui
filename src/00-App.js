@@ -50,12 +50,12 @@ class App extends Component {
               <Route path="/today" component={Today} />
               <Route path="/activities" render={(props) => <LogContext><Activities {...props}/></LogContext>} />
               <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props}/>} />
-              {projects.map( (project, i) =>
+              {/* {projects.map( (project, i) =>
                 <Route
                 path={project.project_url}
                 component={Today}
                 key={i}/>
-              )}
+              )} */}
               <Route component={Home}/>
             </Switch>
           </div>

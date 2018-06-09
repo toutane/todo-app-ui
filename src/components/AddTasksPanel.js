@@ -211,8 +211,7 @@ class TasksPanel extends React.Component {
       spinner: true,
     },
     () => getProjects().then((resProjects = []) =>
-    (!Object.is(resProjects, {}))
-      ? resProjects.map(project =>
+    Array.isArray(resProjects) && resProjects.map(project =>
           getTasks(project.project_id).then(tasks =>
             this.setState({
               tasks: this.state.tasks.concat(tasks)
@@ -221,7 +220,7 @@ class TasksPanel extends React.Component {
             }))
           )
         )
-      : null ))
+      ))
   }
 
   canceVisibleButtons() {
@@ -234,7 +233,7 @@ class TasksPanel extends React.Component {
     this.setState(
       {
         addTasksModal: !this.state.addTasksModal,
-        // addTasksBoard: !this.state.addTasksBoard,        
+        // addTasksBoard: !this.state.addTasksBoard,
         tasksTitleInput: "",
         advancedOptionsCollapse: false,
         personalizationCollapse: false,
