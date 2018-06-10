@@ -41,7 +41,6 @@ export default class Inbox extends React.Component {
 
   render() {
     return (
-      <LogContext testIsLogged="login">
       <div>
         &nbsp;
       <Container>
@@ -87,8 +86,6 @@ export default class Inbox extends React.Component {
           </Row>
         </Container>
       </div>
-      </LogContext>
-
     );
   };
 };
