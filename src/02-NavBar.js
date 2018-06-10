@@ -1,10 +1,5 @@
 import React from "react";
 import {
-  Button,
-  InputGroupButton,
-  Input,
-  InputGroupAddon,
-  InputGroup,
   Collapse,
   Dropdown,
   DropdownToggle,
@@ -16,16 +11,11 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Media,
-  CardImg,
   Container,
   UncontrolledDropdown
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getLogout, getUser } from "./api/BeAPI";
-
-import { LogOff } from './techComponents/LoginProvider';
-
+import { getLogout } from "./api/BeAPI";
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -86,7 +76,7 @@ export default class NavBar extends React.Component {
           <Container>
             <NavbarToggler onClick={this.toggle} />
             <NavbarBrand tag={Link} to="/home">
-              <i className="far fa-clipboard fa-lg" />&nbsp; to do-<span className="text-primary">
+              <i className="far fa-clipboard fa-lg" />&nbsp; to do-<span className="text-info">
                 app
               </span>
             </NavbarBrand>
@@ -110,12 +100,12 @@ export default class NavBar extends React.Component {
                           </DropdownToggle>
                           <DropdownMenu right>
                             <DropdownItem tag={Link} to="/today">
-                              {/* <i className="fa fa-tasks"/> */}
-                              New task
+                              <i className="fa fa-plus mr-1"/>
+                              add task
                             </DropdownItem>
                             <DropdownItem tag={Link} to="/today">
-                              {/* <i className="fa fa-list"/> */}
-                              New project
+                              <i className="fa fa-plus mr-1"/>
+                              add project
                             </DropdownItem>
                           </DropdownMenu>
                         </UncontrolledDropdown>
