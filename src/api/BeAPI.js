@@ -3,11 +3,9 @@ const api = "http://localhost:3001";
 // const api = "http://192.168.1.47:3001";
 
 // fetch authentication
-
 export const getLogout = () => fetch(`${api}/logout`, {credentials: "include"} ).then(x => x.json());
 
 // fetch users
-
 export const getUser = () => fetch(`${api}/user`, {credentials: "include"}).then(x => x.json());
 
 export const postLogin = newLogin =>
@@ -33,9 +31,7 @@ export const postSignUp = newSignup =>
   })
   .then(x => x.json());
 
-
 // fetch projects
-
 export const getProjects = () =>
   fetch(`${api}/projects`, {credentials: "include"})
     .then(x => x.json());

@@ -35,10 +35,14 @@ class LogProv extends Component {
   }
   logoutFunction() {
     getLogout()
-    .then(response => {
-      // console.log('logout from contexte :', response);
-      this.setState({ isLogged: false, location: {pathname: '/login'}, user: {username: 'No Logged'} }, this.props.history.push("/home"));
-    })
+      .then(response => {
+        // console.log('logout from contexte :', response);
+        this.setState({
+          isLogged: false,
+          location: { pathname: '/login' },
+          user: { username: 'No Logged' } },
+          this.props.history.push("/home"));
+      })
   }
   render() {
     return (

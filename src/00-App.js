@@ -41,10 +41,9 @@ class App extends Component {
           >
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
         </Helmet>
-
         <Router>
           <LogProvider>
-            <div>
+
               <LogContext>
                 <NavBar />
               </LogContext>
@@ -67,10 +66,8 @@ class App extends Component {
                 </LittleSwitchRouter>
               </LogContext>
 
-            </div>
           </LogProvider>
         </Router>
-
       </div>
     );
   }
