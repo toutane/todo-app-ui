@@ -1,16 +1,9 @@
 import React from 'react';
-import { Row, Col, Card, CardImg, Container, Jumbotron, Button, Badge,
-  ButtonGroup, CardText, CardTitle, InputGroup, InputGroupAddon, InputGroupButton,
-  Input, CardBody, Fade, Collapse } from 'reactstrap';
+import { Row, Col, Card, Container, Jumbotron, Button,
+  ButtonGroup, CardText, CardTitle, CardBody, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { countBy, sortBy } from 'lodash';
 import { getProjects, getTasks } from "../api/BeAPI";
 
-import NavBar from '../02-NavBar';
-
-import SimpleTasksLineChart from '../activity/SimpleTasksLineChart';
-import SimpleProjectsLineChart from '../activity/SimpleProjectsLineChart';
 import SimpleLineChart from '../activity/SimpleLineChart';
 
 import BottomView from '../03-BottomView';
@@ -19,7 +12,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       activityView: true,
+       activityView: false,
        readyActivity: false,
        projects: [],
        tasks: []
