@@ -10,6 +10,7 @@ import Today from './views/02-Today';
 import Activities from './views/03-Activities'
 import Settings from './views/04-Settings';
 import NavBar from './02-NavBar';
+import LittleSwitchRouter from './techComponents/LittleSwitchRouter';
 import BottomView from './03-BottomView';
 import { getLogout } from './api/BeAPI';
 import { projects } from './database/projects';
@@ -48,20 +49,23 @@ class App extends Component {
               </LogContext>
 
               <LogContext>
-                <Switch>
-                  <Route exact path="/home" render={(props) => <LogContext><Home {...props} /></LogContext>} />
-                  {/* <Route exact path="/" component={Home} /> */}
-                  {/* <Route path="/home" component={Home} /> */}
-                  <Route path="/signup" component={Signup} />
-                  {/* <Route path="/login" component={Login} /> */}
-                  <Route path="/login" render={(props) => <LogContext><Login {...props} /></LogContext>} />
-                  <Route path="/inbox" component={Inbox} />
-                  <Route path="/today" component={Today} />
-                  {/* <Route path="/activities" component={Activities} /> */}
-                  <Route path="/activities" render={(props) => <LogContext><Activities {...props} /></LogContext>} />
-                  <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props} />} />
-                  <Route component={Home} />
-                </Switch>
+                <LittleSwitchRouter>
+                  <Switch>
+                    <Route path="/home" render={(props) => <LogContext><Home {...props} /></LogContext>} />
+                    <Route path="/signup" component={Signup} />
+                    <Route path="/login" render={(props) => <LogContext><Login {...props} /></LogContext>} />
+                    {/* <Route component={Home} /> */}
+                    <Route render={(props) => <LogContext><Home {...props} /></LogContext>} />
+                  </Switch>
+                  <Switch>
+                    <Route path="/inbox" component={Inbox} />
+                    <Route path="/today" component={Today} />
+                    <Route path="/activities" render={(props) => <LogContext><Activities {...props} /></LogContext>} />
+                    <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props} />} />
+                    <Route render={(props) => <LogContext><Home {...props} /></LogContext>} />
+                    {/* <Route component={Home} /> */}
+                  </Switch>
+                </LittleSwitchRouter>
               </LogContext>
 
             </div>
