@@ -10,7 +10,7 @@ class LogProv extends Component {
     this.state = {
       user: {username: 'No Logged'},
       isLogged: false,
-      location: {pathname: '/home'},
+      location: {pathname: '/login'},
     }
     this.loginFunction = this.loginFunction.bind(this);
     this.logoutFunction = this.logoutFunction.bind(this);
