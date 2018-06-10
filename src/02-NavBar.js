@@ -82,7 +82,7 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar className="navbar-dark bg-dark mb-3" expand="md">
+        <Navbar className="navbar-dark invert bg-primary mb-3" expand="md">
           <Container>
             <NavbarToggler onClick={this.toggle} />
             <NavbarBrand tag={Link} to="/home">

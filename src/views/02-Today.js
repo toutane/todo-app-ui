@@ -41,7 +41,7 @@ export default class Todo extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         &nbsp;

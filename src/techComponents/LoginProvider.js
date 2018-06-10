@@ -55,7 +55,7 @@ class LogProv extends Component {
 
 export const LogProvider = withRouter(LogProv);
 
-export class LogCont extends Component {
+class LogCont extends Component {
   constructor(props) {
     super(props);
     this.state = {

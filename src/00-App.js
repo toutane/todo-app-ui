@@ -37,7 +37,8 @@ class App extends Component {
     return (
       <div>
         <Helmet
-          onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}>
+          //onChangeClientState={(newState, addedTags, removedTags) => console.log(newState, addedTags, removedTags)}
+          >
           <link rel="stylesheet" type="text/css" href={this.state.theme}></link>
         </Helmet>
 
@@ -54,7 +55,6 @@ class App extends Component {
                     <Route path="/home" render={(props) => <LogContext><Home {...props} /></LogContext>} />
                     <Route path="/signup" component={Signup} />
                     <Route path="/login" render={(props) => <LogContext><Login {...props} /></LogContext>} />
-                    {/* <Route component={Home} /> */}
                     <Route render={(props) => <LogContext><Home {...props} /></LogContext>} />
                   </Switch>
                   <Switch>
@@ -63,7 +63,6 @@ class App extends Component {
                     <Route path="/activities" render={(props) => <LogContext><Activities {...props} /></LogContext>} />
                     <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props} />} />
                     <Route render={(props) => <LogContext><Home {...props} /></LogContext>} />
-                    {/* <Route component={Home} /> */}
                   </Switch>
                 </LittleSwitchRouter>
               </LogContext>
