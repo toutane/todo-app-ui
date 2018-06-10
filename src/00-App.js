@@ -58,7 +58,8 @@ class App extends Component {
                   </Switch>
                   <Switch>
                     <Route path="/inbox" component={Inbox} />
-                    <Route path="/today" component={Today} />
+                    <Route exact path="/today" component={Today} />
+                    <Route exact path="/today/:action" component={Today} />
                     <Route path="/activities" render={(props) => <LogContext><Activities {...props} /></LogContext>} />
                     <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props} />} />
                     <Route render={(props) => <LogContext><Home {...props} /></LogContext>} />

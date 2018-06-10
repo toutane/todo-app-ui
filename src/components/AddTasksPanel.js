@@ -139,7 +139,7 @@ class TasksPanel extends React.Component {
       projects: [],
       addTasksBoard: false,
       moreInformationCollapse: false,
-      addTasksModal: false,
+      addTasksModal: this.props.match.params.action === 'add-task',
       dropdownProject: false,
       advancedOptionsCollapse: false,
       personalizationCollapse: false,
@@ -203,6 +203,13 @@ class TasksPanel extends React.Component {
 
   componentDidMount() {
     this.getAllTasksFromAllProjects();
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.match.params.action !== prevProps.match.params.action) {
+      this.props.match.params.action === 'add-task' ? this.setState ({ addTasksModal: true}) : null
+    }
   }
 
   getAllTasksFromAllProjects() {
