@@ -1,21 +1,16 @@
 import React from 'react';
-import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Card,
-  Badge, Button, CardTitle, CardText, Row, Col, CardImg, CardImgOverlay,
-  CardFooter, ListGroupItem, ListGroup, Jumbotron, Collapse, ButtonGroup, CardBody
+import { Container, TabContent, TabPane, Nav, NavItem, NavLink,
+  Badge,Row, Col, ListGroupItem, ListGroup, Alert
 } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
-import { getProjects,  getTasks, getUser } from "../api/BeAPI";
-import { Link } from "react-router-dom";
+import { getProjects,  getTasks} from "../api/BeAPI";
 
 import Menu from '../10.3-Menu';
 
 import GlobalActivity from '../activity/GlobalActivity'
-import GlobalBarActivity from '../activity/GlobalBarActivity';
 import TasksLineChart from '../activity/TasksLineChart';
-import SimpleProjectsLineChart from '../activity/SimpleProjectsLineChart'
 import ProjectsLineChart from '../activity/ProjectsLineChart';
-import ProjectsPieChart from '../activity/ProjectsPieChart';
 
 export default class Activity extends React.Component {
   constructor(props) {
@@ -103,14 +98,32 @@ export default class Activity extends React.Component {
                     ? (<div>
                         <h4><i className="fas fa-tasks"/>&nbsp;&nbsp;Tasks activity</h4>
                         <hr className="my-4" />
-                          <TasksLineChart tasks={this.state.tasks} user={this.props.user}/>
+                          { this.state.tasks.length === 0
+                            ? (<Alert color="info">
+                                <h4 className="alert-heading">You don't have tasks!</h4>
+                                <hr />
+                                <p className="mb-0">
+                                  To add tasks go in the Today menu.
+                                </p>
+                              </Alert>)
+                            : (<TasksLineChart tasks={this.state.tasks} user={this.props.user}/>)
+                          }
                       </div>)
                     : (<div></div>)}
                   {this.state.overviewTab === '3'
                     ? (<div>
                       <h4><i className="fas fa-list"/>&nbsp;&nbsp;Projects activity</h4>
                       <hr className="my-4" />
-                        <ProjectsLineChart projects={this.state.projects} user={this.props.user}/>
+                        { this.state.projects.length === 0
+                            ? (<Alert color="info">
+                                <h4 className="alert-heading">You don't have projects!</h4>
+                                <hr />
+                                <p className="mb-0">
+                                  To add tasks go in the projects menu.
+                                </p>
+                              </Alert>)
+                            : (<ProjectsLineChart projects={this.state.projects} user={this.props.user}/>)
+                          }
                       <hr className="my-4" />                        
                         {/* <ProjectsPieChart projects={this.state.projects} user={this.props.user}/> */}
                     </div>)

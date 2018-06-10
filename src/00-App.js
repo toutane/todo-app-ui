@@ -15,6 +15,10 @@ import { getLogout } from './api/BeAPI';
 import { projects } from './database/projects';
 import { LogProvider, LogContext } from './techComponents/LoginProvider';
 
+// function HOCLogContext(component) {
+//   return <LogContext>component</LogContext>
+// }
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,28 +42,30 @@ class App extends Component {
 
         <Router>
           <LogProvider>
-          <div>
-          <LogContext>
-            <NavBar />
-          </LogContext>
-            <Switch>
-              <Route exact path="/home" render={(props) => <LogContext><Home {...props}/></LogContext>} />
-              <Route path="/signup" component={Signup} />
-              <Route path="/login" render={(props) => <LogContext><Login {...props}/></LogContext>} />
-              <Route path="/inbox" component={Inbox} />
-              <Route path="/today" component={Today} />
-              <Route path="/activities" render={(props) => <LogContext><Activities {...props}/></LogContext>} />
-              <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props}/>} />
-              {projects.map( (project, i) =>
-                <Route
-                path={project.project_url}
-                component={Today}
-                key={i}/>
-              )}
-              <Route component={Home}/>
-            </Switch>
-          </div>
-        </LogProvider>
+            <div>
+              <LogContext>
+                <NavBar />
+              </LogContext>
+
+              <LogContext>
+                <Switch>
+                  <Route exact path="/home" render={(props) => <LogContext><Home {...props} /></LogContext>} />
+                  {/* <Route exact path="/" component={Home} /> */}
+                  {/* <Route path="/home" component={Home} /> */}
+                  <Route path="/signup" component={Signup} />
+                  {/* <Route path="/login" component={Login} /> */}
+                  <Route path="/login" render={(props) => <LogContext><Login {...props} /></LogContext>} />
+                  <Route path="/inbox" component={Inbox} />
+                  <Route path="/today" component={Today} />
+                  {/* <Route path="/activities" component={Activities} /> */}
+                  <Route path="/activities" render={(props) => <LogContext><Activities {...props} /></LogContext>} />
+                  <Route path="/settings" render={(props) => <Settings onChangeTheme={this.onChangeTheme} {...props} />} />
+                  <Route component={Home} />
+                </Switch>
+              </LogContext>
+
+            </div>
+          </LogProvider>
         </Router>
 
       </div>

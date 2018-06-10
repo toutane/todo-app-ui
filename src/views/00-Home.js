@@ -12,7 +12,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       activityView: false,
+       activityView: true,
        readyActivity: false,
        projects: [],
        tasks: []
@@ -20,17 +20,19 @@ export default class Home extends React.Component {
   }
   componentDidMount() {
     console.log(this.props.isLogged);
-    getProjects().then(resProjects =>
-          this.setState({ projects: resProjects 
-          }, () => resProjects.map(project =>
+    getProjects()
+      .then(resProjects =>
+          this.setState({ projects: resProjects
+          }, () => Array.isArray(resProjects) && resProjects.map(project =>
             getTasks(project.project_id).then(tasks =>
               this.setState({
                 tasks: this.state.tasks.concat(tasks)
               }, () => this.setState({readyActivity: true}))))))
-            }
+      .catch(err => new Error('Are you Logged?'))
+  }
   // (this.props.isLogged)
   //   ? getProjects().then(resProjects =>
-  //       this.setState({ projects: resProjects 
+  //       this.setState({ projects: resProjects
   //       }, () => resProjects.map(project =>
   //         getTasks(project.project_id).then(tasks =>
   //           this.setState({

@@ -5,14 +5,14 @@ export const projects = [
     "project_icon":"fa fa-clipboard fa-fw text-success",
     "project_url":"/todo",
   },
-  { 
-    "id":2,    
+  {
+    "id":2,
     "project_name":"To buy",
     "project_icon":"fa fa-shopping-cart fa-fw text-danger",
     "project_url":"/tobuy",
   },
   {
-    "id":3,    
+    "id":3,
     "project_name":"To work",
     "project_icon":"fa fa-briefcase fa-fw text-warning",
     "project_url":"/towork",

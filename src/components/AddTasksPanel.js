@@ -210,18 +210,18 @@ class TasksPanel extends React.Component {
       tasks: [],
       spinner: true,
     },
-    () => getProjects().then((resProjects = []) => 
-        (!Object.is(resProjects, {})) 
-        ? resProjects.map(project => 
-          getTasks(project.project_id).then(tasks => 
-            this.setState({ 
-              tasks: this.state.tasks.concat(tasks) 
-            }, this.setState({ 
-              spinner: false, 
-            })) 
-          ) 
-        ) 
-      : null )) 
+    () => getProjects().then((resProjects = []) =>
+      Array.isArray(resProjects) && resProjects.map(project =>
+          getTasks(project.project_id).then(tasks =>
+            this.setState({
+              tasks: this.state.tasks.concat(tasks)
+            }, this.setState({
+              spinner: false,
+            }))
+          )
+        )
+      )
+  )
   }
 
   canceVisibleButtons() {
@@ -234,7 +234,7 @@ class TasksPanel extends React.Component {
     this.setState(
       {
         addTasksModal: !this.state.addTasksModal,
-        // addTasksBoard: !this.state.addTasksBoard,        
+        // addTasksBoard: !this.state.addTasksBoard,
         tasksTitleInput: "",
         advancedOptionsCollapse: false,
         personalizationCollapse: false,
@@ -318,8 +318,7 @@ class TasksPanel extends React.Component {
         visibleCross: false
         // tasks: [...this.state.tasks].filter((e, i) => i !== index)
       },
-      () =>
-        deleteTasks({
+      () => deleteTasks({
           id: index
         }).then(data => {
           this.getAllTasksFromAllProjects();
