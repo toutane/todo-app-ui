@@ -92,7 +92,7 @@ export default class Todo extends React.Component {
                 </Popover> */}
               </h4>
               <hr className="my-3" />
-              <TasksPanelManager />
+              <TasksPanelManager {...this.props} />
               <hr className="my-3" />
               <TodayGrid />
             </Col>

@@ -46,7 +46,7 @@ class Project extends React.Component {
       userId: "",
       currentProject: null,
       spinner: false,
-      projectCollapse: false,
+      projectCollapse: this.props.match.params.action === 'add-project' ,
       filterCollapse: false,
       trashCollapse: false,
       dropdownAddProjectOpen: false,
@@ -93,7 +93,15 @@ class Project extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllProject()
+    this.getAllProject();
+    this.props.match.params.action === 'add-project' ? this.setState ({ projectCollapse: true}) : null
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.match.params.action !== prevProps.match.params.action) {
+      this.props.match.params.action === 'add-project' ? this.setState ({ projectCollapse: true}) : null
+    }
   }
 
   getAllProject() {
@@ -103,7 +111,7 @@ class Project extends React.Component {
     () => getProjects().then(resProjects =>
       resProjects.error
         ? this.props.history.push("/login")
-        : this.setState({ 
+        : this.setState({
           projects: resProjects,
           spinner: false
         })
@@ -114,7 +122,7 @@ class Project extends React.Component {
     // console.log(project)
     this.setState({
       currentProject: project
-    })    
+    })
   }
 
   projectToggle() {
@@ -148,8 +156,7 @@ class Project extends React.Component {
           //   "project_url": "/" + this.state.input.toLowerCase().replace(" ", "")
           // }])
         },
-        () =>
-          postProjects({
+        () => postProjects({
             project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
@@ -161,7 +168,7 @@ class Project extends React.Component {
             getProjects().then(projects =>
               this.setState({
                 projects: projects
-              })
+              }, () => this.props.history.push("/today"))
             );
           })
       );
@@ -333,7 +340,7 @@ class Project extends React.Component {
           &nbsp;&nbsp;&nbsp;<Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
           {this.state.spinner
             ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
-            : (<i className="fa fa-filter fa-fw"/>)}    
+            : (<i className="fa fa-filter fa-fw"/>)}
           </Button>
           <Button outline color="primary" onClick={this.trashToggle}>
             <i className="fa fa-trash fa-fw" />
@@ -346,7 +353,7 @@ class Project extends React.Component {
           <Collapse isOpen={this.state.projectCollapse}>
             &nbsp;
             <Card outline color="info">
-            <CardBody>            
+            <CardBody>
               <FormGroup>
                 <InputGroup>
                   <InputGroupAddon>
@@ -389,7 +396,7 @@ class Project extends React.Component {
                   &nbsp;You must enter a project name !
                 </p>
               </Collapse>
-              </CardBody>              
+              </CardBody>
             </Card>
           </Collapse>
 
@@ -462,7 +469,7 @@ class Project extends React.Component {
                   &nbsp;You can't add twice the same project !
                 </p>
               </Collapse>
-              </CardBody>              
+              </CardBody>
             </Card>
           </Collapse>
 
@@ -471,7 +478,7 @@ class Project extends React.Component {
           <Collapse isOpen={this.state.trashCollapse}>
             &nbsp;
             <Card outline color="danger">
-            <CardBody>            
+            <CardBody>
               <ButtonGroup>
                 <ButtonDropdown
                   isOpen={this.state.dropdownDeleteProjectOpen}
@@ -526,7 +533,7 @@ class Project extends React.Component {
                 <hr/>
                 <p className="text-danger">&nbsp;You must select a project !</p>
               </Collapse>
-              </CardBody>              
+              </CardBody>
             </Card>
           </Collapse>
         </div>
@@ -558,7 +565,7 @@ class Project extends React.Component {
               ))}
             </ListGroup>
           )
-          }        
+          }
       </div>
     );
   }

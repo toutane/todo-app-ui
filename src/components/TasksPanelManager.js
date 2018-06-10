@@ -59,7 +59,7 @@ export default class TasksPanelGestion extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">&nbsp;
-            <AddTasksPanel/>
+            <AddTasksPanel {...this.props} />
           </TabPane>
         </TabContent>
         &nbsp;
