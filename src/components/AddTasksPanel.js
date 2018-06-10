@@ -125,7 +125,24 @@ const icons = [
   {
     icon_name: "Chess",
     icon: "fas fa-chess-knight fa-fw"
-  }
+  },
+  {
+    icon_name:"Bug",    
+    icon:"fas fa-bug fa-fw",
+  },
+  {
+    icon_name:"Beer",
+    icon:"fas fa-beer fa-fw",
+  },
+  {
+    icon_name:"Apple",
+    icon:"fab fa-apple fa-fw",
+  },
+  {
+    icon_name:"Gfit",
+   
+    icon:"fas fa-gift fa-fw",
+  },
 ];
 
 class TasksPanel extends React.Component {

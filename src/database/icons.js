@@ -59,5 +59,17 @@ export const icons = [
     "icon":"fas fa-beer fa-fw",
     "style": {color:'#74b9ff'}
   },
+  {
+    "icon_name":"Apple",
+    "icon_color":"secondary",    
+    "icon":"fab fa-apple fa-fw",
+    "style": {}
+  },
+  {
+    "icon_name":"Gfit",
+    "icon_color":"secondary",    
+    "icon":"fas fa-gift fa-fw",
+    "style": {color:'#82ccdd'}
+  },
  
 ];
