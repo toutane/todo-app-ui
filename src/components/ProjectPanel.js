@@ -67,6 +67,7 @@ class Project extends React.Component {
       input: "",
       icon: "",
       color: "",
+      style: {},
       search: ""
     };
 
@@ -152,6 +153,7 @@ class Project extends React.Component {
             project_color: this.state.color,
             project_name: this.state.input,
             project_icon: this.state.icon,
+            project_icon_style: this.state.style,
             project_date: moment().format("L"),
             project_url: "/" + this.state.input.toLowerCase().replace(" ", "")
           }).then(x=>x)
@@ -239,7 +241,8 @@ class Project extends React.Component {
       dropSelectItem: icon.icon_name,
       dropSelectItemIcon: icon.icon,
       icon: icon.icon, 
-      color: icon.icon_color
+      color: icon.icon_color,
+      style: icon.style
     });
   }
 
@@ -247,13 +250,14 @@ class Project extends React.Component {
     this.setState({
       dropSelectProject: project.project_name,
       dropSelectItemIcon: project.project_icon,
+      style: project.project_icon_style
     });
   }
 
   onFilterSelected(filter) {
     this.setState({
       dropSelectFilter: filter.filter_name,
-      dropSelectItemIcon: filter.filter_icon
+      dropSelectItemIcon: filter.filter_icon,
     });
   }
 
@@ -361,7 +365,7 @@ class Project extends React.Component {
                   toggle={this.dropdownAddProjectToggle}
                 >
                   <DropdownToggle caret outline color="info">
-                    <i className={this.state.dropSelectItemIcon} />{" "}
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>{" "}
                     {this.state.dropSelectItem}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -370,7 +374,7 @@ class Project extends React.Component {
                         onClick={() => this.onAddProjectIcon(icon)}
                         key={i}
                       >
-                        <i className={icon.icon} /> {icon.icon_name}
+                        <i className={icon.icon} style={icon.style}/> {icon.icon_name}
                       </DropdownItem>
                     ))}
                   </DropdownMenu>
@@ -429,7 +433,7 @@ class Project extends React.Component {
                   toggle={this.dropdownFiltersToggle}
                 >
                   <DropdownToggle caret outline color="success">
-                    <i className={this.state.dropSelectItemIcon} />{" "}
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>{" "}
                     {this.state.dropSelectFilter}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -474,7 +478,7 @@ class Project extends React.Component {
                   toggle={this.dropdownDeleteProjectToggle}
                 >
                   <DropdownToggle caret outline color="danger">
-                    <i className={this.state.dropSelectItemIcon} />{" "}
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>{" "}
                     {this.state.dropSelectProject}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -483,7 +487,7 @@ class Project extends React.Component {
                         onClick={() => this.onAddProjectSelected(project)}
                         key={i}
                       >
-                        <i className={project.project_icon} />&nbsp;{
+                        <i className={project.project_icon} style={project.project_icon_style}/>&nbsp;{
                           project.project_name
                         }
                       </DropdownItem>
@@ -499,9 +503,8 @@ class Project extends React.Component {
                     !
                   </ModalHeader>
                   <ModalBody>
-                    Are you sure to delete the project:&nbsp;&nbsp;<i
-                      className={this.state.dropSelectItemIcon}
-                    />&nbsp;
+                    Are you sure to delete the project:&nbsp;&nbsp;
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>&nbsp;
                     {this.state.dropSelectProject}&nbsp;<hr />
                     <Button outline color="danger" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
                   </ModalBody>
@@ -549,7 +552,7 @@ class Project extends React.Component {
                   action
                   key={i}
                 >
-                  <i className={project.project_icon} />
+                  <i className={project.project_icon} style={project.project_icon_style}/>
                   &nbsp;{project.project_name}
                 </ListGroupItem>
               ))}

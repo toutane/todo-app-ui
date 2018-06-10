@@ -71,11 +71,11 @@ export default class ProjectsLineChart extends React.Component {
               <div className="d-flex justify-content-center">
                 <div className="mr-5">
                 <Fade>
-                  <a href="/activities" className="lead text-muted" style={{"fontSize":"14px"}}><i className="fas fa-tasks fa-fw mr-1 mt-3"/>tasks activity</a>          
+                  <a className="lead text-muted" style={{"fontSize":"14px"}}><i className="fas fa-tasks fa-fw mr-1 mt-3"/>tasks activity</a>          
                 </Fade>
                 </div>
                 <Fade>
-                  <a href="/activities" className="lead text-muted" style={{"fontSize":"14px"}}><i className="fa fa-list fa-fw mr-1 mt-3"/>projects activity</a>          
+                  <a className="lead text-muted" style={{"fontSize":"14px"}}><i className="fa fa-list fa-fw mr-1 mt-3"/>projects activity</a>          
                 </Fade>
               </div>
             </div>)
