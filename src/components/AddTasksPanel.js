@@ -497,148 +497,110 @@ class TasksPanel extends React.Component {
                   value={this.state.tasksDescriptionInput}
                 />
               </FormGroup>
-              <FormGroup>
-                <Label> Tasks date</Label>
+              <Label> Tasks date</Label>
+              <FormGroup className="d-flex justify-content-between align-items-center">
                 <DatePicker
                   selected={this.state.selectedDay}
                   onChange={this.taskDateInputFunction}
-                />
+                  />
+                <ButtonDropdown
+                  isOpen={this.state.dropdownSelectProjectOpen}
+                  toggle={this.dropdownSelectProjectToggle}
+                >
+                  <DropdownToggle caret outline color="info">
+                    <i className={this.state.dropSelectItemIcon} />{" "}
+                    {this.state.dropSelectProjectName}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {this.state.projects.map((project, i) => (
+                      <DropdownItem
+                        onClick={() => this.onAddProjectSelected(project)}
+                        key={i}
+                      >
+                        <i className={project.project_icon} />&nbsp;{
+                          project.project_name
+                        }
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </ButtonDropdown>
+                <ButtonDropdown
+                  isOpen={this.state.dropdownSelectPriorityOpen}
+                  toggle={this.dropdownSelectPriorityToggle}
+                >
+                  <DropdownToggle caret outline color="info">
+                    <i className={this.state.prioritySelectIcon} />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {priorities.map((priority, i) => (
+                      <DropdownItem
+                        onClick={() =>
+                          this.showPrioritySelected(priority)
+                        }
+                        key={i}
+                      >
+                        <i className={priority.priority_icon} />&nbsp;{
+                          priority.priority_name
+                        }
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </ButtonDropdown>
+                <ButtonDropdown
+                  isOpen={this.state.dropdownSelectTagOpen}
+                  toggle={this.dropdownSelectTagToggle}
+                >
+                  <DropdownToggle caret outline color="info">
+                    <i className="fas fa-tag" />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem />
+                  </DropdownMenu>
+                </ButtonDropdown>
               </FormGroup>
               <hr className="my-3" />
-              <Button color="info" onClick={this.advancedOptionsCollapse}>
-                <i className="fa fa-cog">&nbsp;</i>Advanced options
-              </Button>&nbsp;
-              <Button color="success" onClick={this.personalizationCollapse}>
-                <i className="fas fa-paint-brush" />&nbsp;Personalization
-              </Button>
-            </Form>
-            <Form>
-              <Collapse isOpen={this.state.advancedOptionsCollapse}>
-                &nbsp;
-                <Card outline color="info">
-                <CardBody>
-                  <Row>
-                    <Col xs="6" sm="4">
-                      <ButtonDropdown
-                        isOpen={this.state.dropdownSelectProjectOpen}
-                        toggle={this.dropdownSelectProjectToggle}
+              <FormGroup className="d-flex justify-content-end">
+                <ButtonDropdown
+                  className="mr-4"
+                  isOpen={this.state.dropdownSelectColorOpen}
+                  toggle={this.dropdownSelectColorToggle}
+                >
+                  <DropdownToggle caret outline color="info">
+                    <i className={this.state.dropSelectColorIcon}/>&nbsp;{this.state.dropSelectColor}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {colors.map((color, i) => (
+                      <DropdownItem
+                        onClick={() => this.showColorSelected(color)}
+                        key={i}
                       >
-                        <DropdownToggle caret outline color="info">
-                          <i className={this.state.dropSelectItemIcon} />{" "}
-                          {this.state.dropSelectProjectName}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {this.state.projects.map((project, i) => (
-                            <DropdownItem
-                              onClick={() => this.onAddProjectSelected(project)}
-                              key={i}
-                            >
-                              <i className={project.project_icon} />&nbsp;{
-                                project.project_name
-                              }
-                            </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Col>
-                    <Col xs="6" sm="4">
-                      <ButtonDropdown
-                        isOpen={this.state.dropdownSelectPriorityOpen}
-                        toggle={this.dropdownSelectPriorityToggle}
+                        <i className={color.color_icon} />&nbsp;{
+                          color.color_name
+                        }
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </ButtonDropdown>
+                <ButtonDropdown
+                  isOpen={this.state.dropdownSelectIconOpen}
+                  toggle={this.dropdownSelectIconToggle}
+                >
+                  <DropdownToggle caret outline color="info">
+                    <i className={this.state.dropSelectIconIcon}/>&nbsp;{this.state.dropSelectIcon}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {icons.map((icon, i) => (
+                      <DropdownItem
+                        onClick={() => this.showIconSelected(icon)}
+                        key={i}
                       >
-                        <DropdownToggle caret outline color="info">
-                          <i className={this.state.prioritySelectIcon} />{" "}
-                          Priority
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {priorities.map((priority, i) => (
-                            <DropdownItem
-                              onClick={() =>
-                                this.showPrioritySelected(priority)
-                              }
-                              key={i}
-                            >
-                              <i className={priority.priority_icon} />&nbsp;{
-                                priority.priority_name
-                              }
-                            </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Col>
-                    <Col sm="4">
-                      <ButtonDropdown
-                        isOpen={this.state.dropdownSelectTagOpen}
-                        toggle={this.dropdownSelectTagToggle}
-                      >
-                        <DropdownToggle caret outline color="info">
-                          <i className="fas fa-tag" /> Tag
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem />
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Col>
-                  </Row>
-                  </CardBody>
-                </Card>
-              </Collapse>
-              <Collapse isOpen={this.state.personalizationCollapse}>
-                &nbsp;
-                <Card outline color="success">
-                <CardBody>
-                  <Row>
-                    <Col />
-                    <Col>
-                      <ButtonDropdown
-                        isOpen={this.state.dropdownSelectColorOpen}
-                        toggle={this.dropdownSelectColorToggle}
-                      >
-                        <DropdownToggle caret outline color="success">
-                          <i className={this.state.dropSelectColorIcon} />{" "}
-                          {this.state.dropSelectColor}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {colors.map((color, i) => (
-                            <DropdownItem
-                              onClick={() => this.showColorSelected(color)}
-                              key={i}
-                            >
-                              <i className={color.color_icon} />&nbsp;{
-                                color.color_name
-                              }
-                            </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Col>
-                    <Col>
-                      <ButtonDropdown
-                        isOpen={this.state.dropdownSelectIconOpen}
-                        toggle={this.dropdownSelectIconToggle}
-                      >
-                        <DropdownToggle caret outline color="success">
-                          <i className={this.state.dropSelectIconIcon} />{" "}
-                          {this.state.dropSelectIcon}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          {icons.map((icon, i) => (
-                            <DropdownItem
-                              onClick={() => this.showIconSelected(icon)}
-                              key={i}
-                            >
-                              <i className={icon.icon} />&nbsp;{icon.icon_name}
-                            </DropdownItem>
-                          ))}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    </Col>
-                    <Col />
-                  </Row>
-                  </CardBody>
-                </Card>
-              </Collapse>
-            </Form>
+                        <i className={icon.icon} />&nbsp;{icon.icon_name}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </ButtonDropdown>
+                </FormGroup>
+              </Form>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.addTasksModal}>
