@@ -338,7 +338,7 @@ class Project extends React.Component {
               Are you sure to delete the project:&nbsp;&nbsp;
               <i className={this.state.dropSelectItemIcon} style={this.state.style}/>&nbsp;
               {this.state.dropSelectProject}&nbsp;<hr />
-              <Button outline color="danger" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
+              <Button outline color="danger" >Be careful ! This action is IRREVERSIBLE ...</Button>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={this.trashModal}>

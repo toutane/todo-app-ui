@@ -38,6 +38,9 @@ import sortBy from "sort-by";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { InputGroupAddon } from '../utils/InputGroupAddon';
+import Radium, {StyleRoot} from 'radium';
+
+import { animations } from '../animations/animations'
 
 
 import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
@@ -183,7 +186,8 @@ class TasksPanel extends React.Component {
       activeTasksInformation: false,
       activeTasksDelete: false,
       visibleCross: false,
-      search: ""
+      search: "",
+      timeoutNumber: null,
     };
 
     this.addTasksModal = this.addTasksModal.bind(this);
@@ -213,7 +217,6 @@ class TasksPanel extends React.Component {
     this.updateSearch = this.updateSearch.bind(this);
     this.deleteTasksFunction = this.deleteTasksFunction.bind(this);
     this.confirmDeleteFunction = this.confirmDeleteFunction.bind(this);
-    this.canceVisibleButtons = this.canceVisibleButtons.bind(this);
     this.moreInformationFunction1 = this.moreInformationFunction1.bind(this);
     this.getAllTasksFromAllProjects = this.getAllTasksFromAllProjects.bind(this);
   }
@@ -246,12 +249,6 @@ class TasksPanel extends React.Component {
         )
       )
   )
-  }
-
-  canceVisibleButtons() {
-    this.setState({
-      visibleCross: false
-    });
   }
 
   addTasksModal() {
@@ -351,11 +348,16 @@ class TasksPanel extends React.Component {
   }
 
   confirmDeleteFunction(i) {
+    clearTimeout(this.state.timeoutNumber || null);
     this.setState({
       visibleCross: true,
       confirmDeleteTasks: i,
       activeTasksInformation: false
       // activeTasksDelete: !this.state.activeTasksDelete
+    }, () => {
+      const num = setTimeout(() => this.setState({visibleCross: false}), 3000);
+      this.setState({timeoutNumber: num});
+      // console.log(num);
     });
   }
 
@@ -708,24 +710,10 @@ class TasksPanel extends React.Component {
 
                     {this.state.visibleCross &&
                     i === this.state.confirmDeleteTasks ? (
-                      <ButtonGroup>
-                        <Button
-                          color="danger"
-                          outline
-                          size="sm"
-                          onClick={() => this.deleteTasksFunction(tasks.tasks_id)}
-                        >
-                          confirm
-                        </Button>
-                        &nbsp;<Button
-                          color="primary"
-                          outline
-                          size="sm"
-                          onClick={() => this.canceVisibleButtons()}
-                        >
-                          cancel
-                        </Button>
-                      </ButtonGroup>
+                        <StyleRoot>
+                          <i style={animations.bounceIn} className="far fa-trash-alt fa-lg" onClick={() => this.deleteTasksFunction(tasks.tasks_id)}/>
+                      
+                        </StyleRoot>
                     ) : (
                       <i
                         className="fas fa-times fa-lg mb-1"
