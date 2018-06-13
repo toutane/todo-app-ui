@@ -4,11 +4,8 @@ import {
   Button,
   Card,
   CardTitle,
-  CardFooter,
   CardBody,
   Collapse,
-  Row,
-  Col,
   Modal,
   ModalHeader,
   ModalBody,
@@ -17,8 +14,6 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
-  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -26,13 +21,8 @@ import {
   CardText,
   Alert,
   InputGroup,
-  Popover,
-  FormFeedback,
-  Badge
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-// import shortid from "shortid-36";
 import moment from "moment";
 import sortBy from "sort-by";
 
@@ -42,14 +32,7 @@ import Radium, {StyleRoot} from 'radium';
 
 import { animations } from '../animations/animations'
 
-
 import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
-
-import ProjectStatue from "./ProjectStatuePanel";
-import AddTasksBoard from "./AddTasksBoard";
-// import { projects } from '../database/projects'
-import { tasks as tasksInit } from "../database/tasks";
-import Project from "./ProjectPanel";
 
 const priorities = [
   {
@@ -188,6 +171,7 @@ class TasksPanel extends React.Component {
       visibleCross: false,
       search: "",
       timeoutNumber: null,
+      alphabSortMode: "tasks_title"
     };
 
     this.addTasksModal = this.addTasksModal.bind(this);
@@ -219,6 +203,7 @@ class TasksPanel extends React.Component {
     this.confirmDeleteFunction = this.confirmDeleteFunction.bind(this);
     this.moreInformationFunction1 = this.moreInformationFunction1.bind(this);
     this.getAllTasksFromAllProjects = this.getAllTasksFromAllProjects.bind(this);
+    this.changeAlphabSortMode = this.changeAlphabSortMode.bind(this);
   }
 
   componentDidMount() {
@@ -465,6 +450,32 @@ class TasksPanel extends React.Component {
     });
   }
 
+  changeAlphabSortMode() {
+    this.state.alphabSortMode === "tasks_title"
+    ? this.setState({alphabSortMode: "-tasks_title"})
+    : this.setState({alphabSortMode: "tasks_title"})
+  }
+
+  changeCardTextColor(tasks) {
+    if (tasks.tasks_card_color === "color-theme") {
+      return ""
+    }
+    else {
+      return "text-white"
+    }
+
+  } 
+
+  changeEllipsisColor(tasks) {
+    if (tasks.tasks_card_color === "info" || tasks.tasks_card_color === "success") {
+      return "fas fa-ellipsis-v fa-sm"
+    }
+    else {
+        return "fas fa-ellipsis-v fa-sm text-info"
+    }
+
+  } 
+
   render() {
     const filteredTasks = this.state.tasks.filter(tasks =>
       tasks.tasks_title.toLowerCase().includes(this.state.search.toLowerCase())
@@ -497,9 +508,14 @@ class TasksPanel extends React.Component {
             ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
             : (<i className="fas fa-ellipsis-v fa-fw" />)}
           </Button>
-          <Button outline color="primary" onClick={null}>
-            <i className="fa fa-trash fa-fw" />
-          </Button>
+          {this.state.alphabSortMode === "tasks_title"
+            ? <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()} >
+                <i className="fas fa-sort-alpha-down fa-fw"/>
+              </Button>
+            : <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()}>
+                <i className="fas fa-sort-alpha-up fa-fw"/>
+              </Button>
+          }
         </ButtonGroup>
         {/* <ProjectStatue/> */}
         <Modal isOpen={this.state.addTasksModal} toggle={this.addTasksModal}>
@@ -543,7 +559,7 @@ class TasksPanel extends React.Component {
                         onClick={() => this.onAddProjectSelected(project)}
                         key={i}
                       >
-                        <i className={project.project_icon} />&nbsp;{
+                        <i className={project.project_icon} style={project.project_icon_style}/>&nbsp;{
                           project.project_name
                         }
                       </DropdownItem>
@@ -658,14 +674,14 @@ class TasksPanel extends React.Component {
           ? (<div></div>)
           : (filteredTasks.sort(
             sortBy(
-              "tasks_title",
+              this.state.alphabSortMode,
               (key, value) =>
                 key === "tasks_title" ? value.toLowerCase() : value
             )
           )
           .map((tasks, i) => (
             <div key={i}>
-              <Card color={tasks.tasks_card_color}>
+              <Card color={tasks.tasks_card_color} className={this.changeCardTextColor(tasks)}>
               <CardBody>
                 <div className="d-flex justify-content-between align-items-start">
                   <div>
@@ -677,7 +693,7 @@ class TasksPanel extends React.Component {
                       </div>
                     </CardTitle>
                     <CardText onClick={() => this.moreInformationFunction(i)} tag="div">
-                      <i className="fas fa-ellipsis-v fa-sm text-info" />&nbsp;&nbsp;{
+                      <i className={this.changeEllipsisColor(tasks)} />&nbsp;&nbsp;{
                         tasks.tasks_description
                       }&nbsp;
                       <Collapse
@@ -689,8 +705,8 @@ class TasksPanel extends React.Component {
                       >
                         <hr className="my-2"/>
                         <h6 >
-                          {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                            className={tasks.tasks_project_icon}
+                          {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <i className={tasks.tasks_project_icon}
                           />&nbsp;{tasks.tasks_project_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
                             className={tasks.tasks_priority}
                           />
