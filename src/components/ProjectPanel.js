@@ -244,27 +244,30 @@ class Project extends React.Component {
     // console.log(filteredProjects.sort(function (a, b) { return a.project_name - b.project_name }))
     return (
       <div>
-        <ButtonGroup>
+        <div className="d-flex justify-content-between">
           <Button color="info" onClick={this.projectToggle}>
-            <i className="fa fa-plus fa-fw" />&nbsp;Add a project
+            <i className="fa fa-plus fa-fw" />&nbsp;Add
           </Button>
-          &nbsp;&nbsp;&nbsp;
-          {this.state.sortMode === true
-            ? <Button outline color="primary" onClick={()=>this.changeSortMode()} >
-                <i className="fas fa-sort-alpha-down fa-fw"/>
-              </Button>
-            : <Button outline color="primary" onClick={()=>this.changeSortMode()}>
-                <i className="fas fa-sort-alpha-up fa-fw"/>
-              </Button>
-          }
-          <Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
-          {this.state.spinner
-            ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
-            : (<i className="fas fa-search fa-fw"/>)}
-          </Button>
-        </ButtonGroup>
+          <ButtonGroup>
+            <Button outline color="primary">
+              <i className="fas fa-th-list fa-fw"/>
+            </Button>
+            {this.state.sortMode === true
+              ? <Button outline color="primary" onClick={()=>this.changeSortMode()} >
+                  <i className="fas fa-sort-alpha-down fa-fw"/>
+                </Button>
+              : <Button outline color="primary" onClick={()=>this.changeSortMode()}>
+                  <i className="fas fa-sort-alpha-up fa-fw"/>
+                </Button>
+            }
+            <Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
+            {this.state.spinner
+              ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
+              : (<i className="fas fa-search fa-fw"/>)}
+            </Button>
+          </ButtonGroup>
+        </div>
         <div>
-
           <Collapse isOpen={this.state.projectCollapse}>
             &nbsp;
             <Card outline color="info">
