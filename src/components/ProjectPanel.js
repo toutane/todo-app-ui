@@ -331,14 +331,18 @@ class Project extends React.Component {
 
           <Modal isOpen={this.state.trashModal} toggle={this.trashModal}>
             <ModalHeader>
-              <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning
-              !
+              <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning!
             </ModalHeader>
-            <ModalBody>
-              Are you sure to delete the project:&nbsp;&nbsp;
-              <i className={this.state.dropSelectItemIcon} style={this.state.style}/>&nbsp;
-              {this.state.dropSelectProject}&nbsp;<hr />
-              <Button outline color="danger" >Be careful ! This action is IRREVERSIBLE ...</Button>
+            <ModalBody className="d-flex flex-column justify-content-center">
+              <span>
+                  Are you sure to delete the project:&nbsp;&nbsp;
+                  <span style={{fontSize: 22}}>
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>
+                    &nbsp;{this.state.dropSelectProject}
+                  </span>
+              </span>
+              <hr/>
+              <Button color="danger">Be careful ! This action is IRREVERSIBLE ...</Button>
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={this.trashModal}>
