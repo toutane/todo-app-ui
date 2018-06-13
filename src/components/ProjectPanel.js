@@ -10,75 +10,53 @@ import {
   FormGroup,
   InputGroup,
   Input,
-  Label,
-  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   ButtonDropdown,
-  Container,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Row,
-  Col,
   Alert
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import { InputGroupAddon } from '../utils/InputGroupAddon';
 import moment from "moment";
 import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
-// import shortid from "shortid-36";
 
-import ProjectStatue from "./ProjectStatuePanel";
-// import { projects as projectsInit } from '../database/projects'
-import { filters as filtersDropdownList } from "../database/filters";
 import { icons } from "../database/icons";
 
-const filtersList = [];
 
 class Project extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userId: "",
-      currentProject: null,
       spinner: false,
+      deleteCross: false,
+      indexDeleteCross: false,
       projectCollapse: this.props.match.params.action === 'add-project' ,
-      filterCollapse: false,
+      searchCollapse: false,
       trashCollapse: false,
       dropdownAddProjectOpen: false,
-      dropdownDeleteProjectOpen: false,
-      dropdownFilterOpen: false,
       trashModal: false,
-      trashDetectCollapse: false,
       addDetectCollapse: false,
-      addFilterDetectCollapse: false,
-      addFilterDetectCollapse2: false,
       dropSelectItem: "Project icon",
       dropSelectProject: "Project selected",
-      dropSelectFilter: "More filter",
       dropSelectItemIcon: "",
+      dropSelectProjectId: "",
       projects: [],
-      filters: filtersList,
-      filtersDropdownList: filtersDropdownList,
       input: "",
       icon: "",
       color: "",
       style: {},
-      search: ""
+      search: "",
+      sortMode: true
     };
 
     this.projectToggle = this.projectToggle.bind(this);
-    this.trashToggle = this.trashToggle.bind(this);
     this.addProjectFunction = this.addProjectFunction.bind(this);
-    this.addFilterFunction = this.addFilterFunction.bind(this);
     this.dropdownAddProjectToggle = this.dropdownAddProjectToggle.bind(this);
-    this.dropdownDeleteProjectToggle = this.dropdownDeleteProjectToggle.bind(
-      this
-    );
     this.onAddProjectInput = this.onAddProjectInput.bind(this);
     this.onAddProjectIcon = this.onAddProjectIcon.bind(this);
     this.updateSearch = this.updateSearch.bind(this);
@@ -86,10 +64,10 @@ class Project extends React.Component {
     this.deleteFunction = this.deleteFunction.bind(this);
     this.onAddProjectSelected = this.onAddProjectSelected.bind(this);
     this.trashModal = this.trashModal.bind(this);
-    this.trashModalBis = this.trashModalBis.bind(this);
-    this.dropdownFiltersToggle = this.dropdownFiltersToggle.bind(this);
-    this.setCurrentProject = this.setCurrentProject.bind(this);
     this.getAllProject = this.getAllProject.bind(this);
+    this.setDeleteCross = this.setDeleteCross.bind(this);
+    this.sortProjects = this.sortProjects.bind(this);
+    this.changeSortMode = this.changeSortMode.bind(this);
   }
 
   componentDidMount() {
@@ -118,13 +96,6 @@ class Project extends React.Component {
     ))
   }
 
-  setCurrentProject(project) {
-    // console.log(project)
-    this.setState({
-      currentProject: project
-    })
-  }
-
   projectToggle() {
     this.setState({
       projectCollapse: !this.state.projectCollapse,
@@ -132,15 +103,6 @@ class Project extends React.Component {
       dropSelectItem: "Project icon",
       addDetectCollapse: false,
       input: ""
-    });
-  }
-
-  trashToggle() {
-    this.setState({
-      trashCollapse: !this.state.trashCollapse,
-      dropSelectItemIcon: "",
-      dropSelectProject: "Project selected",
-      trashDetectCollapse: false
     });
   }
 
@@ -186,54 +148,6 @@ class Project extends React.Component {
     });
   }
 
-  addFilterFunction() {
-    if (
-      this.state.dropSelectFilter !== "More filter" &&
-      !this.state.filters.some(
-        e => e.filter_name === this.state.dropSelectFilter
-      )
-    ) {
-      this.setState({
-        filters: this.state.filters.concat([
-          {
-            filter_name: this.state.dropSelectFilter,
-            filter_icon: this.state.dropSelectItemIcon
-          }
-        ]),
-        dropSelectFilter: "More filter",
-        dropSelectItemIcon: ""
-      });
-    } else {
-      if (this.state.dropSelectFilter === "More filter") {
-        this.setState({
-          addFilterDetectCollapse: true,
-          dropSelectItemIcon: ""
-        });
-      } else {
-        this.setState({
-          addFilterDetectCollapse2: true,
-          dropSelectFilter: "More filter",
-          dropSelectItemIcon: ""
-        });
-      }
-    }
-  }
-
-  dropdownDeleteProjectToggle() {
-    this.setState({
-      dropdownDeleteProjectOpen: !this.state.dropdownDeleteProjectOpen,
-      trashDetectCollapse: false
-    });
-  }
-
-  dropdownFiltersToggle() {
-    this.setState({
-      dropdownFilterOpen: !this.state.dropdownFilterOpen,
-      addFilterDetectCollapse: false,
-      addFilterDetectCollapse2: false
-    });
-  }
-
   onAddProjectInput(e) {
     console.log(e.target.value);
     this.setState({
@@ -261,65 +175,64 @@ class Project extends React.Component {
     });
   }
 
-  onFilterSelected(filter) {
-    this.setState({
-      dropSelectFilter: filter.filter_name,
-      dropSelectItemIcon: filter.filter_icon,
-    });
-  }
-
   updateSearch(event) {
     this.setState({ search: event.target.value.substr(0, 20) });
   }
 
   filterToggle() {
     this.setState({
-      filterCollapse: !this.state.filterCollapse,
+      searchCollapse: !this.state.searchCollapse,
       search: ""
     });
   }
 
-  deleteFunction() {
-    this.setState(
-      {
-        trashCollapse: !this.state.trashCollapse,
-        trashModal: !this.state.trashModal,
-        dropSelectItemIcon: "",
-        // projects: [...this.state.projects].filter(
-        //   e => e.project_name !== this.state.dropSelectProject
-        // ),
-      },
-      () =>
-          deleteProjects({
-            project_name: this.state.dropSelectProject,
-          }).then(data => {
-            getProjects().then(projects =>
-              this.setState({
-                projects: projects
-              })
-            );
-          }),
-    () => console.log(this.state.projects)
-    );
-  }
-
-  trashModal() {
-    if (this.state.dropSelectProject !== "Project selected") {
-      this.setState({
-        trashModal: !this.state.trashModal
-      });
-    } else {
-      this.setState({
-        trashDetectCollapse: true
-      });
-    }
-  }
-
-  trashModalBis() {
+  trashModal(project) {
     this.setState({
       trashModal: !this.state.trashModal,
-      trashCollapse: !this.state.trashCollapse
-    });
+      dropSelectProject: project.project_name,
+      dropSelectItemIcon: project.project_icon,
+      dropSelectProjectId: project.project_id,
+      style: project.project_icon_style
+    })
+  }
+
+  deleteFunction() {
+    this.setState({
+      trashModal: !this.state.trashModal
+    },  
+    () => deleteProjects({
+          project_id: this.state.dropSelectProjectId
+        }).then(() => getProjects().then(projects =>
+            this.setState({
+              projects: projects
+            }, () => console.log(this.state.projects))
+          ))
+    )}
+
+  setDeleteCross(index, toggle) {
+    this.setState({deleteCross: toggle, indexDeleteCross: index})
+  }
+
+  changeSortMode() {
+    this.setState({sortMode: !this.state.sortMode})
+  }
+  sortProjects(a, b) {
+    let x = a.project_name.toLowerCase();
+    let y = b.project_name.toLowerCase();
+    if (this.state.sortMode === true) {
+      if (x < y)
+        return -1;
+      if (x > y)
+        return 1;
+      return 0;
+    }
+    else {
+      if (x > y)
+        return -1;
+      if (x < y)
+        return 1;
+      return 0;
+    }
   }
 
   render() {
@@ -327,29 +240,34 @@ class Project extends React.Component {
       project.project_name
         .toLowerCase()
         .includes(this.state.search.toLowerCase())
-    ) || [];
-
+      ).sort(this.sortProjects) || [];
+    // console.log(filteredProjects.sort(function (a, b) { return a.project_name - b.project_name }))
     return (
       <div>
-        {/* Command panel */}
-
-        <ButtonGroup>
+        <div className="d-flex justify-content-between">
           <Button color="info" onClick={this.projectToggle}>
-            <i className="fa fa-plus fa-fw" />&nbsp;Add a project
+            <i className="fa fa-plus fa-fw" />&nbsp;Add
           </Button>
-          &nbsp;&nbsp;&nbsp;<Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
-          {this.state.spinner
-            ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
-            : (<i className="fa fa-filter fa-fw"/>)}
-          </Button>
-          <Button outline color="primary" onClick={this.trashToggle}>
-            <i className="fa fa-trash fa-fw" />
-          </Button>
-        </ButtonGroup>
-
+          <ButtonGroup>
+            <Button outline color="primary">
+              <i className="fas fa-th-list fa-fw"/>
+            </Button>
+            {this.state.sortMode === true
+              ? <Button outline color="primary" onClick={()=>this.changeSortMode()} >
+                  <i className="fas fa-sort-alpha-down fa-fw"/>
+                </Button>
+              : <Button outline color="primary" onClick={()=>this.changeSortMode()}>
+                  <i className="fas fa-sort-alpha-up fa-fw"/>
+                </Button>
+            }
+            <Button outline={!this.state.spinner} color="primary" onClick={this.filterToggle}>
+            {this.state.spinner
+              ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
+              : (<i className="fas fa-search fa-fw"/>)}
+            </Button>
+          </ButtonGroup>
+        </div>
         <div>
-          {/* Add project menu */}
-
           <Collapse isOpen={this.state.projectCollapse}>
             &nbsp;
             <Card outline color="info">
@@ -400,13 +318,8 @@ class Project extends React.Component {
             </Card>
           </Collapse>
 
-          {/* Filter project menu */}
-
-          <Collapse isOpen={this.state.filterCollapse}>
-            &nbsp;
-            <Card outline color="success">
-            <CardBody>
-              <FormGroup>
+          <Collapse isOpen={this.state.searchCollapse}>
+              &nbsp;
                 <InputGroup>
                   <InputGroupAddon addonType="prepend">
                     <i className="fa fa-search fa-fw" />
@@ -417,125 +330,36 @@ class Project extends React.Component {
                     placeholder="search project"
                   />
                 </InputGroup>
-              </FormGroup>
-              {this.state.filters.map((filter, i) => (
-                <div key={i}>
-                  <ButtonGroup>
-                    <Button outline color="success">
-                      <i className={filter.filter_icon} />
-                      &nbsp;{filter.filter_name}
-                    </Button>&nbsp;
-                    <Button color="success">
-                      <i className="fa fa-filter" />
-                    </Button>
-                  </ButtonGroup>
-                  <div>
-                    <hr className="my-2" />{" "}
-                  </div>
-                </div>
-              ))}
-              <ButtonGroup>
-                <ButtonDropdown
-                  isOpen={this.state.dropdownFilterOpen}
-                  toggle={this.dropdownFiltersToggle}
-                >
-                  <DropdownToggle caret outline color="success">
-                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>{" "}
-                    {this.state.dropSelectFilter}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {this.state.filtersDropdownList.map((filter, i) => (
-                      <DropdownItem
-                        onClick={() => this.onFilterSelected(filter)}
-                        key={i}
-                      >
-                        <i className={filter.filter_icon} />
-                        &nbsp;{filter.filter_name}
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </ButtonDropdown>&nbsp;
-                <Button color="success" onClick={this.addFilterFunction}>
-                  <i className="fa fa-plus" />&nbsp;Add
-                </Button>
-              </ButtonGroup>
-              <Collapse isOpen={this.state.addFilterDetectCollapse}>
-                <hr />
-                <p className="text-danger">&nbsp;You must select a filter !</p>
-              </Collapse>
-              <Collapse isOpen={this.state.addFilterDetectCollapse2}>
-                <hr />
-                <p className="text-danger">
-                  &nbsp;You can't add twice the same project !
-                </p>
-              </Collapse>
-              </CardBody>
-            </Card>
           </Collapse>
 
-          {/* Delete project menu  */}
-
-          <Collapse isOpen={this.state.trashCollapse}>
-            &nbsp;
-            <Card outline color="danger">
-            <CardBody>
-              <ButtonGroup>
-                <ButtonDropdown
-                  isOpen={this.state.dropdownDeleteProjectOpen}
-                  toggle={this.dropdownDeleteProjectToggle}
-                >
-                  <DropdownToggle caret outline color="danger">
-                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>{" "}
-                    {this.state.dropSelectProject}
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {filteredProjects.map((project, i) => (
-                      <DropdownItem
-                        onClick={() => this.onAddProjectSelected(project)}
-                        key={i}
-                      >
-                        <i className={project.project_icon} style={project.project_icon_style}/>&nbsp;{
-                          project.project_name
-                        }
-                      </DropdownItem>
-                    ))}
-                  </DropdownMenu>
-                </ButtonDropdown>&nbsp;
-                <Button color="danger" onClick={this.trashModal}>
-                  <i className="fa fa-trash" />
-                </Button>
-                <Modal isOpen={this.state.trashModal} toggle={this.trashModal}>
-                  <ModalHeader>
-                    <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning
-                    !
-                  </ModalHeader>
-                  <ModalBody>
-                    Are you sure to delete the project:&nbsp;&nbsp;
-                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>&nbsp;
-                    {this.state.dropSelectProject}&nbsp;<hr />
-                    <Button outline color="danger" disabled>Be careful ! This action is IRREVERSIBLE ...</Button>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="secondary" onClick={this.trashModalBis}>
-                      Cancel
-                    </Button>
-                    <Button
-                      outline
-                      color="danger"
-                      onClick={this.deleteFunction}
-                    >
-                      <i className="fa fa-trash" />&nbsp;Delete
-                    </Button>
-                  </ModalFooter>
-                </Modal>
-              </ButtonGroup>
-              <Collapse isOpen={this.state.trashDetectCollapse}>
-                <hr/>
-                <p className="text-danger">&nbsp;You must select a project !</p>
-              </Collapse>
-              </CardBody>
-            </Card>
-          </Collapse>
+          <Modal isOpen={this.state.trashModal} toggle={this.trashModal}>
+            <ModalHeader>
+              <i className="fas fa-exclamation-triangle text-danger" />&nbsp;Warning!
+            </ModalHeader>
+            <ModalBody className="d-flex flex-column justify-content-center">
+              <span>
+                  Are you sure to delete the project:&nbsp;&nbsp;
+                  <span style={{fontSize: 22}}>
+                    <i className={this.state.dropSelectItemIcon} style={this.state.style}/>
+                    &nbsp;{this.state.dropSelectProject}
+                  </span>
+              </span>
+              <hr/>
+              <Button color="danger">Be careful ! This action is IRREVERSIBLE ...</Button>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.trashModal}>
+                Cancel
+              </Button>
+              <Button
+                outline
+                color="danger"
+                onClick={this.deleteFunction}
+              >
+                <i className="fa fa-trash" />&nbsp;Delete
+              </Button>
+            </ModalFooter>
+          </Modal>
         </div>
 
         <div>&nbsp;</div>
@@ -555,12 +379,18 @@ class Project extends React.Component {
             <ListGroup>
               {filteredProjects.map((project, i) => (
                 <ListGroupItem
-                  onClick={() => this.setCurrentProject(project)}
                   action
                   key={i}
+                  className="d-flex justify-content-between align-items-center"
+                  onMouseEnter={(e) => this.setDeleteCross(i, true)}
+                  onMouseLeave={(e) => this.setDeleteCross(i, false)}
                 >
-                  <i className={project.project_icon} style={project.project_icon_style}/>
-                  &nbsp;{project.project_name}
+                  <div>
+                    <i className={project.project_icon} style={project.project_icon_style}/>
+                    &nbsp;{project.project_name}
+                  </div>
+                  {/* <i className="fas fa-times" onClick={() => this.deleteFunction(project.project_name)}/> */}
+                  {(this.state.indexDeleteCross === i) && this.state.deleteCross && <i className="fas fa-times" onClick={() => this.trashModal(project)}/>}
                 </ListGroupItem>
               ))}
             </ListGroup>

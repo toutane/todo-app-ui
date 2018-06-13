@@ -12,7 +12,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       activityView: true,
+       activityView: false,
        readyActivity: false,
        projects: [],
        tasks: []

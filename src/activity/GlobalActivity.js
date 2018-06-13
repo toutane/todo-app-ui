@@ -3,24 +3,9 @@ import { Jumbotron, Fade, Alert } from 'reactstrap';
 import { LineChart, Line } from 'recharts';
 import { countBy, sortBy } from 'lodash';
 import moment from 'moment';
-import { fadeInDown, fadeInUp, fadeIn } from 'react-animations';
 import Radium, {StyleRoot} from 'radium';
 
-const styles = {
-  fadeInDown: {
-    animation: 'x 0.8s',
-    animationName: Radium.keyframes(fadeInDown, 'fadeInDown')
-  },
-  fadeInUp: {
-    animation: 'x 0.8s',
-    animationName: Radium.keyframes(fadeInUp, 'fadeInUp')
-  },
-  fadeIn: {
-    animation: 'x 1.5s',
-    animationName: Radium.keyframes(fadeIn, 'fadeIn')
-  }
-
-}
+import { animations } from '../animations/animations'
 
 export default class ProjectsLineChart extends React.Component {
   constructor(props) {
@@ -40,10 +25,10 @@ export default class ProjectsLineChart extends React.Component {
       <Jumbotron className="text-center">
          <div className="d-flex justify-content-center align-items-baseline">
           <StyleRoot>                            
-              <h1 style={styles.fadeInUp} className="display-3 text-info mr-2">{this.props.user.username}</h1>
+              <h1 style={animations.fadeInUp} className="display-3 text-info mr-2">{this.props.user.username}</h1>
           </StyleRoot>
           <StyleRoot>
-              <h1 style={styles.fadeInDown}>activities</h1>
+              <h1 style={animations.fadeInDown}>activities</h1>
           </StyleRoot>
          </div>
         {
@@ -58,7 +43,7 @@ export default class ProjectsLineChart extends React.Component {
           : (<div>
               <hr className="my-3 pb-3"/>
               <StyleRoot>
-                <div style={styles.fadeIn} className="d-flex justify-content-center">
+                <div style={animations.fadeIn} className="d-flex justify-content-center">
                 <LineChart width={100} height={70} data={tasksActivityData}>
                   <Line type="monotone" dataKey="nb" stroke="#f0ad4e" dot={false} animationBegin={100} isAnimationActive={true}/>
                 </LineChart>
