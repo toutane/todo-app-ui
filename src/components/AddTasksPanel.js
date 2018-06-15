@@ -154,6 +154,9 @@ class TasksPanel extends React.Component {
       allActiveTasks: false,
       dropSelectProjectName: "Project",
       dropSelectProject: "Project",
+      addTaskModalFooter: "",
+      noSelectedProject: false,
+      noTaskInput: false,
       dropSelectColor: "Color-theme",
       dropSelectColorIcon: "fa fa-paint-brush",
       dropSelectIcon: "Icon",
@@ -161,7 +164,6 @@ class TasksPanel extends React.Component {
       dropSelectItemIcon: "fa fa-list",
       prioritySelectIcon: "fa fa-flag",
       tasksTitleInput: "",
-      tasksTitleInputInvalid: false,
       tasksDescriptionInput: "",
       selectedDay: moment(),
       selectedTasksInformation: undefined,
@@ -245,7 +247,10 @@ class TasksPanel extends React.Component {
         advancedOptionsCollapse: false,
         personalizationCollapse: false,
         tasksDescriptionInput: "",
-        selectedDay: moment()
+        selectedDay: moment(),
+        noTaskInput: false,
+        noSelectedProject: false,
+        addTaskModalFooter: ""
       },
       () =>
         getProjects().then(resProjects => {
@@ -273,47 +278,49 @@ class TasksPanel extends React.Component {
   }
 
   addTasksFunction() {
-    if (this.state.tasksTitleInput !== "") {
-      // pour verifier la date :  && this.state.selectedDay !== ""
-      this.setState(
-        {
-          addTasksModal: !this.state.addTasksModal,
-        },
-        () =>
-          postTasks({
-            tasks_id: this.state.tasks.length + 1,
-            tasks_title: this.state.tasksTitleInput,
-            tasks_description: this.state.tasksDescriptionInput,
-            tasks_date: this.state.selectedDay.format("L"),
-            tasks_create_date: moment().format("L"),
-            tasks_project: this.state.dropSelectProject,
-            tasks_project_name: this.state.dropSelectProjectName,
-            tasks_project_icon: this.state.dropSelectItemIcon,
-            tasks_priority: this.state.prioritySelectIcon,
-            tasks_card_color: this.state.dropSelectColor.toLocaleLowerCase(),
-            tasks_card_icon: this.state.dropSelectIconIcon
-          }).then(data => {
-            console.log("retour ", data);
-            this.getAllTasksFromAllProjects();
-          }),
-        {
-          dropSelectProject: "Project",
-          dropSelectItemIcon: "fa fa-list",
-          prioritySelectIcon: "fa fa-flag",
-          dropSelectColor: "Color",
-          dropSelectColorIcon: "fa fa-paint-brush",
-          dropSelectIcon: "Icon",
-          dropSelectIconIcon: "fa fa-clipboard",
-          activeTasksInformation: false
-        }
-      );
-    } else {
-      this.setState(
-        {
-          tasksTitleInputInvalid: !this.state.tasksTitleInputInvalid
-        },
-        () => console.log(this.state.tasksTitleInputInvalid)
-      );
+    if (this.state.dropSelectProject !== "Project") {
+      if (this.state.tasksTitleInput !== "") {
+        // pour verifier la date :  && this.state.selectedDay !== ""
+        this.setState(
+          {
+            addTasksModal: !this.state.addTasksModal,
+          },
+          () =>
+            postTasks({
+              tasks_id: this.state.tasks.length + 1,
+              tasks_title: this.state.tasksTitleInput,
+              tasks_description: this.state.tasksDescriptionInput,
+              tasks_date: this.state.selectedDay.format("L"),
+              tasks_create_date: moment().format("L"),
+              tasks_project: this.state.dropSelectProject,
+              tasks_project_name: this.state.dropSelectProjectName,
+              tasks_project_icon: this.state.dropSelectItemIcon,
+              tasks_priority: this.state.prioritySelectIcon,
+              tasks_card_color: this.state.dropSelectColor.toLocaleLowerCase(),
+              tasks_card_icon: this.state.dropSelectIconIcon
+            }).then(data => {
+              console.log("retour ", data);
+              this.getAllTasksFromAllProjects();
+            }),
+          {
+            dropSelectProject: "Project",
+            dropSelectItemIcon: "fa fa-list",
+            prioritySelectIcon: "fa fa-flag",
+            dropSelectColor: "Color",
+            dropSelectColorIcon: "fa fa-paint-brush",
+            dropSelectIcon: "Icon",
+            dropSelectIconIcon: "fa fa-clipboard",
+            activeTasksInformation: false,
+            noTaskInput: false,
+            noSelectedProject: false,
+            addTaskModalFooter: ""
+          }
+        );
+      } else {
+          this.setState({noTaskInput: true, addTaskModalFooter: "d-flex justify-content-between"})
+      }
+   } else {
+      this.setState({noSelectedProject: true, addTaskModalFooter: "d-flex justify-content-between"})
     }
   }
 
@@ -348,7 +355,9 @@ class TasksPanel extends React.Component {
 
   taskTitleInputFunction(input) {
     this.setState({
-      tasksTitleInput: input.target.value
+      tasksTitleInput: input.target.value,
+      noTaskInput: false,
+      addTaskModalFooter: ""
     });
     console.log(this.state.tasksTitleInput);
   }
@@ -380,7 +389,9 @@ class TasksPanel extends React.Component {
 
   dropdownSelectProjectToggle() {
     this.setState({
-      dropdownSelectProjectOpen: !this.state.dropdownSelectProjectOpen
+      dropdownSelectProjectOpen: !this.state.dropdownSelectProjectOpen,
+      noSelectedProject: false,
+      addTaskModalFooter: ""
     });
   }
 
@@ -517,7 +528,6 @@ class TasksPanel extends React.Component {
               </Button>
           }
         </ButtonGroup>
-        {/* <ProjectStatue/> */}
         <Modal isOpen={this.state.addTasksModal} toggle={this.addTasksModal}>
           <ModalHeader>
             <i className="fa fa-plus text-info" />&nbsp;Add a tasks
@@ -644,13 +654,21 @@ class TasksPanel extends React.Component {
                 </FormGroup>
               </Form>
           </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={this.addTasksModal}>
-              Cancel
-            </Button>
-            <Button outline color="info" onClick={this.addTasksFunction}>
-              <i className="fa fa-plus" />&nbsp;Add
-            </Button>
+          <ModalFooter className={this.state.addTaskModalFooter}>
+            {this.state.noSelectedProject
+              ? <span className="text-danger ml-2">You must select a project to create task</span>
+              : null}
+            {this.state.noTaskInput
+              ? <span className="text-danger ml-2">You must enter a name for your task</span>
+              : null}
+            <div className="mr-1">
+              <Button className="mr-1" color="secondary" onClick={this.addTasksModal}>
+                Cancel
+              </Button>
+              <Button outline color="info" onClick={this.addTasksFunction}>
+                <i className="fa fa-plus" />&nbsp;Add
+              </Button>
+            </div>
           </ModalFooter>
         </Modal>
         {/* Test map tasks */}
