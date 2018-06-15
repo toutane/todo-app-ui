@@ -11,9 +11,6 @@ import Activities from './views/03-Activities'
 import Settings from './views/04-Settings';
 import NavBar from './02-NavBar';
 import LittleSwitchRouter from './techComponents/LittleSwitchRouter';
-import BottomView from './03-BottomView';
-import { getLogout } from './api/BeAPI';
-import { projects } from './database/projects';
 import { LogProvider, LogContext } from './techComponents/LoginProvider';
 
 // function HOCLogContext(component) {

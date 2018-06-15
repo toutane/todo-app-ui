@@ -3,9 +3,11 @@ import { Row, Col, Card, Container, Jumbotron, Button,
   ButtonGroup, CardText, CardTitle, CardBody, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getProjects, getTasks } from "../api/BeAPI";
+import Radium, {StyleRoot} from 'radium';
+
+import { animations } from '../animations/animations'
 
 import SimpleLineChart from '../activity/SimpleLineChart';
-
 import BottomView from '../03-BottomView';
 
 export default class Home extends React.Component {
@@ -41,7 +43,14 @@ export default class Home extends React.Component {
             this.props.isLogged
             ? (<div>
             <Jumbotron className="text-center">
-            <h1 className="display-5">Welcome<span className=" display-3 text-white ml-2">{this.props.user.username}</span></h1>
+            <div className="d-flex justify-content-center align-items-baseline">
+              <StyleRoot>
+                <h1 style={animations.fadeInDown} className="display-5">Welcome</h1>
+              </StyleRoot>
+              <StyleRoot>
+                <h1 style={animations.fadeInUp} className=" display-3 text-white ml-2">{this.props.user.username}</h1>
+              </StyleRoot>
+            </div>
             <span className="lead text-info">{this.props.user.full_name}<i className="ml-2 text-muted fas fa-chart-line fa-xs" onClick={() => this.setState({activityView: !this.state.activityView})}/></span>
             <Collapse isOpen={this.state.activityView}>
               <hr className="my-3 pb-3"/>
