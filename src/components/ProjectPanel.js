@@ -390,7 +390,10 @@ class Project extends React.Component {
                     &nbsp;{project.project_name}
                   </div>
                   {/* <i className="fas fa-times" onClick={() => this.deleteFunction(project.project_name)}/> */}
-                  {(this.state.indexDeleteCross === i) && this.state.deleteCross && <i className="fas fa-times" onClick={() => this.trashModal(project)}/>}
+                  <div>
+                    {(this.state.indexDeleteCross === i) && this.state.deleteCross && <i className="fas fa-times" onClick={() => this.trashModal(project)}/>}
+                    <i className="fas fa-info-circle"/>
+                  </div>
                 </ListGroupItem>
               ))}
             </ListGroup>
