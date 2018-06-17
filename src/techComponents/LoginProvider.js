@@ -29,7 +29,7 @@ class LogProv extends Component {
         this.setState({
           isLogged: true,
           location: null,
-        }, this.props.history.push("/home"))
+        }, this.props.history.push("/today"))
       }
     })
   }
