@@ -485,7 +485,7 @@ class TasksPanel extends React.Component {
         return "fas fa-ellipsis-v fa-sm text-info"
     }
 
-  } 
+  }
 
   render() {
     const filteredTasks = this.state.tasks.filter(tasks =>
@@ -740,7 +740,7 @@ class TasksPanel extends React.Component {
                         : "d-flex flex-column align-items-center"
                     }
                   >
-                    <i className="fas fa-check fa-lg mb-2" />
+                    <i className="fas fa-check fa-lg mb-2"/>
 
                     {this.state.visibleCross &&
                     i === this.state.confirmDeleteTasks ? (
