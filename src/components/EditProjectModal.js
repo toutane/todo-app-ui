@@ -43,7 +43,6 @@ export default class EditProjectModal extends React.Component {
       dropSelectItemIcon: icon.icon,
       icon: icon.icon, 
       color: icon.icon_color,
-      style: icon.style
     });
   }
 
@@ -57,10 +56,10 @@ export default class EditProjectModal extends React.Component {
           this.setState({
             input: "",
             icon: "",
-            dropSelectItem: "",
+            dropSelectItem: "Project icon",
             dropSelectItemIcon: "",
             color: "",
-            style: "" 
+            errorName: false
           },
           () => this.props.updateListFunction())
         })
@@ -78,9 +77,12 @@ export default class EditProjectModal extends React.Component {
           <ModalBody>
           <FormGroup>
               <InputGroup className="d-flex justify-content-between">
-                <InputGroupAddon addonType="prepend">
-                  <i className={this.props.project.project_icon} />
-                </InputGroupAddon>
+              {this.props.project.project_icon !== null
+                ? <InputGroupAddon addonType="prepend">
+                    {/* <i className={this.props.project.project_icon} style={this.props.project.project_icon_style}/> */}
+                    <i className={this.props.project.project_icon}/>
+                  </InputGroupAddon>
+                : null}
                 <Input
                   onChange={e => this.onAddProjectInput(e)}
                   value={this.state.input}
@@ -110,7 +112,7 @@ export default class EditProjectModal extends React.Component {
                   </DropdownMenu>
                 </ButtonDropdown>
                 {this.state.errorName 
-                  ? <span className="text-danger ml-2">You must enter a name for your project</span>
+                  ? <span className="text-danger mr-3">You must enter a name for your project</span>
                   : null}
               </ButtonGroup>
           </ModalBody>
