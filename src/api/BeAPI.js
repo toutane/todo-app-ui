@@ -57,6 +57,18 @@ export const deleteProjects = deletedProject =>
     body: JSON.stringify(deletedProject)
   });
 
+export const updateProjects = (project_id, updatedProject) =>
+  fetch(`${api}/projects/${project_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+      // ...headers
+    },
+    credentials: "include",
+    body: JSON.stringify(updatedProject)
+  })
+  .then(x => x.json());
+
 // fetch tasks
 
 export const getTasks = (project_id) => fetch(`${api}/tasks/${project_id}`, {credentials: "include"}).then(x => x.json());
