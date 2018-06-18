@@ -26,7 +26,7 @@ import { getProjects, postProjects, deleteProjects } from "../api/BeAPI";
 
 import { icons } from "../database/icons";
 
-import ProjectInfo from './ProjectInfo';
+import EditProjectModal from './EditProjectModal';
 
 class Project extends React.Component {
   constructor(props) {
@@ -34,11 +34,12 @@ class Project extends React.Component {
 
     this.state = {
       spinner: false,
-      infoCollapse: false,
+      editModal: false,
+      currentProject: {},
       deleteCross: false,
       indexDeleteCross: false,
-      indexInfoIcon: false,
-      infoIcon: false,
+      indexEditIcon: false,
+      editIcon: false,
       projectCollapse: this.props.match.params.action === 'add-project' ,
       searchCollapse: false,
       trashCollapse: false,
@@ -50,7 +51,6 @@ class Project extends React.Component {
       dropSelectItemIcon: "",
       dropSelectProjectId: "",
       projects: [],
-      currentProject: {},
       input: "",
       icon: "",
       color: "",
@@ -215,7 +215,7 @@ class Project extends React.Component {
     )}
 
   setProjectIndex(index, toggle) {
-    this.setState({deleteCross: toggle, indexDeleteCross: index, infoIcon: toggle, indexInfoIcon: index})
+    this.setState({deleteCross: toggle, indexDeleteCross: index, editIcon: toggle, indexEditIcon: index})
   }
 
   changeSortMode() {
@@ -240,12 +240,6 @@ class Project extends React.Component {
     }
   }
 
-  infoProject(project) {
-    this.state.infoCollapse
-    ? this.setState({ currentProject: project})
-    : this.setState({ infoCollapse: !this.state.infoCollapse, currentProject: project}) 
-  }
-
   render() {
     const filteredProjects = this.state.projects.length && this.state.projects.filter(project =>
       project.project_name
@@ -260,9 +254,9 @@ class Project extends React.Component {
             <i className="fa fa-plus fa-fw" />&nbsp;Add
           </Button>
           <ButtonGroup>
-            {this.state.infoCollapse
-              ? <Button outline color="primary" onClick={() => this.setState({infoCollapse: false})}><i className="fas fa-times fa-fw"/></Button>
-              : <Button outline color="primary"><i className="fas fa-th-list fa-fw"/></Button>}
+            <Button outline color="primary">
+              <i className="fas fa-th-list fa-fw"/>
+            </Button>
             {this.state.sortMode === true
               ? <Button outline color="primary" onClick={()=>this.changeSortMode()} >
                   <i className="fas fa-sort-alpha-down fa-fw"/>
@@ -295,7 +289,7 @@ class Project extends React.Component {
                   />
                 </InputGroup>
               </FormGroup>
-              <ButtonGroup className="d-flex justify-content-between">
+              <ButtonGroup>
                 <ButtonDropdown
                   isOpen={this.state.dropdownAddProjectOpen}
                   toggle={this.dropdownAddProjectToggle}
@@ -314,7 +308,7 @@ class Project extends React.Component {
                       </DropdownItem>
                     ))}
                   </DropdownMenu>
-                </ButtonDropdown>
+                </ButtonDropdown>&nbsp;
                 <Button color="info" onClick={this.addProjectFunction}>
                   <i className="fa fa-plus" />&nbsp;Add
                 </Button>
@@ -371,13 +365,8 @@ class Project extends React.Component {
               </Button>
             </ModalFooter>
           </Modal>
-        </div>
-        <div>
           &nbsp;
-          <Collapse isOpen={this.state.infoCollapse}>
-            <ProjectInfo project={this.state.currentProject}/>
-          </Collapse>
-          &nbsp;
+          <EditProjectModal updateListFunction={() => this.setState({editModal: false}, () => this.getAllProject())} changeStateModal={() => this.setState({editModal: false})} isOpenModal={this.state.editModal} project={this.state.currentProject}/>
         </div>
           {
             filteredProjects.length === 0 && this.state.spinner === false
@@ -404,7 +393,7 @@ class Project extends React.Component {
                   </div>
                   {/* <i className="fas fa-times" onClick={() => this.deleteFunction(project.project_name)}/> */}
                   <div className="d-flex align-items-center">
-                    {(this.state.indexInfoIcon === i) && this.state.infoIcon && <i className="fas fa-ellipsis-v fa-sm mr-2" onClick={() => this.infoProject(project)}/>}
+                    {(this.state.indexEditIcon === i) && this.state.editIcon && <i className="fas fa-edit fa-sm mr-2" onClick={() => this.setState({ editModal: !this.state.editModal, currentProject: project })}/>}
                     {(this.state.indexDeleteCross === i) && this.state.deleteCross && <i className="fas fa-times" onClick={() => this.trashModal(project)}/>}
                   </div>
                 </ListGroupItem>
