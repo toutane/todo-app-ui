@@ -78,11 +78,21 @@ export default class EditProjectModal extends React.Component {
           <FormGroup>
               <InputGroup className="d-flex justify-content-between">
               {this.props.project.project_icon !== null
-                ? <InputGroupAddon addonType="prepend">
-                    {/* <i className={this.props.project.project_icon} style={this.props.project.project_icon_style}/> */}
-                    <i className={this.props.project.project_icon}/>
-                  </InputGroupAddon>
-                : null}
+                ? this.state.dropSelectItemIcon === ""
+                  ? <InputGroupAddon addonType="prepend">
+                      {/* <i className={this.props.project.project_icon} style={this.props.project.project_icon_style}/> */}
+                      <i className={this.props.project.project_icon}/>
+                    </InputGroupAddon>
+                  : <InputGroupAddon addonType="prepend">
+                      {/* <i className={this.props.project.project_icon} style={this.props.project.project_icon_style}/> */}
+                      <i className={this.state.dropSelectItemIcon}/>
+                    </InputGroupAddon>
+                : this.state.dropSelectItemIcon === ""
+                    ? null
+                    : <InputGroupAddon addonType="prepend">
+                        {/* <i className={this.props.project.project_icon} style={this.props.project.project_icon_style}/> */}
+                        <i className={this.state.dropSelectItemIcon}/>
+                      </InputGroupAddon>}
                 <Input
                   onChange={e => this.onAddProjectInput(e)}
                   value={this.state.input}
@@ -117,7 +127,7 @@ export default class EditProjectModal extends React.Component {
               </ButtonGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => this.props.changeStateModal()}>Cancel</Button>
+            <Button color="secondary" onClick={() => this.setState({input: "", icon: "", dropSelectItem: "Project icon", dropSelectItemIcon: "", color: "", errorName: false}, () => this.props.changeStateModal())}>Cancel</Button>
             <Button color="primary" onClick={() => this.updateProjectFunction(this.props.project)}>Update</Button>
           </ModalFooter>
         </Modal>
