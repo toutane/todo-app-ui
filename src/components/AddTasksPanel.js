@@ -32,7 +32,7 @@ import Radium, {StyleRoot} from 'radium';
 
 import { animations } from '../animations/animations'
 
-import { getProjects, getTasks, postTasks, deleteTasks } from "../api/BeAPI";
+import { getProjects, getTasks, postTasks, deleteTasks, completeTasks } from "../api/BeAPI";
 
 const priorities = [
   {
@@ -206,6 +206,7 @@ class TasksPanel extends React.Component {
     this.moreInformationFunction1 = this.moreInformationFunction1.bind(this);
     this.getAllTasksFromAllProjects = this.getAllTasksFromAllProjects.bind(this);
     this.changeAlphabSortMode = this.changeAlphabSortMode.bind(this);
+    this.completeTasksFunction = this.completeTasksFunction.bind(this);
   }
 
   componentDidMount() {
@@ -477,14 +478,27 @@ class TasksPanel extends React.Component {
 
   } 
 
-  changeEllipsisColor(tasks) {
-    if (tasks.tasks_card_color === "info" || tasks.tasks_card_color === "success") {
-      return "fas fa-ellipsis-v fa-sm"
+  changeEllipsisColor(tasks, icon) {
+    if (icon === "ellipsis") {
+      if (tasks.tasks_card_color === "info" || tasks.tasks_card_color === "success") {
+        return "fas fa-ellipsis-v fa-sm"
+      }
+      else {
+          return "fas fa-ellipsis-v fa-sm text-info"
+      }
     }
-    else {
-        return "fas fa-ellipsis-v fa-sm text-info"
+    if (icon === "edit") {
+      if (tasks.tasks_card_color === "info" || tasks.tasks_card_color === "success") {
+        return "fas fa-edit mr-2"
+      }
+      else {
+          return "fas fa-edit mr-2 text-info"
+      }
     }
+  }
 
+  completeTasksFunction(tasks) {
+    completeTasks(tasks._id, {}).then(x => {this.getAllTasksFromAllProjects()})
   }
 
   render() {
@@ -711,7 +725,7 @@ class TasksPanel extends React.Component {
                       </div>
                     </CardTitle>
                     <CardText onClick={() => this.moreInformationFunction(i)} tag="div">
-                      <i className={this.changeEllipsisColor(tasks)} />&nbsp;&nbsp;{
+                      <i className={this.changeEllipsisColor(tasks, "ellipsis")}/>&nbsp;&nbsp;{
                         tasks.tasks_description
                       }&nbsp;
                       <Collapse
@@ -719,15 +733,16 @@ class TasksPanel extends React.Component {
                           (i === this.state.selectedTasksInformation &&
                             this.state.activeTasksInformation) ||
                           this.state.allActiveTasks
-                        }
-                      >
+                        }>
                         <hr className="my-2"/>
-                        <h6 >
-                          {tasks.tasks_date}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          <i className={tasks.tasks_project_icon}
-                          />&nbsp;{tasks.tasks_project_name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i
-                            className={tasks.tasks_priority}
-                          />
+                        <h6 className="d-flex justify-content-between align-items-baseline">
+                          <i className={this.changeEllipsisColor(tasks, "edit")} />
+                          {tasks.tasks_date}
+                          <div className="mr-3 ml-3">
+                            <i className={tasks.tasks_project_icon}/>
+                            {tasks.tasks_project_name}
+                          </div>
+                          <i className={tasks.tasks_priority}/>
                         </h6>
                       </Collapse>
                     </CardText>
@@ -740,7 +755,7 @@ class TasksPanel extends React.Component {
                         : "d-flex flex-column align-items-center"
                     }
                   >
-                    <i className="fas fa-check fa-lg mb-2"/>
+                    <i className="fas fa-check fa-lg mb-2" onClick={() => this.completeTasksFunction(tasks)}/>
 
                     {this.state.visibleCross &&
                     i === this.state.confirmDeleteTasks ? (

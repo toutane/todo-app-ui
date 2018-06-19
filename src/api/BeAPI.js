@@ -93,3 +93,15 @@ fetch(`${api}/tasks`, {
   credentials: "include",
   body: JSON.stringify(deleteTasks)
 });
+
+export const completeTasks = (tasks_id, completedTask) =>
+  fetch(`${api}/completedTasks/${tasks_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+      // ...headers
+    },
+    credentials: "include",
+    body: JSON.stringify(completedTask)
+  })
+  .then(x => x.json());
