@@ -254,7 +254,7 @@ class Project extends React.Component {
             <i className="fa fa-plus fa-fw" />&nbsp;Add
           </Button>
           <ButtonGroup>
-            <Button outline color="primary">
+            <Button outline color="primary" onClick={() => this.props.setSelectedProject("today")}>
               <i className="fas fa-th-list fa-fw"/>
             </Button>
             {this.state.sortMode === true
@@ -386,6 +386,7 @@ class Project extends React.Component {
                   className="d-flex justify-content-between align-items-center"
                   onMouseEnter={(e) => this.setProjectIndex(i, true)}
                   onMouseLeave={(e) => this.setProjectIndex(i, false)}
+                  onClick={() => this.props.setSelectedProject(project)}
                 >
                   <div>
                     <i className={project.project_icon} style={project.project_icon_style}/>
