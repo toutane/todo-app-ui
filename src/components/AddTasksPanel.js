@@ -140,6 +140,7 @@ class TasksPanel extends React.Component {
       userId: "",
       tasks: [],
       projects: [],
+      tasksCompletionMode: "all",
       addTasksBoard: false,
       moreInformationCollapse: false,
       addTasksModal: this.props.match.params.action === 'add-task',
@@ -181,18 +182,12 @@ class TasksPanel extends React.Component {
     this.onAddProjectSelected = this.onAddProjectSelected.bind(this);
     this.addTasksFunction = this.addTasksFunction.bind(this);
     this.taskTitleInputFunction = this.taskTitleInputFunction.bind(this);
-    this.taskDescriptionInputFunction = this.taskDescriptionInputFunction.bind(
-      this
-    );
+    this.taskDescriptionInputFunction = this.taskDescriptionInputFunction.bind(this);
     this.personalizationCollapse = this.personalizationCollapse.bind(this);
     this.advancedOptionsCollapse = this.advancedOptionsCollapse.bind(this);
     this.taskDateInputFunction = this.taskDateInputFunction.bind(this);
-    this.dropdownSelectProjectToggle = this.dropdownSelectProjectToggle.bind(
-      this
-    );
-    this.dropdownSelectPriorityToggle = this.dropdownSelectPriorityToggle.bind(
-      this
-    );
+    this.dropdownSelectProjectToggle = this.dropdownSelectProjectToggle.bind(this);
+    this.dropdownSelectPriorityToggle = this.dropdownSelectPriorityToggle.bind(this);
     this.dropdownSelectTagToggle = this.dropdownSelectTagToggle.bind(this);
     this.dropdownSelectColorToggle = this.dropdownSelectColorToggle.bind(this);
     this.dropdownSelectIconToggle = this.dropdownSelectIconToggle.bind(this);
@@ -211,6 +206,7 @@ class TasksPanel extends React.Component {
 
   componentDidMount() {
     this.getAllTasksFromAllProjects();
+    this.getProjects();
   }
 
   componentDidUpdate(prevProps) {
@@ -218,6 +214,15 @@ class TasksPanel extends React.Component {
     if (this.props.match.params.action !== prevProps.match.params.action) {
       this.props.match.params.action === 'add-task' ? this.setState ({ addTasksModal: true}) : null
     }
+    if (this.props.selectedProject !== prevProps.selectedProject) {
+      this.props.selectedProject === null ? this.getAllTasksFromAllProjects() : this.getTasksFromSelectedProjects(this.props.selectedProject)
+    }
+  }
+
+  getProjects = () => {
+    getProjects().then(resProjects => {
+          this.setState({projects: resProjects})
+        })
   }
 
   getAllTasksFromAllProjects() {
@@ -236,6 +241,21 @@ class TasksPanel extends React.Component {
           )
         )
       )
+  )
+  }
+
+  getTasksFromSelectedProjects(selectedProject) {
+    this.setState({
+      tasks: [],
+      spinner: true,
+    },
+    () => getTasks(selectedProject.project_id).then(tasks =>
+      this.setState({
+        tasks: this.state.tasks.concat(tasks)
+      }, this.setState({
+        spinner: false,
+      }))
+    )
   )
   }
 
@@ -501,6 +521,15 @@ class TasksPanel extends React.Component {
     completeTasks(tasks._id, {}).then(x => {this.getAllTasksFromAllProjects()})
   }
 
+  completionTasksFilterFunction(task) {
+    if (this.state.tasksCompletionMode !== "all") {
+      return task.tasks_completion === this.state.tasksCompletionMode
+    } 
+    else {
+      return task.tasks_completion === false || task.tasks_completion === true || task.tasks_completion === undefined
+    }
+  }
+
   render() {
     const filteredTasks = this.state.tasks.filter(tasks =>
       tasks.tasks_title.toLowerCase().includes(this.state.search.toLowerCase())
@@ -508,39 +537,49 @@ class TasksPanel extends React.Component {
 
     return (
       <div>
-        <ButtonGroup>
-          {/* <h4><Badge color="primary">{this.state.tasks.length}</Badge></h4>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-          <InputGroup>
-            <InputGroupAddon>
-              <i className="fa fa-search fa-fw" />
-            </InputGroupAddon>
-            <Input
-              value={this.state.search}
-              onChange={this.updateSearch}
-              placeholder="search tasks"
-            />&nbsp;
-          </InputGroup>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {/* <Button style={{"backgroundColor":"#0c2461"}} onClick={this.addTasksModal}><i className="fa fa-plus" />&nbsp;Add a tasks</Button> */}
-          <Button color="info" onClick={this.addTasksModal}>
-            <i className="fa fa-plus" />&nbsp;Add a tasks
-          </Button>
-          &nbsp;&nbsp;&nbsp;<Button
-            outline={!this.state.spinner} color="primary"
-            onClick={this.moreInformationFunction1}
-          > {this.state.spinner
-            ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
-            : (<i className="fas fa-ellipsis-v fa-fw" />)}
-          </Button>
-          {this.state.alphabSortMode === "tasks_title"
-            ? <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()} >
-                <i className="fas fa-sort-alpha-down fa-fw"/>
-              </Button>
-            : <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()}>
-                <i className="fas fa-sort-alpha-up fa-fw"/>
-              </Button>
-          }
+        <ButtonGroup className="d-flex justify-content-between">
+          <div className="d-flex flex-row">
+            <InputGroup className="mr-4">
+              <InputGroupAddon>
+                <i className="fa fa-search fa-fw" />
+              </InputGroupAddon>
+              <Input
+                value={this.state.search}
+                onChange={this.updateSearch}
+                placeholder="search tasks"
+              />&nbsp;
+            </InputGroup>
+            <Button color="info" onClick={this.addTasksModal}>
+              <i className="fa fa-plus" />&nbsp;Add a tasks
+            </Button>
+          </div>
+          <ButtonGroup>
+            <Button outline={this.state.tasksCompletionMode === "all" ? false : true} color="primary" onClick={() => this.setState({tasksCompletionMode: "all"})}>
+              <i className="fas fa-th-list fa-fw"/>
+            </Button>
+            <Button outline={this.state.tasksCompletionMode === false ? false : true} color="primary" onClick={() => this.setState({tasksCompletionMode: false})}>
+              <i className="fas fa-times fa-fw"/>
+            </Button>
+            <Button outline outline={this.state.tasksCompletionMode === true ? false : true} color="primary" onClick={() => this.setState({tasksCompletionMode: true})}>
+              <i className="fas fa-check fa-fw"/>
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            {this.state.alphabSortMode === "tasks_title"
+              ? <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()} >
+                  <i className="fas fa-sort-alpha-down fa-fw"/>
+                </Button>
+              : <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()}>
+                  <i className="fas fa-sort-alpha-up fa-fw"/>
+                </Button>}
+            <Button
+              outline={!this.state.spinner} color="primary"
+              onClick={this.moreInformationFunction1}
+            > {this.state.spinner
+              ? (<i className="fas fa-spinner fa-pulse fa-fw"/>)
+              : (<i className="fas fa-ellipsis-v fa-fw" />)}
+            </Button>
+          </ButtonGroup>
         </ButtonGroup>
         <Modal isOpen={this.state.addTasksModal} toggle={this.addTasksModal}>
           <ModalHeader>
@@ -711,7 +750,7 @@ class TasksPanel extends React.Component {
                 key === "tasks_title" ? value.toLowerCase() : value
             )
           )
-          .map((tasks, i) => (
+          .filter((task) => this.completionTasksFilterFunction(task)).map((tasks, i) => (
             <div key={i}>
               <Card color={tasks.tasks_card_color} className={this.changeCardTextColor(tasks)}>
               <CardBody>
@@ -739,8 +778,8 @@ class TasksPanel extends React.Component {
                           <i className={this.changeEllipsisColor(tasks, "edit")} />
                           {tasks.tasks_date}
                           <div className="mr-3 ml-3">
-                            <i className={tasks.tasks_project_icon}/>
-                            {tasks.tasks_project_name}
+                            <i className={`${this.state.projects.filter((project) => project.project_id === tasks.project_id)[0].project_icon} mr-1`}/>
+                            {this.state.projects.filter((project) => project.project_id === tasks.project_id)[0].project_name}
                           </div>
                           <i className={tasks.tasks_priority}/>
                         </h6>
