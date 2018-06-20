@@ -20,11 +20,15 @@ export default class EditProjectModal extends React.Component {
     errorName: false,
     dropSelectItem: "Project icon",
     dropSelectItemIcon: "",
-    color: "",
     input: "",
+    color: "",
     style: {}
   }
 }
+
+  componentDidMount() {
+    this.setState({input: this.props.project.project_name})
+  }
 
   dropdownActiveFunction() {
     this.setState({dropdownOpen: !this.state.dropdownOpen})

@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col, CardImg, CardText, CardTitle, Button, Card, CardColumns,
-  CardSubtitle, CardImgOverlay, TabContent, TabPane, Nav, NavItem, NavLink,
-  ButtonGroup, Badge, Popover
+  Container, Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Badge
 } from 'reactstrap';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -11,18 +9,16 @@ import Menu from '../10.3-Menu';
 import ProjectPanel from '../components/ProjectPanel'
 import TasksPanelManager from '../components/TasksPanelManager'
 import TodayGrid from '../components/TodayGrid'
-import ConectionsManager from '../components/ConectionsManager'
 
 export default class Todo extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.togglePopover = this.togglePopover.bind(this);
 
     this.state = {
+      selectedProject: null,
       activeTab: '1',
-      popoverOpen: false
     };
   }
 
@@ -34,11 +30,15 @@ export default class Todo extends React.Component {
     }
   }
 
-  togglePopover() {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen
-    });
+  setSelectedProject(project) {
+    if (project !== "today") {
+      this.setState({selectedProject: project})
+    }
+    else {
+      this.setState({selectedProject: null})
+    }
   }
+
 
   render() {
     // console.log(this.props);
@@ -76,7 +76,7 @@ export default class Todo extends React.Component {
                   <Row>
                     <Col sm="12">
                       &nbsp;
-                      <ProjectPanel {...this.props}/>
+                      <ProjectPanel setSelectedProject={(project) => this.setSelectedProject(project)} {...this.props}/>
                     </Col>
                   </Row>
                 </TabPane>
@@ -84,15 +84,23 @@ export default class Todo extends React.Component {
               &nbsp;
           </Col>
             <Col>
-              <h4><i className="far fa-calendar fa-fw" />&nbsp;Today -&nbsp;&nbsp;
-                <Badge color="primary" id="Popover1" onClick={this.togglePopover}>{moment().format('dddd, MMMM Do YYYY')}</Badge>
-                {/* <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.togglePopover}>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere rem, facilis quae quasi reiciendis officia amet nam culpa eos tenetur odit soluta, cum qui voluptates excepturi harum quas architecto veritatis.
-                  </p>
-                </Popover> */}
+              <h4>
+              {this.state.selectedProject === null
+                  ? <span>
+                      <i className="far fa-calendar fa-fw mr-1"/>TODAY -
+                      <Badge className="ml-2 mr-2" color="primary">
+                        {moment().format('dddd, MMMM Do YYYY')}
+                      </Badge>
+                    </span>
+                  : <span>
+                      <i className={`${this.state.selectedProject.project_icon} mr-1`} style={this.state.selectedProject.project_icon_style}/>{this.state.selectedProject.project_name} - 
+                      <Badge className="ml-2 mr-2" color="primary">
+                        {moment().format('dddd, MMMM Do YYYY')}
+                      </Badge>
+                    </span>}
               </h4>
               <hr className="my-3" />
-              <TasksPanelManager {...this.props} />
+                <TasksPanelManager {...this.props} selectedProject={this.state.selectedProject}/>
               <hr className="my-3" />
               <TodayGrid />
             </Col>
