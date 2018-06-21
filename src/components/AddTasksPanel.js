@@ -565,6 +565,9 @@ class TasksPanel extends React.Component {
             </Button>
           </ButtonGroup>
           <ButtonGroup>
+            <Button outline color="primary">
+              <i className="fa fa-flag fa-fw"/>
+            </Button>
             {this.state.alphabSortMode === "tasks_title"
               ? <Button outline color="primary" onClick={()=>this.changeAlphabSortMode()} >
                   <i className="fas fa-sort-alpha-down fa-fw"/>
