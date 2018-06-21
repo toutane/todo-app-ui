@@ -20,15 +20,11 @@ export default class EditProjectModal extends React.Component {
     errorName: false,
     dropSelectItem: "Project icon",
     dropSelectItemIcon: "",
-    input: "",
+    projectNameInput: "",
     color: "",
     style: {}
   }
 }
-
-  componentDidMount() {
-    this.setState({input: this.props.project.project_name})
-  }
 
   dropdownActiveFunction() {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
@@ -36,7 +32,7 @@ export default class EditProjectModal extends React.Component {
 
   onAddProjectInput(e) {
     this.setState({
-      input: e.target.value,
+      projectNameInput: e.target.value,
       errorName: false
     });
   }
@@ -51,14 +47,15 @@ export default class EditProjectModal extends React.Component {
   }
 
   updateProjectFunction(project) {
-    if (this.state.input !== "") {
+    if (this.state.projectNameInput !== "") {
       console.log(project, this.state.icon)
+      if (this.state.icon === "") {
         updateProjects(project._id, {
-          project_name: this.state.input,
-          project_icon: this.state.icon
+          project_name: this.state.projectNameInput,
+          project_icon: this.props.project.project_icon
         }).then(x => {
           this.setState({
-            input: "",
+            projectNameInput: "",
             icon: "",
             dropSelectItem: "Project icon",
             dropSelectItemIcon: "",
@@ -67,6 +64,23 @@ export default class EditProjectModal extends React.Component {
           },
           () => this.props.updateListFunction())
         })
+      }
+      else {
+          updateProjects(project._id, {
+            project_name: this.state.projectNameInput,
+            project_icon: this.state.icon
+          }).then(x => {
+            this.setState({
+              projectNameInput: "",
+              icon: "",
+              dropSelectItem: "Project icon",
+              dropSelectItemIcon: "",
+              color: "",
+              errorName: false
+            },
+            () => this.props.updateListFunction())
+          })
+      } 
     }
     else {
       this.setState({errorName: true})
@@ -99,7 +113,7 @@ export default class EditProjectModal extends React.Component {
                       </InputGroupAddon>}
                 <Input
                   onChange={e => this.onAddProjectInput(e)}
-                  value={this.state.input}
+                  value={this.state.projectNameInput}
                   placeholder={this.props.project.project_name}
                 />
               </InputGroup>
