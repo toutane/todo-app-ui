@@ -2,14 +2,10 @@ import React from 'react';
 import {
   Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle, Button, InputGroup, CardFooter,
   FormGroup, Label, InputGroupAddon, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
-  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardLink, CardBody
+  Form, CardBody
 } from 'reactstrap';
-import classnames from 'classnames'
-import { Link } from "react-router-dom"
 
 import { getUser } from '../api/BeAPI'
-
-import Menu from '../10.3-Menu';
 
 export default class Account extends React.Component {
   constructor(props) {
