@@ -761,9 +761,11 @@ class TasksPanel extends React.Component {
                   <div>
                     <CardTitle>
                       <div>
-                        <i className={tasks.tasks_card_icon} />&nbsp;{
-                          tasks.tasks_title
-                        }
+                        <i className={`${tasks.tasks_card_icon} mr-1`} />
+                        {tasks.tasks_title}
+                        {tasks.tasks_completion
+                          ? <i className="fas fa-check ml-2 mb-1"/>
+                          : <i className="fas fa-times ml-2 mb-1"/>}
                       </div>
                     </CardTitle>
                     <CardText onClick={() => this.moreInformationFunction(i)} tag="div">
