@@ -1,13 +1,8 @@
 import React from 'react';
 import {
-  Container, Row, Col, Card, CardImg, CardText, CardTitle, CardSubtitle, Button, InputGroup, CardFooter,
-  FormGroup, Label, InputGroupButton, Input, TabContent, TabPane, Nav, NavItem, NavLink,
-  Badge, FormText, Modal, ModalHeader, ModalBody, ModalFooter, Form, CardBody
+  Row, Col, Card, CardImg, CardText, Button, CardFooter,
+  FormGroup, Label, Form, CardBody
 } from 'reactstrap';
-import classnames from 'classnames'
-import { InputGroupAddon } from '../utils/InputGroupAddon';
-
-import Menu from '../10.3-Menu';
 
 export default class Profile extends React.Component {
   constructor(props) {
