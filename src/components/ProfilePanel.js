@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Row, Col, Card, CardImg, CardText, Button, CardFooter,
-  FormGroup, Label, Form, CardBody
+  FormGroup, Label, Form, CardBody, Input
 } from 'reactstrap';
 
 export default class Profile extends React.Component {
